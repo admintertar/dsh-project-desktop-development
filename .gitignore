@@ -1,0 +1,6 @@
+mcp/local.yaml
+/.agent-project/local.yaml
+tasks/.write-lock
+tasks/.write-lock.recovery
+/resources/
+.DS_Store

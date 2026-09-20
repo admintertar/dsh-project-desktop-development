@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: dsh-project-desktop-development-c8b73fdc
+name: dsh-project-desktop-development
+resources:
+  - id: root
+    name: dsh-project-desktop-development
+    type: local
+    path: .
+  - id: dsh-project-desktop-ce773483
+    name: dsh-project-desktop
+    type: git
+    path: resources/dsh-project-desktop
+    url: https://github.com/admintertar/dsh-project-desktop.git
+  - id: dsh-plugin-project-f142a57e
+    name: dsh-plugin-project
+    type: git
+    path: resources/dsh-plugin-project
+    url: https://github.com/admintertar/dsh-plugin-project.git
+memory:
+  - id: working-agreements
+    name: 项目工作约定与验证流程
+    path: memory/working-agreements.md
