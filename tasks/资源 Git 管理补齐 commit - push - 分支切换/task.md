@@ -4,14 +4,26 @@ directory: 资源 Git 管理补齐 commit - push - 分支切换
 id: task-2646c970-8b9e-4c35-ab93-6f5fec4ede12
 title: 资源 Git 管理补齐 commit / push / 分支切换
 objective: 让资源面板能直接处理本地领先、未提交改动和分支切换，不必切到外部 Git 客户端；同时修复会污染资源仓库的 .gitignore 幂等缺陷。
-status: active
+status: completed
 createdAt: 2026-09-20T06:22:52.232Z
-updatedAt: 2026-09-20T08:31:39.162Z
-artifacts: []
+updatedAt: 2026-09-21T05:41:19.656Z
+artifacts:
+  - type: commit
+    repository: https://github.com/admintertar/dsh-plugin-project.git
+    commit: b2d3e28fc74957c49cac156c7ef3726088cca160
+    description: "fix: follow the reported branch in the resource picker"
+  - type: commit
+    repository: https://github.com/admintertar/dsh-plugin-project.git
+    commit: 24b7ddf5ddfc8c6ee4372aa2b2ea2131a4d41736
+    description: "refactor: make the associate action an icon action"
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop.git
+    commit: 89418fc013680a7f30599db25a4ff054e19f96f4
+    description: "test: exercise the resource Git actions in the native check"
 archived: false
 phase: implementation
 brief:
-  currentBehavior: 资源只支持 check（fetch 并报告状态）与 update（fetch + 仅快进合并）。面板能显示 dirty / ahead / diverged / in-progress，但唯一可用的 update 在这些状态下被明确拒绝，因此这些状态无法在产品内处理。
+  currentBehavior: 资源支持 check / update / commit / push / switch 五个动作与只读分支列表；面板能处理 dirty / ahead / diverged / in-progress。原生验收（本地源构建）已实际点击并验证提交、快进推送与分支切换，并修复了切换分支后选择器不刷新的缺陷。
   scope: dsh-plugin-project 的资源 Git 能力：Host 侧契约与 ResourceSyncManager、资源 API 路由、客户端 UI 与中英文案、测试。
   constraints:
     - 不执行仓库钩子（core.hooksPath=/dev/null），与既有 fetch/merge 立场一致
@@ -49,17 +61,9 @@ brief:
       version: 1
 handoff:
   nextSteps:
-    - 扩展 native-resource-state-checks.mjs 覆盖新控件：展开资源详情、输入提交信息、断言提交/推送/分支选择的存在与禁用态、中英文案、窄窗口无横向溢出、弹窗关闭后焦点返回
-    - 决定是否提交壳侧的 upstream.lock.json pin 更新（当前未提交，壳工作树只有这一个改动）
-    - 两个仓库的提交均未推送，需用户明确要求后才推
-    - 可选：用官方 DiffBlock 在提交前预览将提交的改动（官方已有能力，本插件已在 TaskCommitPreview 复用）
-  readBefore:
-    - file-sync
-    - file-ui
-    - file-card
-    - note-pin
-  verifyBefore:
-    - note-verify
+    - 发布时才需要把 upstream.lock.json 的 project pin 从 58d1f6d bump 到 24b7ddf 并重导 .upstream/project（流程见 note-pin）；日常本地开发不必改它。
+    - 本地验证插件工作树请带 DSH_PROJECT_PLUGIN_SOURCE=../dsh-plugin-project（build 与 smoke 都必须带）；不带变量的标准 smoke:resources 在 pin 更新前会失败，因为检查脚本断言了 pin 尚未包含的行为。
+    - CI（.github/workflows/package.yml）只跑 npm run check 与 smoke:updates，不运行 smoke:resources，因此不受 pin 落后影响。
 references:
   - id: note-design
     label: 设计决定
@@ -251,6 +255,74 @@ entries:
     basis: observation
     reason: 必须如实标注未运行的检查
     createdAt: 2026-09-20T08:31:39.162Z
+  - id: dec-3
+    kind: decision
+    content: 原生验收必须有一个产品认可的远端：validResourceUrl 只接受 https/ssh，且自动 check 失败会把资源置为 error，使 commit/push/switch 全部不可用（canCommit/canPush 都要求 !sync.error）。因此检查脚本内起一个 loopback HTTPS 服务：自签名证书 + git http-backend 转发（CGI 头解析后流式回包），URL 形如 https://127.0.0.1:<port>/backend.git；仓库级 http.sslVerify=false 让 git 信任证书，裸仓库开启 http.receivepack 才能推送。曾尝试 git url.<base>.insteadOf 重定向，失败原因是 git remote get-url 会展开 insteadOf，产品随即判定 resource-origin-mismatch。
+    basis: observation
+    reason: 解释检查脚本为何自带 HTTPS 服务器，以及为什么不能用本地路径/insteadOf 走捷径
+    createdAt: 2026-09-21T03:32:26.238Z
+  - id: prog-7
+    kind: progress
+    content: 原生验收发现真实缺陷并修复：详情弹窗的分支选择器只在打开时读取一次分支列表，切换分支后仍显示旧分支（实测 HEAD 已切到 feature，选择器仍写 main，且「远程更新」显示的是 feature 的 no-upstream 状态）。修复：ResourceCard 增加 effect，跟随 item.git.branch 上报的分支重新读取一次分支列表，用 followedBranch ref 保证每个分支只跟随一次、不会因 branches 对象更新而循环请求。
+    basis: observation
+    reason: 用户可见的错误状态：切换成功后界面仍显示旧分支
+    createdAt: 2026-09-21T03:32:26.238Z
+  - id: ver-ac5c
+    kind: verification
+    content: 插件完整验证（含分支跟随修复）：npm run check exit 0，插件测试 248/248 通过，typecheck 干净。
+    basis: observation
+    reason: ac5 的最新证据
+    verification:
+      criterionId: ac5
+      criterionVersion: 1
+      method: cd resources/dsh-project-plugin && npm run check
+      result: passed
+      coverage: typecheck + 全部测试（248）+ build
+    createdAt: 2026-09-21T03:32:26.238Z
+  - id: ver-native-2
+    kind: verification
+    content: 原生验收补齐（gap-1 的交互点击缺口已闭合）：在真实 Electron 界面上按顺序验证——1) 脏工作树时卡片出现「提交改动」，推送按钮此时不存在；2) 打开提交对话框，变更列表列出 AGENT.md 且状态为「已修改」，取消后焦点回到开启它的按钮；3) 中英双语下对话框标题/字段 aria-label/变更列表文案逐一断言；4) 空提交信息点提交，断言行内错误「请填写提交信息。」且 Git 历史不变；5) 填入信息提交，等待 Git 真正产生该提交、工作树转干净；6) 检查更新后出现「推送提交」，点击后远端 HEAD 前进到本地提交且面板转「已是最新」；7) 详情弹窗中分支选择器列出本地分支并真实切换 HEAD 到 feature，选择器跟随刷新；8) 制造脏工作树后选择器转为禁用；9) 窄窗口 420px 下详情弹窗无横向溢出；10) Escape 关闭后焦点返回。
+    basis: observation
+    reason: 真实界面与真实 Git 的交互证据
+    verification:
+      criterionId: ac5
+      criterionVersion: 1
+      method: cd resources/dsh-project-desktop && DSH_PROJECT_PLUGIN_SOURCE=../dsh-plugin-project npm run build && DSH_PROJECT_PLUGIN_SOURCE=../dsh-plugin-project npm run smoke:resources
+      result: passed
+      coverage: 提交/推送/分支切换的真实点击与真实 Git 状态核对、中英文案、窄窗口、焦点；注意这是在含未提交插件改动的本地源工作树上验证的（DSH_PROJECT_PLUGIN_SOURCE），不是 pin 快照
+    createdAt: 2026-09-21T03:32:26.238Z
+  - id: prog-8
+    kind: progress
+    content: 验收脚本的两个关键发现，供后续复用：1) Host 的 /sync 立即返回 {accepted:true}，操作在后台异步执行（卡片以 phase 显示），所以断言 Git 结果必须轮询等待，不能紧跟对话框关闭；2) 提交对话框的变更列表来自独立读取，打开对话框时可能尚未到达，断言前需等待。检查脚本已相应加入 waitGit 辅助与 changes 等待。
+    basis: observation
+    reason: 避免后续会话重复踩坑
+    createdAt: 2026-09-21T03:32:26.238Z
+  - id: prog-9
+    kind: progress
+    content: 并行改动情况（如实记录）：工作树存在非本会话产生的改动——插件 ResourcesPanel.tsx 把「关联远端」从文本按钮改为 IconAction（带 aria-label），壳 native-resource-state-checks.mjs 相应改用 aria-label 定位（clickAction）。本会话保留了这些改动，并让扩展部分复用其 actionSelector。当前两个仓库均有未提交改动，提交边界与 pin 处理需要用户确认。
+    basis: observation
+    supersedes: gap-1
+    reason: 存在并行编辑，必须说明工作树状态与耦合关系
+    createdAt: 2026-09-21T03:32:26.238Z
+  - id: prog-10
+    kind: progress
+    content: 本轮改动已提交（按用户选择「全部提交为独立提交」且暂不 push）：插件 b2d3e28（分支跟随修复）、24b7ddf（关联远端改为图标动作，即并行改动）、壳 89418fc（原生验收扩展）。两个仓库工作树干净，verify:upstream 仍通过（pin 未动）。未推送：插件 2 个、壳 1 个。
+    basis: observation
+    reason: 交付形态落定
+    createdAt: 2026-09-21T03:36:47.279Z
+  - id: done-1
+    kind: completion
+    content: 六条验收标准均有通过证据：ac1=ver-ac1、ac2=ver-ac2、ac3=ver-ac3、ac4=ver-ac4、ac5=ver-ac5c+ver-native-2、ac6=ver-1。实现与修复均已推送到 origin/master（插件 24b7ddf、壳 89418fc）。pin 按项目约定留到发布时再 bump，不作为完成条件。
+    basis: observation
+    verificationEntryIds:
+      - ver-ac1
+      - ver-ac2
+      - ver-ac3
+      - ver-ac4
+      - ver-ac5c
+      - ver-native-2
+      - ver-1
+    createdAt: 2026-09-21T05:41:19.656Z
 operations:
   92aa9d4356a174b7afa8a8df50ced7e3c2c8af4b5b56ca1d4ae7b3b6db9d012c:
     fingerprint: 722fd1d4a72da3e59c50db2ecb395ac297152b3bc39ddc88ced41955ea1987f5
@@ -285,6 +357,29 @@ operations:
       - ver-ac5b
       - ver-native-1
       - gap-1
+  5e2b2f1ce4e969c13a19d8f25dffed55e58e41e95b3978f5df4ad380aea2a0b4:
+    fingerprint: 1d788509ad5cc99184c0caec58360f1045f563bbd197882fa1ab0a3951e63145
+    kind: update
+    at: 2026-09-21T03:32:26.238Z
+    entryIds:
+      - dec-3
+      - prog-7
+      - ver-ac5c
+      - ver-native-2
+      - prog-8
+      - prog-9
+  6898823c4078c3583d375ba4149e15d620c9b9edc23ab2431775447bd4ab04fc:
+    fingerprint: 5ade210e7e7367f76ac1ccde9acd7720a3ecb3e25a24b47c7f3a9ef6592d3b7e
+    kind: update
+    at: 2026-09-21T03:36:47.279Z
+    entryIds:
+      - prog-10
+  f07954bdb990870294444de188c3c57c7985cd3e8a1ef216df7b7b5cd6c96f85:
+    fingerprint: 5171a871b231d30a782669970817310abf15652e64f255eb1b359cffaaf75b66
+    kind: update
+    at: 2026-09-21T05:41:19.656Z
+    entryIds:
+      - done-1
 criterionVersions:
   ac1: 1
   ac2: 1
@@ -294,4 +389,4 @@ criterionVersions:
   ac6: 1
 ---
 
-
+资源面板的 commit / push / 分支切换与分支列表已实现、验证并推送：插件 b2d3e28（分支跟随修复）与 24b7ddf（关联远端图标化）、壳 89418fc（原生验收扩展）均已在 origin/master。插件 npm run check 248/248 通过；原生验收在真实 Electron 界面上实际点击并核对了提交、快进推送、分支切换、中英文案、420px 窄窗口与焦点返回，并由此发现并修复了「切换分支后选择器不刷新」的缺陷。.gitignore 幂等修复随 ce099ff 交付。限制与边界：upstream.lock.json 的 project pin 仍是 58d1f6d——按项目约定日常开发不 bump、发布时才 bump，因此本地不带 DSH_PROJECT_PLUGIN_SOURCE 的标准 smoke:resources 会失败（检查脚本断言了 pin 尚未包含的行为），本地验证请带该变量；CI 不运行 smoke:resources，不受影响。壳测试 project-bootstrap-network.test.mjs 在本机沙箱下超时（loopback Git 传输），与本任务无关。
