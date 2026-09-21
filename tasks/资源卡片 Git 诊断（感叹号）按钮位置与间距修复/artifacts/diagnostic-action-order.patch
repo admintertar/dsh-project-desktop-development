@@ -1,0 +1,62 @@
+diff --git a/src/client/McpPanel.tsx b/src/client/McpPanel.tsx
+index 432a51d..240dfd8 100644
+--- a/src/client/McpPanel.tsx
++++ b/src/client/McpPanel.tsx
+@@ -105,16 +105,17 @@ export function McpPanel({controller, t}: {controller: ProjectCapabilityControll
+         </div>
+         <div className="project-mcp-card-footer">
+           {/* Pinned Button does not forward refs; Tooltip needs a DOM anchor for positioning. */}
+-          {hasError && <Tooltip label={t(status === 'reconnecting' ? 'mcpReconnectingBody' : 'mcpConnectionError')} side="top" maxWidth={320} disabled={errorDetails !== null}>
+-            <span className="project-mcp-action-anchor project-mcp-error-anchor"><Button size="sm" icon={<IconWarningOutline16 className="project-mcp-error-icon" />} aria-label={`${t('mcpErrorDetails')}: ${server.serverName}`} aria-haspopup="dialog"
+-              onClick={event => {errorOpener.current = event.currentTarget; setErrorDetails({server, reconnecting: status === 'reconnecting'});}} /></span>
+-          </Tooltip>}
+           <Tooltip label={t('edit')} side="top" delayMs={400} disabled={busy}><span className="project-mcp-action-anchor">
+             <Button className="project-mcp-action" size="sm" icon={<IconEditOutline16 />} disabled={busy} aria-label={`${t('edit')}: ${server.serverName}`} onClick={() => edit(server)} />
+           </span></Tooltip>
+           <Tooltip label={t('delete')} side="top" delayMs={400} disabled={busy}><span className="project-mcp-action-anchor">
+             <Button className="project-mcp-action project-mcp-action-danger" size="sm" icon={<IconTrashOutline16 />} disabled={busy} aria-label={`${t('delete')}: ${server.serverName}`} onClick={() => setRemoving(server)} />
+           </span></Tooltip>
++          {/* The diagnostic closes the action row, matching the resource card, instead of claiming the row's free space on the left. */}
++          {hasError && <Tooltip label={t(status === 'reconnecting' ? 'mcpReconnectingBody' : 'mcpConnectionError')} side="top" maxWidth={320} disabled={errorDetails !== null}>
++            <span className="project-mcp-action-anchor"><Button size="sm" icon={<IconWarningOutline16 className="project-mcp-error-icon" />} aria-label={`${t('mcpErrorDetails')}: ${server.serverName}`} aria-haspopup="dialog"
++              onClick={event => {errorOpener.current = event.currentTarget; setErrorDetails({server, reconnecting: status === 'reconnecting'});}} /></span>
++          </Tooltip>}
+         </div>
+       </article>;
+     })}</div>
+diff --git a/src/client/ResourcesPanel.tsx b/src/client/ResourcesPanel.tsx
+index 9fc432a..ea7696a 100644
+--- a/src/client/ResourcesPanel.tsx
++++ b/src/client/ResourcesPanel.tsx
+@@ -128,8 +128,6 @@ export function ResourcesPanel({controller, root, pickDirectory, t}: {controller
+           // Committing and switching stay usable without a remote, so the card gates each action itself.
+           loadBranches: () => controller.branches(item.id),
+           loadChanges: () => controller.changes(item.id)} : undefined}>
+-          {item.git?.diagnostic && <span className="project-mcp-error-anchor"><IconAction label={errorText(item.git.diagnostic, t)} icon={<IconWarningOutline16 />}
+-            action={event => {opener.current = event.currentTarget; setDetails({name: item.name, error: item.git!.diagnostic!});}} /></span>}
+           {item.type === 'git' && item.status === 'ready' && (!item.url || ['unlinked', 'no-upstream'].includes(item.git?.sync?.status ?? '')) &&
+             <IconAction label={`${t(item.git?.sync?.status === 'no-upstream' ? 'resourceSetTracking' : 'resourceAssociate')}: ${item.name}`}
+               icon={<IconLinkOutline16 />} disabled={locked || !state.data?.canClone} action={event => open(event, 'associate', item)} />}
+@@ -140,6 +138,10 @@ export function ResourcesPanel({controller, root, pickDirectory, t}: {controller
+           <IconAction label={`${t('removeResource')}: ${item.name}`} icon={<IconTrashOutline16 />} disabled={locked} action={event => {
+             opener.current = event.currentTarget; controller.clearError(); setRemoving({item, revision: state.data!.revision});
+           }} />
++          {/* The diagnostic closes the action row: the details action already claims the row's free space on the left,
++              so an auto margin here would open a gap in the middle of the buttons. */}
++          {item.git?.diagnostic && <IconAction label={errorText(item.git.diagnostic, t)} icon={<IconWarningOutline16 />}
++            action={event => {opener.current = event.currentTarget; setDetails({name: item.name, error: item.git!.diagnostic!});}} />}
+       </ResourceCard>;
+     })}</div>
+     {Boolean(state.data?.operations.length) && <section className="project-resource-operations"><h2>{t('resourceOperations')}</h2>
+diff --git a/src/client/styles.ts b/src/client/styles.ts
+index f5f108f..36d64ec 100644
+--- a/src/client/styles.ts
++++ b/src/client/styles.ts
+@@ -100,7 +100,6 @@ button.project-tool-main:hover:not(:disabled),button.project-tool-main:active:no
+ .project-mcp-tools:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:2px}
+ .project-mcp-tools ul{display:flex;flex-direction:column;list-style:none;margin:0;padding:0;overflow-wrap:anywhere}.project-mcp-tools li{min-width:0;line-height:20px}.project-mcp-tools code{display:block}
+ .project-mcp-card-footer{display:flex;justify-content:flex-end;gap:2px;padding:6px 10px;border-top:.5px solid var(--dsw-alias-border-l2)}.project-mcp-action-anchor{display:inline-flex}
+-.project-mcp-error-anchor{margin-right:auto}
+ .project-mcp-error-icon{color:var(--dsw-alias-state-error-primary)}
+ button.project-mcp-action{width:28px;height:28px;padding:6px;border:0;border-radius:7px;background:none;color:var(--dsw-alias-label-tertiary)}button.project-mcp-action:disabled{opacity:.4}
+ button.project-mcp-action:hover:not(:disabled){background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary)}button.project-mcp-action-danger:hover:not(:disabled){background:var(--dsw-alias-interactive-bg-hover-danger);color:var(--dsw-alias-state-error-primary)}.project-panel button.project-mcp-action:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:-1px}

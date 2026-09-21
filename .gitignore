@@ -7,3 +7,4 @@ tasks/.write-lock.recovery
 .DS_Store
 /resources/dsh-project-desktop/
 /resources/dsh-plugin-project/
+.local
