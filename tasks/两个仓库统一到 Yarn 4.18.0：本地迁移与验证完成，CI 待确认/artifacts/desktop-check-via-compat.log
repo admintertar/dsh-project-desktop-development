@@ -1,0 +1,579 @@
+Official stable source intact: Desktop 2.0.11, DSH 0.1.5-rc.2
+Official stable source intact: Desktop 2.0.11, DSH 0.1.5-rc.2
+Built official stable libraries and the pinned Project plugin without modifying either source tree.
+TAP version 13
+# Subtest: guide clone authenticates, retries credentials and creates from the selected branch without downloading again
+ok 1 - guide clone authenticates, retries credentials and creates from the selected branch without downloading again
+  ---
+  duration_ms: 1417.0035
+  type: 'test'
+  ...
+# Subtest: guide authentication cancellation, clone retry and window close release pending prompts and staging
+ok 2 - guide authentication cancellation, clone retry and window close release pending prompts and staging
+  ---
+  duration_ms: 531.378209
+  type: 'test'
+  ...
+# Subtest: guide rejects invalid input before allocating a clone; branch validation agrees with Git
+ok 3 - guide rejects invalid input before allocating a clone; branch validation agrees with Git
+  ---
+  duration_ms: 376.903042
+  type: 'test'
+  ...
+# Subtest: source digest matches Git including trees, symlinks and executable modes, and detects edits
+ok 4 - source digest matches Git including trees, symlinks and executable modes, and detects edits
+  ---
+  duration_ms: 127.989958
+  type: 'test'
+  ...
+# Subtest: every native command has an explicit translated label and keeps its role
+ok 5 - every native command has an explicit translated label and keeps its role
+  ---
+  duration_ms: 2.346667
+  type: 'test'
+  ...
+#   • 
+# using manual traversal of node_modules to build dependency tree
+# Subtest: universal merge accepts the official native pairs inside the hidden runtime but rejects unlisted binaries
+ok 6 - universal merge accepts the official native pairs inside the hidden runtime but rejects unlisted binaries
+  ---
+  duration_ms: 72.212834
+  type: 'test'
+  ...
+#   • using manual traversal of node_modules to build dependency tree
+#   • using manual traversal of node_modules to build dependency tree
+#   ⨯ 
+# production dependency not found  parent=fixture dependency=missing version=1.0.0
+# Subtest: production staging preserves nested and optional runtime dependencies and licenses, without development tools or native build outputs
+ok 7 - production staging preserves nested and optional runtime dependencies and licenses, without development tools or native build outputs
+  ---
+  duration_ms: 237.855833
+  type: 'test'
+  ...
+# Subtest: packaging rejects escaping, absolute and dangling links, including chained escapes
+ok 8 - packaging rejects escaping, absolute and dangling links, including chained escapes
+  ---
+  duration_ms: 3.014792
+  type: 'test'
+  ...
+# Subtest: CI resolves only stable pinned repositories and rejects mismatched version tags
+ok 9 - CI resolves only stable pinned repositories and rejects mismatched version tags
+  ---
+  duration_ms: 0.840375
+  type: 'test'
+  ...
+# Subtest: Windows safe mode keeps case-insensitive process essentials without inheriting credentials
+ok 10 - Windows safe mode keeps case-insensitive process essentials without inheriting credentials
+  ---
+  duration_ms: 0.325417
+  type: 'test'
+  ...
+# Subtest: loads root and linked resource AGENT.md files without requiring them
+ok 11 - loads root and linked resource AGENT.md files without requiring them
+  ---
+  duration_ms: 16.980708
+  type: 'test'
+  ...
+# Subtest: ignores oversized instruction files and returns an empty context when none are present
+ok 12 - ignores oversized instruction files and returns an empty context when none are present
+  ---
+  duration_ms: 4.629916
+  type: 'test'
+  ...
+# Subtest: a transparent client disconnect fails the check within its bound instead of hanging
+ok 13 - a transparent client disconnect fails the check within its bound instead of hanging
+  ---
+  duration_ms: 1801.113084
+  type: 'test'
+  ...
+# Subtest: a slow real clone leaves the event loop and other project creation responsive
+ok 14 - a slow real clone leaves the event loop and other project creation responsive
+  ---
+  duration_ms: 389.858375
+  type: 'test'
+  ...
+# Subtest: cancelling a real clone closes its transport before rollback and preserves linked resources
+ok 15 - cancelling a real clone closes its transport before rollback and preserves linked resources
+  ---
+  duration_ms: 313.541208
+  type: 'test'
+  ...
+# Subtest: a stalled clone times out and removes only the unfinished project
+ok 16 - a stalled clone times out and removes only the unfinished project
+  ---
+  duration_ms: 641.796709
+  type: 'test'
+  ...
+# Subtest: creates a root repository and independent empty resource repositories
+ok 17 - creates a root repository and independent empty resource repositories
+  ---
+  duration_ms: 164.353334
+  type: 'test'
+  ...
+# Subtest: creates missing parent directories through an existing directory alias
+ok 18 - creates missing parent directories through an existing directory alias
+  ---
+  duration_ms: 65.286417
+  type: 'test'
+  ...
+# Subtest: invalid plans and file or dangling-link locations do not create parent directories
+ok 19 - invalid plans and file or dangling-link locations do not create parent directories
+  ---
+  duration_ms: 1.808083
+  type: 'test'
+  ...
+# Subtest: failed creation removes its project root and preserves the newly created shared location
+ok 20 - failed creation removes its project root and preserves the newly created shared location
+  ---
+  duration_ms: 44.356375
+  type: 'test'
+  ...
+# Subtest: admin and desktop compositions create their intended independent resource repositories
+ok 21 - admin and desktop compositions create their intended independent resource repositories
+  ---
+  duration_ms: 157.305333
+  type: 'test'
+  ...
+# Subtest: omitted resource paths default under resources while explicit destinations stay unchanged
+ok 22 - omitted resource paths default under resources while explicit destinations stay unchanged
+  ---
+  duration_ms: 122.644
+  type: 'test'
+  ...
+# Subtest: links an existing external Git repository without modifying it
+ok 23 - links an existing external Git repository without modifying it
+  ---
+  duration_ms: 84.091291
+  type: 'test'
+  ...
+# Subtest: clones a remote resource without adding project instructions to it
+ok 24 - clones a remote resource without adding project instructions to it
+  ---
+  duration_ms: 84.804375
+  type: 'test'
+  ...
+# Subtest: rejects unsafe remote resource URLs before creating a project
+ok 25 - rejects unsafe remote resource URLs before creating a project
+  ---
+  duration_ms: 0.730666
+  type: 'test'
+  ...
+# Subtest: resource import preserves the chosen local type, Git origin and display name without changing the directory
+ok 26 - resource import preserves the chosen local type, Git origin and display name without changing the directory
+  ---
+  duration_ms: 177.038125
+  type: 'test'
+  ...
+# Subtest: links an explicit Git repository that has no origin remote yet
+ok 27 - links an explicit Git repository that has no origin remote yet
+  ---
+  duration_ms: 53.233917
+  type: 'test'
+  ...
+# Subtest: resource import rejects overlapping and unsafe targets before creating anything
+ok 28 - resource import rejects overlapping and unsafe targets before creating anything
+  ---
+  duration_ms: 1.066459
+  type: 'test'
+  ...
+# Subtest: rejects an occupied project target without changing it
+ok 29 - rejects an occupied project target without changing it
+  ---
+  duration_ms: 0.632792
+  type: 'test'
+  ...
+# Subtest: legacy folder creation preserves existing files while initializing the root repository
+ok 30 - legacy folder creation preserves existing files while initializing the root repository
+  ---
+  duration_ms: 21.462042
+  type: 'test'
+  ...
+# Subtest: project market inherits dsh-market and accepts only stable project overrides
+ok 31 - project market inherits dsh-market and accepts only stable project overrides
+  ---
+  duration_ms: 11.266791
+  type: 'test'
+  ...
+# Subtest: project market receives immutable current Profile identity without management methods
+ok 32 - project market receives immutable current Profile identity without management methods
+  ---
+  duration_ms: 0.624417
+  type: 'test'
+  ...
+# Subtest: the create guide previews the Windows project path with one separator style
+ok 33 - the create guide previews the Windows project path with one separator style
+  ---
+  duration_ms: 0.5435
+  type: 'test'
+  ...
+# Subtest: other platforms keep their separator and root
+ok 34 - other platforms keep their separator and root
+  ---
+  duration_ms: 0.110125
+  type: 'test'
+  ...
+# Subtest: an empty location never emits a leading separator
+ok 35 - an empty location never emits a leading separator
+  ---
+  duration_ms: 0.043208
+  type: 'test'
+  ...
+# Subtest: cancel keeps the project running and the next request can prompt again
+ok 36 - cancel keeps the project running and the next request can prompt again
+  ---
+  duration_ms: 4.372917
+  type: 'test'
+  ...
+# Subtest: concurrent normal and recovery requests share one confirmation and one operation
+ok 37 - concurrent normal and recovery requests share one confirmation and one operation
+  ---
+  duration_ms: 1.052459
+  type: 'test'
+  ...
+# Subtest: recovery confirms separately and follows the current window language
+ok 38 - recovery confirms separately and follows the current window language
+  ---
+  duration_ms: 0.571709
+  type: 'test'
+  ...
+# Subtest: a project closed while confirmation is open cannot be resurrected
+ok 39 - a project closed while confirmation is open cannot be resurrected
+  ---
+  duration_ms: 0.942458
+  type: 'test'
+  ...
+# Subtest: quitting prevents prompts and dialog failure releases the pending request
+ok 40 - quitting prevents prompts and dialog failure releases the pending request
+  ---
+  duration_ms: 2.513709
+  type: 'test'
+  ...
+# Subtest: state roots are independent and a project cannot adopt another project or Desktop Home
+ok 41 - state roots are independent and a project cannot adopt another project or Desktop Home
+  ---
+  duration_ms: 7.369958
+  type: 'test'
+  ...
+# Subtest: only a complete stable release with fixed repository assets is accepted
+ok 42 - only a complete stable release with fixed repository assets is accepted
+  ---
+  duration_ms: 2.236708
+  type: 'test'
+  ...
+# Subtest: official comparison uses Shell version and sends no upstream headers or installation identifiers to GitHub
+ok 43 - official comparison uses Shell version and sends no upstream headers or installation identifiers to GitHub
+  ---
+  duration_ms: 20.13925
+  type: 'test'
+  ...
+# Subtest: conditional requests use the previously validated release, never an empty 304
+ok 44 - conditional requests use the previously validated release, never an empty 304
+  ---
+  duration_ms: 2.580333
+  type: 'test'
+  ...
+# Subtest: failed checks preserve a safe reason, reject invalid/oversized metadata and clear the reason after success
+ok 45 - failed checks preserve a safe reason, reject invalid/oversized metadata and clear the reason after success
+  ---
+  duration_ms: 1.314042
+  type: 'test'
+  ...
+# Subtest: the official downloader writes a verified DMG/EXE and rejects corrupt data before replacing an existing file
+ok 46 - the official downloader writes a verified DMG/EXE and rejects corrupt data before replacing an existing file
+  ---
+  duration_ms: 31.765208
+  type: 'test'
+  ...
+# Subtest: a tag manifest cannot silently switch the confirmed download to another version
+ok 47 - a tag manifest cannot silently switch the confirmed download to another version
+  ---
+  duration_ms: 3.416209
+  type: 'test'
+  ...
+# Subtest: official lifecycle coalesces manual checks and persists one background notification per version
+ok 48 - official lifecycle coalesces manual checks and persists one background notification per version
+  ---
+  duration_ms: 293.755875
+  type: 'test'
+  ...
+# Subtest: the verified download stream reports monotonic progress against the declared total
+ok 49 - the verified download stream reports monotonic progress against the declared total
+  ---
+  duration_ms: 9.399084
+  type: 'test'
+  ...
+# Subtest: Shell download progress throttles refreshes, keeps the last sample and clears on completion
+ok 50 - Shell download progress throttles refreshes, keeps the last sample and clears on completion
+  ---
+  duration_ms: 0.818375
+  type: 'test'
+  ...
+# Subtest: the published manifest contains only verified package identities, sizes, hashes and the exact source commit
+ok 51 - the published manifest contains only verified package identities, sizes, hashes and the exact source commit
+  ---
+  duration_ms: 1.972417
+  type: 'test'
+  ...
+# Subtest: post-publication verification uses anonymous file downloads and rejects a stale same-version manifest
+ok 52 - post-publication verification uses anonymous file downloads and rejects a stale same-version manifest
+  ---
+  duration_ms: 21.772667
+  type: 'test'
+  ...
+# Subtest: same-version republish preserves the old release privately and promotes the fully uploaded candidate
+ok 53 - same-version republish preserves the old release privately and promotes the fully uploaded candidate
+  ---
+  duration_ms: 0.183375
+  type: 'test'
+  ...
+# Subtest: a failed publication restores the old public release and version tag
+ok 54 - a failed publication restores the old public release and version tag
+  ---
+  duration_ms: 0.135584
+  type: 'test'
+  ...
+# Subtest: a lost publication response does not roll back a successfully published release
+ok 55 - a lost publication response does not roll back a successfully published release
+  ---
+  duration_ms: 0.665042
+  type: 'test'
+  ...
+# Subtest: an annotated version tag already targeting this commit is preserved
+ok 56 - an annotated version tag already targeting this commit is preserved
+  ---
+  duration_ms: 0.1815
+  type: 'test'
+  ...
+# Subtest: concurrent opens share one Host and closing one project preserves the other
+ok 57 - concurrent opens share one Host and closing one project preserves the other
+  ---
+  duration_ms: 1.163917
+  type: 'test'
+  ...
+# Subtest: closing during startup disposes a late Host
+ok 58 - closing during startup disposes a late Host
+  ---
+  duration_ms: 0.164166
+  type: 'test'
+  ...
+# Subtest: unconfirmed shutdown retains ownership until retry succeeds
+ok 59 - unconfirmed shutdown retains ownership until retry succeeds
+  ---
+  duration_ms: 0.126708
+  type: 'test'
+  ...
+# Subtest: failed startup retains a partially created Host whose cleanup is unconfirmed
+ok 60 - failed startup retains a partially created Host whose cleanup is unconfirmed
+  ---
+  duration_ms: 0.754917
+  type: 'test'
+  ...
+# Subtest: capability stays on the owning main frame and its own HTTP/WebSocket origin
+ok 61 - capability stays on the owning main frame and its own HTTP/WebSocket origin
+  ---
+  duration_ms: 1.049208
+  type: 'test'
+  ...
+# Subtest: native IPC rejects subframes and other documents, external launches reject privileged protocols
+ok 62 - native IPC rejects subframes and other documents, external launches reject privileged protocols
+  ---
+  duration_ms: 0.4155
+  type: 'test'
+  ...
+# Subtest: window sessions install no renderer permission handler and no download block
+ok 63 - window sessions install no renderer permission handler and no download block
+  ---
+  duration_ms: 1.328833
+  type: 'test'
+  ...
+# Subtest: local guide IPC accepts equivalent file encoding without accepting other files, queries or frames
+ok 64 - local guide IPC accepts equivalent file encoding without accepting other files, queries or frames
+  ---
+  duration_ms: 0.356583
+  type: 'test'
+  ...
+# Subtest: first project initializes the preference, reopened windows inherit it, failed save does not broadcast
+ok 65 - first project initializes the preference, reopened windows inherit it, failed save does not broadcast
+  ---
+  duration_ms: 2.0035
+  type: 'test'
+  ...
+# Subtest: one failed project does not prevent other projects receiving the preference
+ok 66 - one failed project does not prevent other projects receiving the preference
+  ---
+  duration_ms: 0.805375
+  type: 'test'
+  ...
+# Subtest: a normal launch keeps the per-user default, and an isolated directory replaces it
+ok 67 - a normal launch keeps the per-user default, and an isolated directory replaces it
+  ---
+  duration_ms: 0.435041
+  type: 'test'
+  ...
+# Subtest: testing modes keep their harness directory and cannot be redirected by the development override
+ok 68 - testing modes keep their harness directory and cannot be redirected by the development override
+  ---
+  duration_ms: 0.463417
+  type: 'test'
+  ...
+# Subtest: the installation check keeps its own temporary directory
+ok 69 - the installation check keeps its own temporary directory
+  ---
+  duration_ms: 2.3325
+  type: 'test'
+  ...
+# Subtest: safe mode stops normal ownership, is never auto-restored, and exits back to recovery
+ok 70 - safe mode stops normal ownership, is never auto-restored, and exits back to recovery
+  ---
+  duration_ms: 5.839542
+  type: 'test'
+  ...
+# Subtest: application quit preserves open set; explicit project close removes only that project
+ok 71 - application quit preserves open set; explicit project close removes only that project
+  ---
+  duration_ms: 5.195875
+  type: 'test'
+  ...
+# Subtest: one missing project does not prevent restoring another; interrupted startup waits for explicit retry
+ok 72 - one missing project does not prevent restoring another; interrupted startup waits for explicit retry
+  ---
+  duration_ms: 3.68725
+  type: 'test'
+  ...
+# Subtest: recovery waits for confirmed shutdown, serializes reopen and leaves other projects available
+ok 73 - recovery waits for confirmed shutdown, serializes reopen and leaves other projects available
+  ---
+  duration_ms: 3.031959
+  type: 'test'
+  ...
+# Subtest: manual recovery is a persisted non-failure state and releases the queue while its window is open
+ok 74 - manual recovery is a persisted non-failure state and releases the queue while its window is open
+  ---
+  duration_ms: 2.110542
+  type: 'test'
+  ...
+# Subtest: failed application quit allows close retry and new work without losing the restore set
+ok 75 - failed application quit allows close retry and new work without losing the restore set
+  ---
+  duration_ms: 2.357834
+  type: 'test'
+  ...
+# Subtest: an installer launch failure can resume every saved project after a successful shutdown
+ok 76 - an installer launch failure can resume every saved project after a successful shutdown
+  ---
+  duration_ms: 2.048083
+  type: 'test'
+  ...
+# Subtest: unreadable window records are preserved and do not prevent the welcome page
+ok 77 - unreadable window records are preserved and do not prevent the welcome page
+  ---
+  duration_ms: 0.548
+  type: 'test'
+  ...
+# Subtest: off-screen windows are clamped to the current display without losing valid bounds
+ok 78 - off-screen windows are clamped to the current display without losing valid bounds
+  ---
+  duration_ms: 0.929041
+  type: 'test'
+  ...
+1..78
+# tests 78
+# suites 0
+# pass 78
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2411.556833
+TAP version 13
+# Subtest: official checkpoint restore preserves project data and rejects stale confirmations
+ok 1 - official checkpoint restore preserves project data and rejects stale confirmations
+  ---
+  duration_ms: 83.112542
+  type: 'test'
+  ...
+# Subtest: dependency rebuild failure blocks boot and can be retried without consuming the good checkpoint
+ok 2 - dependency rebuild failure blocks boot and can be retried without consuming the good checkpoint
+  ---
+  duration_ms: 87.283542
+  type: 'test'
+  ...
+# Subtest: first startup without a checkpoint offers no destructive recovery action
+ok 3 - first startup without a checkpoint offers no destructive recovery action
+  ---
+  duration_ms: 1.848583
+  type: 'test'
+  ...
+# Subtest: early bundled-only checkpoint without a lockfile can complete real dependency recovery
+ok 4 - early bundled-only checkpoint without a lockfile can complete real dependency recovery
+  ---
+  duration_ms: 335.198625
+  type: 'test'
+  ...
+# Subtest: official selection is project-local and missing selected Profiles do not silently fall back
+ok 5 - official selection is project-local and missing selected Profiles do not silently fall back
+  ---
+  duration_ms: 7.693834
+  type: 'test'
+  ...
+# Subtest: a failed restore blocks only its Profile and changing the selected Profile invalidates previews
+ok 6 - a failed restore blocks only its Profile and changing the selected Profile invalidates previews
+  ---
+  duration_ms: 112.5925
+  type: 'test'
+  ...
+# Subtest: recovery refuses a Profile bound to another project
+ok 7 - recovery refuses a Profile bound to another project
+  ---
+  duration_ms: 34.27275
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 715.048
+TAP version 13
+# Subtest: safe Host ignores broken settings, project plugins, credentials and normal project files
+ok 1 - safe Host ignores broken settings, project plugins, credentials and normal project files
+  ---
+  duration_ms: 2352.395583
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2401.923584
+Project creation, existing-file preservation, ambiguous directory refusal and recent-project history operations passed.
+{
+  "ok": true,
+  "desktop": "2.0.11",
+  "harness": "0.1.5-rc.2",
+  "checks": [
+    "official-source-integrity",
+    "two-isolated-hosts",
+    "renderer-authentication",
+    "project-api",
+    "project-task-tools",
+    "root-memory-read-edit-reopen",
+    "client-bundles",
+    "project-market-desktop-pnpm-bridge",
+    "project-market-profile-binding",
+    "project-market-disable-on-restart",
+    "disabled-official-updates",
+    "shared-theme",
+    "close-and-reopen-isolation",
+    "selected-profile-project-binding"
+  ],
+  "nativeWindowsTested": false,
+  "evidence": "~/dsh-project-desktop-development/resources/dsh-project-desktop/.runtime/smoke-KjKNU3"
+}

@@ -1,0 +1,26 @@
+➤ YN0000: · Yarn 4.18.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @deepseek-ai/cordis-plugin-group@npm:1.0.2, and 786 more.
+➤ YN0000: └ Completed in 2s 528ms
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0002: │ project-local-runtime@workspace:. doesn't provide @deepseek-ai/cordis (pae2864), requested by @deepseek-ai/cordis-plugin-group and other dependencies.
+➤ YN0002: │ project-local-runtime@workspace:. doesn't provide @deepseek-ai/cordis-plugin-include (pa7614a), requested by @deepseek-ai/dsh-agent-presets and other dependencies.
+➤ YN0002: │ project-local-runtime@workspace:. doesn't provide @deepseek-ai/cordis-plugin-loader (pbbe438), requested by @deepseek-ai/cordis-plugin-group and other dependencies.
+➤ YN0002: │ project-local-runtime@workspace:. doesn't provide @deepseek-ai/schemastery (p1b6d61), requested by @deepseek-ai/dsh-settings.
+➤ YN0002: │ project-local-runtime@workspace:. doesn't provide react (p6c6410), requested by @deepseek-ai/dsh-client-test-runtime.
+➤ YN0002: │ project-local-runtime@workspace:. doesn't provide react-dom (pa39efb), requested by @deepseek-ai/dsh-client-test-runtime.
+➤ YN0086: │ Some peer dependencies are incorrectly met by your project; run yarn explain peer-requirements <hash> for details, where <hash> is the six-letter p-prefixed code.
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies; run yarn explain peer-requirements for details.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0000: └ Completed in 0s 249ms
+➤ YN0000: ┌ Link step
+➤ YN0004: │ @deepseek-ai/dsh-subprocess-local@file:~/dsh-project-desktop-development/resources/dsh-plugin-project/.dev/runtime-tarballs/0.1.5-rc.2/deepseek-ai-dsh-subprocess-local-0.1.5-rc.2.tgz#~/dsh-project-desktop-development/resources/dsh-plugin-project/.dev/runtime-tarballs/0.1.5-rc.2/deepseek-ai-dsh-subprocess-local-0.1.5-rc.2.tgz::hash=f08213&locator=project-local-runtime%40workspace%3A. [4768e] lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ @google/genai@npm:1.52.0 [ba470] lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ esbuild@npm:0.28.2 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ koffi@npm:3.3.1 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ node-pty@npm:1.2.0-beta.15 lists build scripts, but all build scripts have been disabled.
+➤ YN0004: │ protobufjs@npm:7.6.6 lists build scripts, but all build scripts have been disabled.
+➤ YN0000: └ Completed in 3s 6ms
+➤ YN0000: · Done with warnings in 5s 878ms
+Prepared stable: DSH 0.1.5-rc.2, including matching development types.

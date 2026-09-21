@@ -1,0 +1,107 @@
+Official stable source intact: Desktop 2.0.11, DSH 0.1.5-rc.2
+Built official stable libraries and the pinned Project plugin without modifying either source tree.
+TAP version 13
+# Subtest: guide clone authenticates, retries credentials and creates from the selected branch without downloading again
+ok 1 - guide clone authenticates, retries credentials and creates from the selected branch without downloading again
+  ---
+  duration_ms: 1770.604084
+  type: 'test'
+  ...
+# Subtest: guide authentication cancellation, clone retry and window close release pending prompts and staging
+ok 2 - guide authentication cancellation, clone retry and window close release pending prompts and staging
+  ---
+  duration_ms: 608.517583
+  type: 'test'
+  ...
+# Subtest: guide rejects invalid input before allocating a clone; branch validation agrees with Git
+ok 3 - guide rejects invalid input before allocating a clone; branch validation agrees with Git
+  ---
+  duration_ms: 427.149208
+  type: 'test'
+  ...
+# Subtest: source digest matches Git including trees, symlinks and executable modes, and detects edits
+ok 4 - source digest matches Git including trees, symlinks and executable modes, and detects edits
+  ---
+  duration_ms: 134.401292
+  type: 'test'
+  ...
+# Subtest: every native command has an explicit translated label and keeps its role
+ok 5 - every native command has an explicit translated label and keeps its role
+  ---
+  duration_ms: 1.027792
+  type: 'test'
+  ...
+#   • 
+# using manual traversal of node_modules to build dependency tree
+# Subtest: universal merge accepts the official native pairs inside the hidden runtime but rejects unlisted binaries
+ok 6 - universal merge accepts the official native pairs inside the hidden runtime but rejects unlisted binaries
+  ---
+  duration_ms: 80.381875
+  type: 'test'
+  ...
+#   • using manual traversal of node_modules to build dependency tree
+#   • using manual traversal of node_modules to build dependency tree
+#   ⨯ 
+# production dependency not found  parent=fixture dependency=missing version=1.0.0
+# Subtest: production staging preserves nested and optional runtime dependencies and licenses, without development tools or native build outputs
+ok 7 - production staging preserves nested and optional runtime dependencies and licenses, without development tools or native build outputs
+  ---
+  duration_ms: 297.898875
+  type: 'test'
+  ...
+# Subtest: packaging rejects escaping, absolute and dangling links, including chained escapes
+ok 8 - packaging rejects escaping, absolute and dangling links, including chained escapes
+  ---
+  duration_ms: 2.281334
+  type: 'test'
+  ...
+# Subtest: CI resolves only stable pinned repositories and rejects mismatched version tags
+ok 9 - CI resolves only stable pinned repositories and rejects mismatched version tags
+  ---
+  duration_ms: 1.250959
+  type: 'test'
+  ...
+# Subtest: Windows safe mode keeps case-insensitive process essentials without inheriting credentials
+ok 10 - Windows safe mode keeps case-insensitive process essentials without inheriting credentials
+  ---
+  duration_ms: 0.137583
+  type: 'test'
+  ...
+# Subtest: loads root and linked resource AGENT.md files without requiring them
+ok 11 - loads root and linked resource AGENT.md files without requiring them
+  ---
+  duration_ms: 13.70725
+  type: 'test'
+  ...
+# Subtest: ignores oversized instruction files and returns an empty context when none are present
+ok 12 - ignores oversized instruction files and returns an empty context when none are present
+  ---
+  duration_ms: 2.291334
+  type: 'test'
+  ...
+# Subtest: a slow real clone leaves the event loop and other project creation responsive
+ok 13 - a slow real clone leaves the event loop and other project creation responsive
+  ---
+  duration_ms: 466.090875
+  type: 'test'
+  ...
+# Subtest: cancelling a real clone closes its transport before rollback and preserves linked resources
+not ok 14 - cancelling a real clone closes its transport before rollback and preserves linked resources
+  ---
+  duration_ms: 15001.994375
+  type: 'test'
+  location: '~/dsh-project-desktop-development/resources/dsh-project-desktop/tests/project-bootstrap-network.test.mjs:72:1'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 15000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: a stalled clone times out and removes only the unfinished project
+not ok 15 - a stalled clone times out and removes only the unfinished project
+  ---
+  duration_ms: 15001.285875
+  type: 'test'
+  location: '~/dsh-project-desktop-development/resources/dsh-project-desktop/tests/project-bootstrap-network.test.mjs:91:1'
+  failureType: 'testTimeoutFailure'
+  error: 'test timed out after 15000ms'
+  code: 'ERR_TEST_FAILURE'
+  ...

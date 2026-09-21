@@ -1,0 +1,31 @@
+➤ YN0000: · Yarn 4.18.0
+➤ YN0000: ┌ Resolution step
+➤ YN0085: │ + @deepseek-ai/cordis@npm:4.0.2, @deepseek-ai/dsh-agent-presets@npm:0.1.5-rc.2, @deepseek-ai/dsh-attachment@npm:0.1.5-rc.2, and 227 more.
+➤ YN0000: └ Completed in 2s 743ms
+➤ YN0000: ┌ Post-resolution validation
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/cordis-plugin-include (p1f95eb), requested by @deepseek-ai/cordis and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/cordis-plugin-loader (pe3c2bf), requested by @deepseek-ai/cordis and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-agent (pc7ff27), requested by @deepseek-ai/dsh-agent-presets and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-atomic-write (pab6748), requested by @deepseek-ai/dsh-agent-presets.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-brand (pe78278), requested by @deepseek-ai/dsh-attachment and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-code-runtime (p472f32), requested by @deepseek-ai/dsh-tools.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-fs (p2ab9e5), requested by @deepseek-ai/dsh-skill-filesystem and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-http-proxy (p66e3d8), requested by @deepseek-ai/dsh-subprocess.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-invariants (p360bbf), requested by @deepseek-ai/dsh-agent-presets and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-llm (p6f4201), requested by @deepseek-ai/dsh-mcp-client and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-session-title (pab1706), requested by @deepseek-ai/dsh-session-query.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-settings (p18092e), requested by @deepseek-ai/dsh-agent-presets.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-system-prompt (pb5a0bd), requested by @deepseek-ai/dsh-agent-presets and other dependencies.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-tool-todo (p798fa3), requested by @deepseek-ai/dsh-session-query.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-typert-protocol (p49fd04), requested by @deepseek-ai/dsh-agent-presets.
+➤ YN0002: │ dsh-plugin-project@workspace:. doesn't provide @deepseek-ai/dsh-user-approval (p464f20), requested by @deepseek-ai/dsh-tools.
+➤ YN0086: │ Some peer dependencies are incorrectly met by your project; run yarn explain peer-requirements <hash> for details, where <hash> is the six-letter p-prefixed code.
+➤ YN0000: └ Completed
+➤ YN0000: ┌ Fetch step
+➤ YN0013: │ 35 packages were added to the project (+ 88.06 MiB).
+➤ YN0000: └ Completed in 2s 630ms
+➤ YN0000: ┌ Link step
+➤ YN0007: │ esbuild@npm:0.25.10 must be built because it never has been before or the last one failed
+➤ YN0007: │ esbuild@npm:0.25.12 must be built because it never has been before or the last one failed
+➤ YN0000: └ Completed in 2s 101ms
+➤ YN0000: · Done with warnings in 7s 498ms
