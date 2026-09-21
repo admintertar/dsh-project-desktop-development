@@ -1,0 +1,1194 @@
+{
+  "ok": true,
+  "userData": "D:\\dsh-project-desktop-development\\resources\\dsh-project-desktop\\.runtime\\diag-order-Vwc979",
+  "samples": {
+    "zh-light-resource-1180": {
+      "card": "Diag order-backend",
+      "labels": [
+        "资源详情: Diag order-backend",
+        "更新资源: Diag order-backend",
+        "关联远端: Diag order-backend",
+        "绑定目录: Diag order-backend",
+        "编辑资源: Diag order-backend",
+        "移除资源: Diag order-backend",
+        "请选择具有有效远端的 Git 工作区根目录。"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        153,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        44,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "zh-light-resource-420": {
+      "card": "Diag order-backend",
+      "labels": [
+        "资源详情: Diag order-backend",
+        "更新资源: Diag order-backend",
+        "关联远端: Diag order-backend",
+        "绑定目录: Diag order-backend",
+        "编辑资源: Diag order-backend",
+        "移除资源: Diag order-backend",
+        "请选择具有有效远端的 Git 工作区根目录。"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        32,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 44,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "zh-light-mcp-1180": {
+      "card": "verify",
+      "labels": [
+        "编辑: verify",
+        "删除: verify",
+        "连接错误详情: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "zh-light-mcp-420": {
+      "card": "verify",
+      "labels": [
+        "编辑: verify",
+        "删除: verify",
+        "连接错误详情: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 43,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "zh-dark-resource-1180": {
+      "card": "Diag order-backend",
+      "labels": [
+        "资源详情: Diag order-backend",
+        "更新资源: Diag order-backend",
+        "关联远端: Diag order-backend",
+        "绑定目录: Diag order-backend",
+        "编辑资源: Diag order-backend",
+        "移除资源: Diag order-backend",
+        "请选择具有有效远端的 Git 工作区根目录。"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        153,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        44,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "zh-dark-resource-420": {
+      "card": "Diag order-backend",
+      "labels": [
+        "资源详情: Diag order-backend",
+        "更新资源: Diag order-backend",
+        "关联远端: Diag order-backend",
+        "绑定目录: Diag order-backend",
+        "编辑资源: Diag order-backend",
+        "移除资源: Diag order-backend",
+        "请选择具有有效远端的 Git 工作区根目录。"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        32,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 43,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "zh-dark-mcp-1180": {
+      "card": "verify",
+      "labels": [
+        "编辑: verify",
+        "删除: verify",
+        "连接错误详情: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "zh-dark-mcp-420": {
+      "card": "verify",
+      "labels": [
+        "编辑: verify",
+        "删除: verify",
+        "连接错误详情: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 43,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-light-resource-1180": {
+      "card": "Diag order-backend",
+      "labels": [
+        "Resource details: Diag order-backend",
+        "Update resource: Diag order-backend",
+        "Link remote: Diag order-backend",
+        "Bind directory: Diag order-backend",
+        "Edit resource: Diag order-backend",
+        "Remove resource: Diag order-backend",
+        "Select a Git working-tree root with a valid origin."
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        142,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        56,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-light-resource-420": {
+      "card": "Diag order-backend",
+      "labels": [
+        "Resource details: Diag order-backend",
+        "Update resource: Diag order-backend",
+        "Link remote: Diag order-backend",
+        "Bind directory: Diag order-backend",
+        "Edit resource: Diag order-backend",
+        "Remove resource: Diag order-backend",
+        "Select a Git working-tree root with a valid origin."
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        56,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 43,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-light-mcp-1180": {
+      "card": "verify",
+      "labels": [
+        "Edit: verify",
+        "Delete: verify",
+        "Connection error details: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-light-mcp-420": {
+      "card": "verify",
+      "labels": [
+        "Edit: verify",
+        "Delete: verify",
+        "Connection error details: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 43,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-dark-resource-1180": {
+      "card": "Diag order-backend",
+      "labels": [
+        "Resource details: Diag order-backend",
+        "Update resource: Diag order-backend",
+        "Link remote: Diag order-backend",
+        "Bind directory: Diag order-backend",
+        "Edit resource: Diag order-backend",
+        "Remove resource: Diag order-backend",
+        "Select a Git working-tree root with a valid origin."
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        142,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        56,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-dark-resource-420": {
+      "card": "Diag order-backend",
+      "labels": [
+        "Resource details: Diag order-backend",
+        "Update resource: Diag order-backend",
+        "Link remote: Diag order-backend",
+        "Bind directory: Diag order-backend",
+        "Edit resource: Diag order-backend",
+        "Remove resource: Diag order-backend",
+        "Select a Git working-tree root with a valid origin."
+      ],
+      "errorIcons": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "gaps": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "widths": [
+        56,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 43,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-dark-mcp-1180": {
+      "card": "verify",
+      "labels": [
+        "Edit: verify",
+        "Delete: verify",
+        "Connection error details: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 395,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    },
+    "en-dark-mcp-420": {
+      "card": "verify",
+      "labels": [
+        "Edit: verify",
+        "Delete: verify",
+        "Connection error details: verify"
+      ],
+      "errorIcons": [
+        false,
+        false,
+        true
+      ],
+      "gaps": [
+        2,
+        2
+      ],
+      "widths": [
+        28,
+        28,
+        36
+      ],
+      "footerGap": "2px",
+      "justify": "flex-end",
+      "lastRightGap": 10,
+      "footerClientWidth": 43,
+      "footerScroll": 0,
+      "bodyScroll": 0,
+      "legacyAnchor": 0
+    }
+  },
+  "assertions": [
+    {
+      "name": "zh-light-resource-1180: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-1180: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-420: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-420: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-resource-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-1180: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-1180: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-420: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-420: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-light-mcp-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-1180: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-1180: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-420: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-420: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-resource-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-1180: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-1180: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-420: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-420: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "zh-dark-mcp-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-1180: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-1180: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-420: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-420: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-resource-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-1180: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-1180: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-420: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-420: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-light-mcp-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-1180: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-1180: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-420: diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-420: earlier actions all name the resource",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-resource-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-1180: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-1180: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-1180: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-1180: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-1180: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-1180: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-420: mcp diagnostic action is last",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-420: mcp edit/delete carry no error icon",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-420: action gaps equal the footer gap",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-420: no footer overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-420: no page overflow",
+      "value": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "en-dark-mcp-420: legacy auto-margin anchor gone",
+      "value": true,
+      "expected": true,
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    "diag-order-zh-light-resource-1180.png",
+    "diag-order-zh-light-resource-420.png",
+    "diag-order-zh-light-mcp-1180.png",
+    "diag-order-zh-light-mcp-420.png",
+    "diag-order-zh-dark-resource-1180.png",
+    "diag-order-zh-dark-resource-420.png",
+    "diag-order-zh-dark-mcp-1180.png",
+    "diag-order-zh-dark-mcp-420.png",
+    "diag-order-en-light-resource-1180.png",
+    "diag-order-en-light-resource-420.png",
+    "diag-order-en-light-mcp-1180.png",
+    "diag-order-en-light-mcp-420.png",
+    "diag-order-en-dark-resource-1180.png",
+    "diag-order-en-dark-resource-420.png",
+    "diag-order-en-dark-mcp-1180.png",
+    "diag-order-en-dark-mcp-420.png"
+  ]
+}
