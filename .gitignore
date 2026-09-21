@@ -3,6 +3,7 @@ mcp/local.yaml
 tasks/.write-lock
 tasks/.write-lock.recovery
 /resources/
+/.pnpm-store/
 .DS_Store
 /resources/dsh-project-desktop/
 /resources/dsh-plugin-project/
