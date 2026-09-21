@@ -1,5 +1,8 @@
 # 项目工作约定与验证流程
 
+## 模型约束
+思考请使用中文
+
 ## 仓库边界
 
 - 插件功能（project / resource / task / skill / MCP / memory）在 `resources/dsh-plugin-project`。
@@ -10,6 +13,27 @@
 
 - 源码改动后运行：`cd resources/dsh-plugin-project && npm run check`（typecheck + test + build）。
 - UI 改动不能只靠测试与构建，必须做原生视觉验收：中英文案、主题状态、窄窗口、键盘行为。
+
+## 长任务与后台作业（禁止空转等待）
+
+**实测代价**：20 个历史会话中，`job_output` 对「无输出」作业的等待共 **38 次、累计 173.9 分钟**；
+其中单个作业最长空转 48.9 分钟（`npm run check` 正常只要 ~35 秒）。同期 96 条命令把输出管道进 `tail/head`。
+
+**根因**：`cmd | tail -N` 里的 `tail` 必须读到 EOF 才能输出最后 N 行，
+所以**后台运行时它永远不产生增量输出**，`job_output` 只会一直返回 `(no new output) [status: running]`；
+同时管道的退出码是 `tail` 的 `0`，会掩盖真实失败（历史上有 875 条管道命令没有捕获真实退出码）。
+
+### 硬规则
+
+1. **禁止**把「管道进 `tail`/`head`」的命令用 `run_in_background: true` 启动。长任务改为落盘：
+   `cmd > /tmp/<name>.log 2>&1; echo "EXIT=$?"`，再用 `job_output` 增量读，或另起一次**前台**调用 `tail -30 /tmp/<name>.log`。
+2. **禁止**用 `| tail` 收尾而不捕获退出码。必须写成 `cmd 2>&1 | tail -30; echo "EXIT=${PIPESTATUS[0]}"`，或干脆不接管道。
+3. **等待要短、要有梯度**：单次 `job_output wait:true` 的 `timeout_ms` 不超过 **120000**，按 30s → 60s → 120s 递进探测。
+4. **连续两次 `(no new output)` 即判定卡死**，不再追加等待。处置顺序：
+   `job_list` 看状态 → 前台 `tail -5 /tmp/<name>.log` 看落盘进度 → `ps` 确认进程是否还活着 → 必要时 `job_kill` 换策略重跑。
+5. 基准量级：`resources/dsh-plugin-project` 的 `yarn check` ≈ 40 秒，`resources/dsh-project-desktop` 的 `yarn check` ≈ 35 秒
+   （两仓库已统一到 Yarn 4.18.0，`npm run check` 亦可触发，但以 `yarn check` 为准）。远超该量级即视为卡死。
+6. 给长命令加硬超时：macOS **没有** GNU `timeout`，用 `gtimeout`（coreutils）或 `perl -e 'alarm 300; exec @ARGV' -- cmd`。
 
 ## 目录约定
 
