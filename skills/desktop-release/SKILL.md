@@ -98,6 +98,7 @@ curl -s -H "Authorization: Bearer $PW" \
 - **`upstream.lock.json` 的 `repository` 写错**（例如把 `dsh-plugin-project` 写成 `dsh-project-plugin`）：CI 在 checkout 阶段失败。改完务必与插件 remote 逐字比对。
 - **改 lock 和 push 插件必须是同一个动作**：只改 lock 不推插件，等于让 CI checkout 一个远端不存在的 ref。
 - **发布提交会带起额外工作流**：`resources-windows.yml` 与 `probe-boot-timing.yml` 都监听 master push，且 paths 含 `package.json` / `upstream.lock.json`，所以清理它们的红是发布的一部分，不是误触。
+- **tag push 传不了 `replace_existing`**：覆盖重发只能走 `workflow_dispatch`。先移 tag 再等 tag 构建的话，那次构建的 publish 阶段会因为 release 已存在而失败，等于白跑一轮；直接一次 dispatch 更快（它会自己移 tag）。
 - **`package.yml` 只跑 `smoke:updates`**，不跑资源冒烟——所以资源冒烟的红不会阻塞发布，反之发布改动也不该被资源冒烟的红挡住。
 - **普通 `yarn check` 会覆盖本地插件产物**：壳加载的是 `.cache/runtime/dsh-plugin-project`，不带 `DSH_PROJECT_PLUGIN_SOURCE` 的构建会把它换成 pin 版本，于是开发中的界面「缺一块」，严重时开发壳启动即崩（`renderSlot('root') before any 'root' registration`）。排查先比对标记：
 
