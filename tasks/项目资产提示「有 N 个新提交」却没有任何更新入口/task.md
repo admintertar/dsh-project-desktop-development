@@ -6,7 +6,7 @@ title: 项目资产提示「有 N 个新提交」却没有任何更新入口
 objective: 修复「项目资产」面板在项目根仓库落后于远端时只显示「有 N 个新提交」、却不提供更新（fast-forward）入口的缺陷：查明根因（面板自造了一套同步状态判断并漏掉 update 动作），改为复用资源卡的更新动作与可用性规则，补齐单元测试与原生界面验收。
 status: completed
 createdAt: 2026-09-22T13:28:56.475Z
-updatedAt: 2026-09-22T13:29:26.179Z
+updatedAt: 2026-09-22T14:35:52.185Z
 artifacts:
   - type: file
     path: artifacts/project-assets-update-blocked.png
@@ -20,11 +20,11 @@ artifacts:
   - type: commit
     repository: https://github.com/admintertar/dsh-plugin-project
     commit: 82bca7ebb4e17524969086134ae1b2f8ab35dacd
-    description: 插件：项目仓库详情补上「更新」入口（9 文件 +143/-33，本地提交未 push）
+    description: 插件：项目仓库详情补上「更新」入口（9 文件 +143/-33，已 push，现已包含在 2dd22d3 之后的发布链里）
   - type: commit
     repository: https://github.com/admintertar/dsh-project-desktop
     commit: bc6087c282456dd5d4862a88f355989561096375
-    description: 壳：原生验收覆盖项目仓库详情里的「更新」（1 文件 +94/-1，本地提交未 push）
+    description: 壳：原生验收覆盖项目仓库详情里的「更新」（已 push，后续由 9e16309 扩展）
 archived: false
 phase: validation
 brief:
@@ -53,9 +53,8 @@ brief:
       version: 1
 handoff:
   nextSteps:
-    - 需要发布时：先 push 插件 82bca7e → 再把 resources/dsh-project-desktop/upstream.lock.json 的 project.commit 与 tree 指到该提交并重导 .upstream/project（先删旧快照、再跑 setup）→ 最后 push 壳。顺序颠倒会让 CI 在 checkout 阶段失败。
-    - 如需让已安装版带上此修复，需重新打包并安装（当前安装版仍是旧 shell + 旧插件）。
-    - 可选后续：英文「{count} new commits」在 count=1 时显示「1 new commits」，可改成中性表述或加复数处理。
+    - 后续的分叉合并与冲突处理已由 task-664c652d 接续（同一入口现在能直接合并或交给会话）
+    - 如需让已安装版带着此修复，仍需重新打包安装
   readBefore:
     - ref-panel
     - ref-rules
@@ -133,6 +132,31 @@ entries:
       - v-ac2
       - v-ac3
     createdAt: 2026-09-22T13:29:26.179Z
+  - id: e-released
+    kind: progress
+    content: 已发布：插件 82bca7e 随 2dd22d3 / d1e1745 一起 push，壳 bc6087c 随 9e16309 / d019455 一起 push；壳的 project pin 现指向 d1e1745，.upstream/project 已重导。
+    basis: observation
+    createdAt: 2026-09-22T14:35:52.185Z
+  - id: v-ac3-windows
+    kind: verification
+    content: ac-3 的 Windows 平台证据：push 后 GitHub Actions 三个作业全部 success（Verify Resources on Windows run 35740620431、Verify Guide on Windows run 35740620339、Probe project boot timing run 35740620246）。注：首次 push 时该作业因插件新增用例在无全局 Git 身份的环境下失败，已由插件 d1e1745（合并前校验身份 + fixture 自带身份）修复。
+    basis: observation
+    verification:
+      criterionId: ac-3
+      criterionVersion: 1
+      method: GitHub Actions Windows CI（push 后自动运行）
+      result: passed
+      coverage: Windows Server 2022 + 真实 Electron；含本次新增的项目仓库更新与分叉合并验收段落
+    createdAt: 2026-09-22T14:35:52.185Z
+  - id: e-completion-2
+    kind: completion
+    content: 三条验收标准均由当前证据通过（本地原生验收 + CI），项目仓库详情已提供更新动作，并已随 pin bump 进入壳的默认构建路径。
+    basis: agent-proposal
+    verificationEntryIds:
+      - v-ac1
+      - v-ac2
+      - v-ac3-windows
+    createdAt: 2026-09-22T14:35:52.185Z
 operations:
   8487118ea6c38c77621a5ea0413b4a5a3324805fcb5c28cef3eb95473b4291ac:
     fingerprint: b4361c76970d11f85682eee164057964a239ca70594428dd066db424a103eaff
@@ -150,10 +174,18 @@ operations:
       - v-ac2
       - v-ac3
       - e-completion
+  7512a70c4076e999d7d7a55ea312f4b316e1a6c03cba8012badd1e34574f8048:
+    fingerprint: ab207e4db1abe33fcc6b8b01a8bf7c5df8b41094a1addfd1fe1ca518d189cde0
+    kind: update
+    at: 2026-09-22T14:35:52.185Z
+    entryIds:
+      - e-released
+      - v-ac3-windows
+      - e-completion-2
 criterionVersions:
   ac-1: 1
   ac-2: 1
   ac-3: 1
 ---
 
-「项目资产」面板的仓库详情已补上更新入口：项目根落后时 footer 出现「更新资源 / Update resource」，点击后 fetch + merge --ff-only 快进，状态回到「已是最新 / Up to date」，工作区文件随之更新；工作区不干净等不可更新状态按钮禁用且详情说明原因。根因是面板自造了一套同步状态判断并手写了检查/推送两个动作，漏掉了资源卡早有的 update（Host 与 controller 一直支持）。改动：插件 82bca7e（9 文件，+143/-33，未 push）、壳 bc6087c（验收脚本，未 push）。验证：插件 yarn check EXIT=0（279 tests，含新增的项目根 update 真实快进、控制器 update 动作、可用性与说明规则）；壳 yarn check EXIT=0；原生 smoke:resources 在真实 Electron + 真实 loopback HTTPS Git 远端下通过，中英文与禁用态、窄窗口（420）均断言通过，截图见 artifacts。未覆盖：英文「1 new commits」单复数（既有文案，见 outOfScope）；已安装版仍为旧 shell。
+「项目资产」面板的仓库详情已补上更新入口并已发布：项目根落后时 footer 出现「更新资源 / Update resource」，点击后 fetch + merge --ff-only 快进，状态回到「已是最新 / Up to date」，工作区文件随之更新；工作区不干净等不可更新状态按钮禁用且详情说明原因。根因是面板自造了一套同步状态判断并手写了检查/推送两个动作，漏掉了资源卡早有的 update（Host 与 controller 一直支持）。已 push：插件 82bca7e（随 2dd22d3、d1e1745）、壳 bc6087c（随 9e16309、d019455），壳 pin 现指向 d1e1745 且快照已重导。验证：插件 yarn check EXIT=0（286 tests）、壳 yarn check EXIT=0、本地原生 smoke:resources EXIT=0、Windows CI 三个作业 success。未覆盖：英文「1 new commits」单复数（既有文案）；已安装版仍是旧 shell。
