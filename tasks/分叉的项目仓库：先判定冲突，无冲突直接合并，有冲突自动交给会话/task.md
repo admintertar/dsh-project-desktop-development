@@ -6,7 +6,7 @@ title: 分叉的项目仓库：先判定冲突，无冲突直接合并，有冲�
 objective: 让「项目资产」的更新在项目仓库分叉时也能推进分支：无冲突直接合并（保留合并提交），有冲突则不落地任何改动（工作区与 index 完整回滚、不留 MERGE_HEAD）并自动创建项目会话、把冲突文件清单与约束写进 composer 草稿交给 AI；含 Host/Client 改动、单元测试与原生界面验收。
 status: completed
 createdAt: 2026-09-22T14:12:39.801Z
-updatedAt: 2026-09-22T14:12:52.260Z
+updatedAt: 2026-09-22T14:35:42.859Z
 artifacts:
   - type: file
     path: artifacts/project-assets-merged.png
@@ -20,11 +20,19 @@ artifacts:
   - type: commit
     repository: https://github.com/admintertar/dsh-plugin-project
     commit: 2dd22d309f87ef77d30f54299fd15948cab2f990
-    description: 插件：分叉时先判定冲突，再决定直接合并还是交给会话（15 文件 +327/-57，本地提交未 push）
+    description: 插件：分叉时先判定冲突，再决定直接合并还是交给会话（15 文件 +327/-57，已 push）
   - type: commit
     repository: https://github.com/admintertar/dsh-project-desktop
     commit: 9e16309fff763ad7746da230133f05441222c5e6
-    description: 壳：原生验收覆盖分叉合并与冲突交给会话（本地提交未 push）
+    description: 壳：原生验收覆盖分叉合并与冲突交给会话（已 push）
+  - type: commit
+    repository: https://github.com/admintertar/dsh-plugin-project
+    commit: d1e1745a1316f71ad80a4fee44ef00fd3fe9b6a0
+    description: 插件：合并前校验提交身份，并让 fixture 自带身份与 LF（Windows CI 暴露，已 push）
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop
+    commit: d0194554bda13272b6e0f0b035b9f7d401b0392b
+    description: 壳：插件 pin 指向合并身份校验修复（已 push，CI 绿）
 archived: false
 phase: validation
 brief:
@@ -54,9 +62,9 @@ brief:
       version: 1
 handoff:
   nextSteps:
-    - 发布时：先 push 插件 2dd22d3，再把 upstream.lock.json 的 project.commit/tree 指到该提交并重导 .upstream/project，然后 push 壳（当前壳还有另一条未 push 的提交 bc6087c 与 9e16309）
-    - 可选后续：把「冲突交给会话」扩展到资源仓库（现在只有项目资产面板）；以及支持 rebase 作为另一种合并方式
-    - 可选后续：合并完成后如果需要，可一键推送（目前推送仍需用户手动点）
+    - 可选后续：把「冲突交给会话」扩展到资源仓库（现在只有项目资产面板）
+    - 可选后续：支持 rebase 作为另一种合并方式；合并后一键推送
+    - 可选后续：把「缺 Git 身份」的提示扩展到 push（目前仅在 commit 与 merge 前校验）
   readBefore:
     - ref-sync
     - ref-conflict
@@ -133,6 +141,31 @@ entries:
       - v-ac2
       - v-ac3
     createdAt: 2026-09-22T14:12:52.260Z
+  - id: e-ci-identity
+    kind: progress
+    content: 首次 push 后 Windows CI 就红了：Verify Resources on Windows 失败，失败点是我新增的两个合并用例在 Windows 上返回 undefined。根因：merge 要创建 merge commit，而 CI runner 没有全局 user.name/user.email，macOS 上恰好被本机全局配置遮住。修复：合并前校验身份，缺失时报 git-identity-missing（面板已有对应文案）；fixture 写入仓库级身份与 core.autocrlf=false，使合并路径不依赖机器全局配置、检出的字节与提交一致。
+    basis: observation
+    createdAt: 2026-09-22T14:35:42.859Z
+  - id: v-ac3-windows
+    kind: verification
+    content: ac-3 的 Windows 平台证据：修复后 push（插件 d1e1745、壳 d019455，pin 已 bump 到该提交并重导快照），GitHub Actions 三个作业全部 success：Verify Resources on Windows（含插件 Windows 测试与 smoke:resources）run 35740620431、Verify Guide on Windows run 35740620339、Probe project boot timing run 35740620246。
+    basis: observation
+    verification:
+      criterionId: ac-3
+      criterionVersion: 1
+      method: GitHub Actions Windows CI（push 后自动运行）
+      result: passed
+      coverage: Windows Server 2022 + 真实 Electron；插件 286 tests 与形态验收均在 CI 跑过
+    createdAt: 2026-09-22T14:35:42.859Z
+  - id: e-completion-2
+    kind: completion
+    content: 三条验收标准均由当前证据通过：ac-1/ac-2 为单测 + 本地真实 Electron 原生验收，ac-3 由两仓库 yarn check 与 Windows CI 三项作业共同覆盖。两个仓库已 push，壳 pin 与快照同步。
+    basis: agent-proposal
+    verificationEntryIds:
+      - v-ac1
+      - v-ac2
+      - v-ac3-windows
+    createdAt: 2026-09-22T14:35:42.859Z
 operations:
   0b742b05981caa52b22edaff39fe2fd88118257ac434473acce4b824d0d310f1:
     fingerprint: f85f1860ccb9d68d53d481cfde735c013402043cc4befa89644eb22b31843725
@@ -150,10 +183,18 @@ operations:
       - v-ac2
       - v-ac3
       - e-completion
+  c700fe754820e8a7c3b0617e1e1b96a54e74e9c6d4532249d7c013849bcbc57a:
+    fingerprint: 23b1a1c4f357ba96107a82add19736efb177607c2b0967b8555de7f04ffe5e76
+    kind: update
+    at: 2026-09-22T14:35:42.859Z
+    entryIds:
+      - e-ci-identity
+      - v-ac3-windows
+      - e-completion-2
 criterionVersions:
   ac-1: 1
   ac-2: 1
   ac-3: 1
 ---
 
-项目仓库分叉时不再是死路：点「更新资源」会先判定冲突——无冲突直接 merge（保留合并提交，两边提交都在、工作区干净、状态变「本地领先 N 个提交」）；有冲突则先读出 unmerged 路径、再 merge --abort 完整回滚，绝不留下半合并状态，并自动创建项目会话、把冲突清单/项目根/分支与「不 push、保留双方改动」的约束写进 composer 草稿后切过去，由用户自己提交给 AI。改动：插件 2dd22d3（15 文件，+327/-57，未 push）、壳 9e16309（验收脚本，未 push）。验证：插件 yarn check EXIT=0（285 tests，含分叉合并、冲突回滚、会话准备器 4 项、控制器返回合并结果）；壳 yarn check EXIT=0；原生 smoke:resources 在真实 Electron + loopback HTTPS 远端下 EXIT=0，两个场景均读实时 DOM 与真实 Git 状态并留截图。未覆盖（见 outOfScope）：rebase 选项、资源仓库的冲突交接、AI 自动解决后自动提交/推送。
+项目仓库分叉时不再是死路：点「更新资源」会先判定冲突——无冲突直接 merge（保留合并提交，两边提交都在、工作区干净、状态变「本地领先 N 个提交」）；有冲突则先读出 unmerged 路径、再 merge --abort 完整回滚，绝不留下半合并状态，并自动创建项目会话、把冲突清单/项目根/分支与「不 push、保留双方改动」的约束写进 composer 草稿后切过去，由用户自己提交给 AI。已发布到两个仓库：插件 2dd22d3 + d1e1745（合并前校验提交身份、fixture 自带身份与 LF）、壳 9e16309 + d019455（验收脚本 + pin bump 到 d1e1745，快照已重导）。验证：两仓库 yarn check EXIT=0（插件 286 tests）；本地原生 smoke:resources EXIT=0；首次 push 暴露的 Windows CI 失败（缺 Git 身份）已修复，复跑后 GitHub Actions 三个作业全部 success（含 Verify Resources on Windows）。未覆盖（见 outOfScope）：rebase 选项、资源仓库的冲突交接、AI 自动解决后自动提交/推送。
