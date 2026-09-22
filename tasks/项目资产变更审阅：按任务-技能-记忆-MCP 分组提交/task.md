@@ -6,7 +6,7 @@ title: 项目资产变更审阅：按任务/技能/记忆/MCP 分组提交
 objective: 把项目概览页的项目根 Git 能力从「仓库级提交」改造为「项目资产级变更审阅」：按任务/技能/记忆/MCP/其他文件分组列出新增、更新、删除的条目卡片，逐条勾选后只提交选中项，提交信息按资产类型自动生成；分支、领先落后与推送降级为区块顶部的同步状态行与详情入口。底层仍复用项目根仓库 Git，但用户面对的是项目资产而非文件 diff。
 status: completed
 createdAt: 2026-09-22T03:18:33.678Z
-updatedAt: 2026-09-22T08:59:33.627Z
+updatedAt: 2026-09-22T09:11:54.556Z
 artifacts:
   - type: file
     path: artifacts/project-changes-zh-light-1180.png
@@ -776,6 +776,11 @@ entries:
     content: 产物不一致的后果比先前记录更严重：被混着构建的 .cache/runtime 产物（插件为本地版、其他 runtime 产物为 pin 版）会让开发壳在启动时报 renderSlot('root') before any 'root' registration (boot order) 并直接退出，而不只是界面缺一块。插件与壳源码都没有 renderSlot('root') 调用，该调用来自官方 UI，属启动顺序错乱。完整带 DSH_PROJECT_PLUGIN_SOURCE 重新 build 后启动正常且稳定运行（PID 94515，55 秒无错），产物标记为 3。
     basis: observation
     createdAt: 2026-09-22T08:59:33.627Z
+  - id: prog-17
+    kind: progress
+    content: "用户要求发布 0.1.5。壳发布提交 9034b27（package.json 版本 0.1.5、upstream.lock.json pin 到插件 51c8524 与 tree 5a008ac、新增 docs/releases/0.1.5.md）已提交并 push 到 origin/master，并已打 tag v0.1.5 推送 —— tag 命中 package.yml 的 tags: ['v*'] 触发 Package Desktop 构建。已确认 pin 提交 51c8524 位于插件 origin/master（CI checkout 不会失败），快照重导后 verify:upstream 通过。剩余一步：publish 到 GitHub Releases 需要 workflow_dispatch 且 publish=true（要求两个平台构建成功），本机未安装 gh，无法代劳。"
+    basis: user-request
+    createdAt: 2026-09-22T09:11:54.556Z
 operations:
   6d5c5951206028b816d640ab59542dec9673a71e6bd83101abfe87246e549ca7:
     fingerprint: 0e03526cabd3be54d9460ff1809d5fe55618c30366932c3dde6ac071f2dd9271
@@ -928,6 +933,12 @@ operations:
     at: 2026-09-22T08:59:33.627Z
     entryIds:
       - prog-16
+  1fbbd6445d6792748d52bace183cfa70a6d38af2102dbdb6eed7a1cdd55b2afd:
+    fingerprint: 2e11ff7b79cf67bf5e6d3e8224bb19ee5f23e7f400f8adecf86353cfd3d80d0d
+    kind: update
+    at: 2026-09-22T09:11:54.556Z
+    entryIds:
+      - prog-17
 criterionVersions:
   ac1: 1
   ac2: 1
