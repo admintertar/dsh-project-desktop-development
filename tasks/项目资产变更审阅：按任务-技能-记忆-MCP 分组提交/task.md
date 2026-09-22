@@ -6,11 +6,11 @@ title: 项目资产变更审阅：按任务/技能/记忆/MCP 分组提交
 objective: 把项目概览页的项目根 Git 能力从「仓库级提交」改造为「项目资产级变更审阅」：按任务/技能/记忆/MCP/其他文件分组列出新增、更新、删除的条目卡片，逐条勾选后只提交选中项，提交信息按资产类型自动生成；分支、领先落后与推送降级为区块顶部的同步状态行与详情入口。底层仍复用项目根仓库 Git，但用户面对的是项目资产而非文件 diff。
 status: completed
 createdAt: 2026-09-22T03:18:33.678Z
-updatedAt: 2026-09-22T06:57:48.401Z
+updatedAt: 2026-09-22T07:58:42.352Z
 artifacts:
   - type: file
     path: artifacts/project-changes-zh-light-1180.png
-    description: 区块「刷新」已与页头刷新一致（图标 + 文字）
+    description: 进行中反馈（转圈 + 进行时文案）与最新布局
   - type: file
     path: artifacts/project-changes-zh-dark-1180.png
     description: 中文/深色/1180px
@@ -40,7 +40,7 @@ artifacts:
     description: 提交后：两个资产离开审阅
   - type: file
     path: artifacts/native-smoke-result.json
-    description: 原生冒烟完整结果（含两处刷新按钮图标一致性断言）
+    description: 原生冒烟完整结果（含 section 诊断行）
   - type: file
     path: artifacts/native-smoke-run.log
     description: smoke:resources 运行日志（EXIT=0）
@@ -88,11 +88,12 @@ brief:
       version: 1
 handoff:
   nextSteps:
+    - 环境陷阱（重要）：壳加载的插件产物在 .cache/runtime/dsh-plugin-project，不带 DSH_PROJECT_PLUGIN_SOURCE 的壳构建（普通 yarn check / 并发会话）会把它覆盖成 pin 版本，于是开发中的界面会“缺一块”。排查时先比对产物标记（如 grep -c project-change-card .cache/runtime/dsh-plugin-project/lib/client.js），必要时重新带变量 build。
+    - 真实工作区复验：在仓库详情里点「检查更新」与「推送提交」确认成功路径（fixture 远端不可达，需人工确认；推送会真写到 GitHub）。
     - 发布时才需要：先 push 插件提交，再把 upstream.lock.json 的 project.commit/tree 指到该已推送提交，删除 .upstream/project 后重导并跑 yarn run verify:upstream。
-    - 壳仓库 scripts/native-resource-state-checks.mjs 的验收扩展是未提交改动，需随壳一起提交。
-    - 验收手法备注：隐藏窗口下 sendInputEvent 的连续合成按键会偶发丢失，需要两次连续按键时应改用一次按键 + 一次 click。
+    - 本地已提交待推送：插件 0dc817e、7f7c986、51c8524；壳 47282ef、4d80d42、31f319b。
+    - 验收手法备注：隐藏窗口下 sendInputEvent 的连续合成按键会偶发丢失，两次连续按键应改用一次按键 + 一次 click。
     - MCP 多 server 共享 mcp/servers.yaml：各自成为一个提交但每个提交都带上整个文件，需 partial staging 才能路径级隔离。
-    - 记忆条目仍无新增入口（task-e3ccde1c），只会以「更新」出现。
 references: []
 entries:
   - id: dec-1
@@ -675,6 +676,101 @@ entries:
       - ver-fix-12
       - ver-fix-13
     createdAt: 2026-09-22T06:57:48.401Z
+  - id: prog-14
+    kind: progress
+    content: 用户实测：仓库详情弹窗里的「检查更新」与「推送提交」点击后没有生效。
+    basis: user-request
+    createdAt: 2026-09-22T07:27:17.711Z
+  - id: inv-2
+    kind: progress
+    content: 两个根因：(1) /api/project/repository 的写操作是 accepted 语义——服务端 void startProjectRoot 后立即回 {accepted:true}，客户端刷新拿到的仍是旧状态，之后再也没有刷新，看起来就像没生效；(2) 操作失败时设置的 state.error 在已有数据时不渲染，失败也无任何提示。另有一个被连带暴露的布局问题：长错误文案把状态块整体挤到标题下方另起一行。
+    basis: observation
+    createdAt: 2026-09-22T07:27:17.711Z
+  - id: ver-fix-14
+    kind: verification
+    content: 仓库动作现在同步生效、失败可见，标题行不再因长文案换行。
+    basis: observation
+    verification:
+      criterionId: ac3
+      criterionVersion: 1
+      method: 修复：(1) 服务端 await sync.startProjectRoot 后再响应，并回传结果快照，客户端一次点击即可拿到新状态；(2) 资产区块在已有数据时也渲染 state.error；(3) 详情弹窗按钮加 busy 禁用；(4) 标题行改为两列网格 auto + minmax(0,1fr)，状态块在剩余宽度内 ellipsis 截断，完整文案走 Tooltip。验证：原生冒烟在详情弹窗里点击「Check for updates」，拦截 window.fetch 断言 /api/project/repository 确实收到 action=check；8 组 locale×theme×width 截图确认标题行不再换行；插件 yarn check EXIT=0（268 tests）。未覆盖：fixture 的 origin 不可达，因此「检查/推送成功后的状态变化」无法端到端验证，需在真实工作区人工确认。
+      result: passed
+      coverage: 原生：点击后请求确实到达 Host + 8 组视觉；单测 268 条
+    createdAt: 2026-09-22T07:27:17.711Z
+  - id: done-14
+    kind: completion
+    content: 仓库动作已改为同步生效并补上失败提示，布局问题一并修掉。
+    basis: agent-proposal
+    verificationEntryIds:
+      - ver-ac1
+      - ver-ac2
+      - ver-ac3
+      - ver-ac4
+      - ver-ac5
+      - ver-ac6
+      - ver-fix-1
+      - ver-fix-2
+      - ver-fix-3
+      - ver-fix-4
+      - ver-fix-5
+      - ver-fix-6
+      - ver-fix-7
+      - ver-fix-8
+      - ver-fix-9
+      - ver-fix-10
+      - ver-fix-11
+      - ver-fix-12
+      - ver-fix-13
+      - ver-fix-14
+    createdAt: 2026-09-22T07:27:17.711Z
+  - id: prog-15
+    kind: progress
+    content: 用户建议：检查更新加转圈效果并把文字改成「正在检查更新」，提交按钮同理。已采纳。
+    basis: user-request
+    createdAt: 2026-09-22T07:58:42.352Z
+  - id: dec-14
+    kind: decision
+    content: 官方 primitives 未导出 spinner，按规范做最小适配：新增 .project-spinner（主题色圆环 + 官方变量）与 project-spin 关键帧；controller 新增 action 字段（'commit' | 仓库动作），使每个控件能准确说出自己在做什么，而不是共用一个 pending。
+    basis: agent-proposal
+    createdAt: 2026-09-22T07:58:42.352Z
+  - id: ver-fix-15
+    kind: verification
+    content: 三个按钮已有进行中反馈；另发现并定位一个环境陷阱：壳加载的插件产物会被不带本地源的构建覆盖。
+    basis: observation
+    verification:
+      criterionId: ac5
+      criterionVersion: 1
+      method: 三个按钮在等待 Host 时显示转圈并改文案（正在检查…/正在推送…/正在提交…）；新增 tests/client-project-changes.test.ts 固定 pending 期间 action 分别为 commit / check。原生侧：连续三轮 smoke 失败（概览页连「项目资产」section 都不渲染）经排查不是代码问题——壳加载的 .cache/runtime/dsh-plugin-project/lib/client.js 被不带 DSH_PROJECT_PLUGIN_SOURCE 的构建覆盖成 pin 版本（并发会话或普通 yarn check 都会如此）；用本地源重新 build 后该产物 hash 改变、project-change-card 标记由 0 变 3，smoke 立即 EXIT=0。已在脚本里保留一行 section 诊断输出以便日后快速区分「界面缺一块」是代码还是产物问题。
+      result: passed
+      coverage: 客户端单测 2 条 + 原生 8 组视觉 + 产物标记比对
+    createdAt: 2026-09-22T07:58:42.352Z
+  - id: done-15
+    kind: completion
+    content: 进行中反馈已实现并验证；本轮同时查清了「区块整个不渲染」的成因是插件产物被 pin 构建覆盖。
+    basis: agent-proposal
+    verificationEntryIds:
+      - ver-ac1
+      - ver-ac2
+      - ver-ac3
+      - ver-ac4
+      - ver-ac5
+      - ver-ac6
+      - ver-fix-1
+      - ver-fix-2
+      - ver-fix-3
+      - ver-fix-4
+      - ver-fix-5
+      - ver-fix-6
+      - ver-fix-7
+      - ver-fix-8
+      - ver-fix-9
+      - ver-fix-10
+      - ver-fix-11
+      - ver-fix-12
+      - ver-fix-13
+      - ver-fix-14
+      - ver-fix-15
+    createdAt: 2026-09-22T07:58:42.352Z
 operations:
   6d5c5951206028b816d640ab59542dec9673a71e6bd83101abfe87246e549ca7:
     fingerprint: 0e03526cabd3be54d9460ff1809d5fe55618c30366932c3dde6ac071f2dd9271
@@ -803,6 +899,24 @@ operations:
       - prog-13
       - ver-fix-13
       - done-13
+  c5231cfc4f1460c6dfff35127c2ff54d364189a88488d49f26f44945aab7684e:
+    fingerprint: 7ff9df38ae7fb46db0b95101f744fc4cb6588ced4625df8426be0a69352314cc
+    kind: update
+    at: 2026-09-22T07:27:17.711Z
+    entryIds:
+      - prog-14
+      - inv-2
+      - ver-fix-14
+      - done-14
+  269bc5564cbd9403647e4ea7c58142c7fb615ee097b1e302585c59a07ed194a3:
+    fingerprint: 7279ba2bba35f417c3a8ee045f5700e7922099e61b61d6f543678f35b40be6fc
+    kind: update
+    at: 2026-09-22T07:58:42.352Z
+    entryIds:
+      - prog-15
+      - dec-14
+      - ver-fix-15
+      - done-15
 criterionVersions:
   ac1: 1
   ac2: 1
@@ -812,4 +926,4 @@ criterionVersions:
   ac6: 1
 ---
 
-已实现并验证（含十二轮用户反馈）：项目概览页的「项目资产」区块按资产维度审阅变更，主界面两行——标题行（标题 + 可点的仓库状态入口 + 与页头一致的刷新按钮）与工具栏（全选 / 清空 / 提交所选 N 项）。仓库状态本身是详情入口（无边框按钮），检查更新/推送提交/分支切换/远端/目录都在详情弹窗内；概览打开且状态未检查时静默自动检查一次（不锁工具栏、不报页面错误）。提交计划由提交按钮右侧气泡展示，仅列各条提交信息。多选提交按资产逐个提交（每个资产生成一个 commit、只含自己的路径、信息自动生成）。一张卡片 = 一个资产（任务含全部附件、技能含整个目录、MCP 一条配置、记忆一份文档，其余归其他文件）；卡片标签右对齐并显示文件数与产物数；选中状态由页脚勾选框与文案表达，不用主题色边框；卡片样式复用共享的 .project-mcp-card 系列与 .project-mcp-grid。本轮修正：区块刷新按钮补上图标，与面板右上角刷新控件保持一致。Host 侧 commitProjectSelection 在同一把仓库锁内逐资产 add+commit，并拒绝不安全路径、空信息、过期 revision 与已有暂存内容的 index；项目根用 --untracked-files=all 并关闭 core.quotePath。验证：插件 yarn check EXIT=0（268 tests）；原生冒烟 smoke:resources EXIT=0，8 组 locale×theme×width + 标题行居中 + 状态入口 + 刷新按钮图标一致 + 自动检查不锁工具栏 + 领先时无推送按钮 + 双资产双提交 + 气泡可见 + 键盘 Space；证据已写入 artifacts/。限制：(1) MCP 多 server 共享一个文件；(2)「其他文件」默认不勾选；(3) 记忆仍无新增入口；(4) 窄窗下面板约 133px 时标题行会换行；(5) 插件与壳改动均未提交、未 push。
+已实现并验证（含十四轮用户反馈）：项目概览页的「项目资产」区块按资产维度审阅变更。本轮新增进行中反馈——检查更新/推送/提交在等待 Host 时显示主题色转圈并把文案换成「正在检查…」「正在推送…」「正在提交…」（官方 primitives 未导出 spinner，按规范做了最小适配，并给 controller 增加 action 字段让每个控件准确说明自己在做什么）；新增 2 条客户端单测固定该行为。同时查清一个环境陷阱：连续三轮 smoke 失败（概览页连「项目资产」section 都不渲染）不是代码问题，而是壳加载的 .cache/runtime/dsh-plugin-project 产物被不带 DSH_PROJECT_PLUGIN_SOURCE 的构建覆盖成 pin 版本；用本地源重新 build 后标记从 0 变 3、smoke 立即通过，已在验收脚本里保留一行 section 诊断便于日后快速区分。此前各轮已完成：逐资产各生成一个提交、提交计划气泡（按钮右侧）、标题「项目资产」、卡片标签右对齐、选中不用边框强调、状态入口打开详情、自动检查静默不锁工具栏、仓库动作同步生效并可见失败、刷新按钮与页头一致、中文路径不被转义。Host 侧 commitProjectSelection 在同一把仓库锁内逐资产 add+commit，并拒绝不安全路径、空信息、过期 revision 与已有暂存内容的 index；项目根用 --untracked-files=all 并关闭 core.quotePath。验证：插件 yarn check EXIT=0（270 tests）；原生冒烟 smoke:resources EXIT=0，8 组 locale×theme×width + 标题行居中不换行 + 状态入口 + 点击动作到达 Host + 自动检查不锁工具栏 + 领先时无推送按钮 + 双资产双提交 + 气泡可见 + 键盘 Space；证据已写入 artifacts/。已本地提交（插件 51c8524 等、壳 31f319b 等），未 push。限制：(1) 检查/推送成功路径需在真实可达远端的人工环境复验；(2) MCP 多 server 共享一个文件；(3)「其他文件」默认不勾选；(4) 记忆仍无新增入口。
