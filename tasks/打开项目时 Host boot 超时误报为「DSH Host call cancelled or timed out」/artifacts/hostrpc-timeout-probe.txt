@@ -1,0 +1,5 @@
+# HostRpc.call 第四参数（timeoutMs）行为探针
+# 命令: node .runtime/hostrpc-timeout-probe.mjs
+# 断言: 第四参数是超时预算；超时 reject 文案与用户截图一致
+RESULT=rejected elapsedMs=152 message="DSH Host call cancelled or timed out"
+EXIT=0

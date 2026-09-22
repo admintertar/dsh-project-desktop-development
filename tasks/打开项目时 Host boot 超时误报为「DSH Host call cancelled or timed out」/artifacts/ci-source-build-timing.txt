@@ -1,0 +1,51 @@
+# Project boot timing probe
+
+Generated: 2026-09-22T08:11:48.196Z
+Boot budget in source: 300000 ms
+Samples per stage: 2
+
+| environment | value |
+| --- | --- |
+| platform | win32 |
+| release | 10.0.20348 |
+| arch | x64 |
+| cpus | 4 |
+| memoryGb | 16 |
+| node | v22.23.2 |
+| repository | D:\a\dsh-project-desktop\dsh-project-desktop\ |
+| userDataBase | C:\Users\runneradmin\AppData\Roaming |
+| temporaryDirectory | C:\Users\RUNNER~1\AppData\Local\Temp |
+
+## location: repository
+
+Base: D:\a\dsh-project-desktop\dsh-project-desktop\.runtime
+
+| stage | duration | note |
+| --- | --- | --- |
+| hostReady #1 | 175 ms |  |
+| hostReady #2 | 175 ms |  |
+| prepareProfile #1 | 1799 ms |  |
+| prepareProfile #2 | 264 ms |  |
+| boot #1 | 6733 ms |  |
+| boot #2 | 5543 ms |  |
+| close #1 | 97 ms |  |
+| close #2 | 95 ms |  |
+
+## location: user-data
+
+Base: C:\Users\runneradmin\AppData\Roaming
+
+| stage | duration | note |
+| --- | --- | --- |
+| hostReady #1 | 173 ms |  |
+| hostReady #2 | 174 ms |  |
+| prepareProfile #1 | 2180 ms |  |
+| prepareProfile #2 | 252 ms |  |
+| boot #1 | 7065 ms |  |
+| boot #2 | 5539 ms |  |
+| close #1 | 114 ms |  |
+| close #2 | 109 ms |  |
+
+##[group]Run {
+[36;1m{[0m
+[36;1m  echo '## Source-build boot timing (windows-2022)'[0m
