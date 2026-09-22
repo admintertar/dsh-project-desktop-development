@@ -2,3 +2,5 @@ schemaVersion: 1
 skills:
   windows-ci-pitfalls:
     enabled: true
+  desktop-release:
+    enabled: true
