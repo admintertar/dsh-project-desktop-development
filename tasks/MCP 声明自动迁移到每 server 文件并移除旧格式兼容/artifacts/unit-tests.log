@@ -1,0 +1,1661 @@
+TAP version 13
+# Subtest: task filtering invalidates stale pages and preserves query parameters during archive
+ok 1 - task filtering invalidates stale pages and preserves query parameters during archive
+  ---
+  duration_ms: 21.226625
+  type: 'test'
+  ...
+# Subtest: project client controller calls browser fetch with a valid receiver
+ok 2 - project client controller calls browser fetch with a valid receiver
+  ---
+  duration_ms: 0.965833
+  type: 'test'
+  ...
+# Subtest: project client controller isolates views and ignores a superseded refresh even if fetch ignores abort
+ok 3 - project client controller isolates views and ignores a superseded refresh even if fetch ignores abort
+  ---
+  duration_ms: 0.547084
+  type: 'test'
+  ...
+# Subtest: project client controller applies mutation snapshots and retains previous data on error
+ok 4 - project client controller applies mutation snapshots and retains previous data on error
+  ---
+  duration_ms: 1.00325
+  type: 'test'
+  ...
+# Subtest: item mutations can run together without setting the page-wide pending state
+ok 5 - item mutations can run together without setting the page-wide pending state
+  ---
+  duration_ms: 0.501792
+  type: 'test'
+  ...
+# Subtest: project client controller cancels Skill import and keeps MCP secrets out of view snapshots
+ok 6 - project client controller cancels Skill import and keeps MCP secrets out of view snapshots
+  ---
+  duration_ms: 0.906958
+  type: 'test'
+  ...
+# Subtest: project client controller prevents stale GET from overwriting a mutation and aborts on disposal
+ok 7 - project client controller prevents stale GET from overwriting a mutation and aborts on disposal
+  ---
+  duration_ms: 2.542416
+  type: 'test'
+  ...
+# Subtest: session switches immediately clear catalogs and ignore stale requests, including same-session preset changes
+ok 8 - session switches immediately clear catalogs and ignore stale requests, including same-session preset changes
+  ---
+  duration_ms: 8.504917
+  type: 'test'
+  ...
+# Subtest: a Skill mutation finishing after a Session switch refreshes the new catalog without publishing the old one
+ok 9 - a Skill mutation finishing after a Session switch refreshes the new catalog without publishing the old one
+  ---
+  duration_ms: 1.251666
+  type: 'test'
+  ...
+# Subtest: project file navigation opens a fresh rightbar without requiring an existing active tab
+ok 10 - project file navigation opens a fresh rightbar without requiring an existing active tab
+  ---
+  duration_ms: 0.823333
+  type: 'test'
+  ...
+# Subtest: project file navigation waits for the selected Session seat and stops on cancellation or resource errors
+ok 11 - project file navigation waits for the selected Session seat and stops on cancellation or resource errors
+  ---
+  duration_ms: 0.521083
+  type: 'test'
+  ...
+# Subtest: project panel geometry remains instant through one painted frame
+ok 12 - project panel geometry remains instant through one painted frame
+  ---
+  duration_ms: 54.578291
+  type: 'test'
+  ...
+# Subtest: a later panel change restarts the two-frame window and dispose clears it
+ok 13 - a later panel change restarts the two-frame window and dispose clears it
+  ---
+  duration_ms: 10.398625
+  type: 'test'
+  ...
+# Subtest: project sidebar panels use stable namespaced identities and order
+ok 14 - project sidebar panels use stable namespaced identities and order
+  ---
+  duration_ms: 1.180584
+  type: 'test'
+  ...
+# Subtest: the client picker keeps the official workspace flow for the native seam and refuses a missing source
+ok 15 - the client picker keeps the official workspace flow for the native seam and refuses a missing source
+  ---
+  duration_ms: 0.738584
+  type: 'test'
+  ...
+# Subtest: the client picker asks the Host for the Desktop shell chooser and reports cancel and failure
+ok 16 - the client picker asks the Host for the Desktop shell chooser and reports cancel and failure
+  ---
+  duration_ms: 22.386083
+  type: 'test'
+  ...
+# Subtest: the changes controller reports a commit while it is in flight
+ok 17 - the changes controller reports a commit while it is in flight
+  ---
+  duration_ms: 31.823625
+  type: 'test'
+  ...
+# Subtest: the changes controller names the repository action it is waiting for
+ok 18 - the changes controller names the repository action it is waiting for
+  ---
+  duration_ms: 7.374708
+  type: 'test'
+  ...
+# Subtest: a late authentication poll cannot reopen an answered prompt or retain its credentials
+ok 19 - a late authentication poll cannot reopen an answered prompt or retain its credentials
+  ---
+  duration_ms: 20.661625
+  type: 'test'
+  ...
+# Subtest: invalid key input retains the prompt with a fixed error and dismissal sends no credentials
+ok 20 - invalid key input retains the prompt with a fixed error and dismissal sends no credentials
+  ---
+  duration_ms: 2.630542
+  type: 'test'
+  ...
+# Subtest: a picked Git working tree defaults to the Git resource type, with or without an origin
+ok 21 - a picked Git working tree defaults to the Git resource type, with or without an origin
+  ---
+  duration_ms: 1.117416
+  type: 'test'
+  ...
+# Subtest: resource controller retains a successful snapshot on error and ignores late GETs after mutation
+ok 22 - resource controller retains a successful snapshot on error and ignores late GETs after mutation
+  ---
+  duration_ms: 21.511708
+  type: 'test'
+  ...
+# Subtest: resource controller blocks duplicate item mutations, preserves errors for draft review and aborts on disposal
+ok 23 - resource controller blocks duplicate item mutations, preserves errors for draft review and aborts on disposal
+  ---
+  duration_ms: 5.060125
+  type: 'test'
+  ...
+# Subtest: resource sync requests are independent and failures remain on the affected resource until retry
+ok 24 - resource sync requests are independent and failures remain on the affected resource until retry
+  ---
+  duration_ms: 8.24725
+  type: 'test'
+  ...
+# Subtest: commit carries the message, switch carries the branch and branch reads stay out of the snapshot
+ok 25 - commit carries the message, switch carries the branch and branch reads stay out of the snapshot
+  ---
+  duration_ms: 5.328084
+  type: 'test'
+  ...
+# Subtest: project session browser keeps only visible sessions from the Project root
+ok 26 - project session browser keeps only visible sessions from the Project root
+  ---
+  duration_ms: 1.816792
+  type: 'test'
+  ...
+# Subtest: project session browser reconciles the persisted flat-list order
+ok 27 - project session browser reconciles the persisted flat-list order
+  ---
+  duration_ms: 0.228375
+  type: 'test'
+  ...
+# Subtest: project session browser promotes only newly active sessions in updated mode
+ok 28 - project session browser promotes only newly active sessions in updated mode
+  ---
+  duration_ms: 0.333417
+  type: 'test'
+  ...
+# Subtest: project session browser preserves the reconciled order in manual mode
+ok 29 - project session browser preserves the reconciled order in manual mode
+  ---
+  duration_ms: 0.702959
+  type: 'test'
+  ...
+# Subtest: project session browser search merges title and scoped content matches
+ok 30 - project session browser search merges title and scoped content matches
+  ---
+  duration_ms: 0.478792
+  type: 'test'
+  ...
+# Subtest: project session browser sanitizes wire queries without splitting surrogate pairs
+ok 31 - project session browser sanitizes wire queries without splitting surrogate pairs
+  ---
+  duration_ms: 0.163125
+  type: 'test'
+  ...
+# Subtest: project session browser resolves manual drag anchors
+ok 32 - project session browser resolves manual drag anchors
+  ---
+  duration_ms: 0.250042
+  type: 'test'
+  ...
+# Subtest: brand, icon and keyboard activation navigate to the overview; new session uses the Project action
+ok 33 - brand, icon and keyboard activation navigate to the overview; new session uses the Project action
+  ---
+  duration_ms: 40.812958
+  type: 'test'
+  ...
+# Subtest: the collapsed mark retains official expansion, while New Session remains project-bound
+ok 34 - the collapsed mark retains official expansion, while New Session remains project-bound
+  ---
+  duration_ms: 9.169583
+  type: 'test'
+  ...
+# Subtest: loading/busy state blocks new sessions and rebinding does not retain duplicate listeners
+ok 35 - loading/busy state blocks new sessions and rebinding does not retain duplicate listeners
+  ---
+  duration_ms: 9.812958
+  type: 'test'
+  ...
+# Subtest: Project row counts include active MCP connections and exclude failed declarations
+ok 36 - Project row counts include active MCP connections and exclude failed declarations
+  ---
+  duration_ms: 1.4585
+  type: 'test'
+  ...
+# Subtest: catalog counts stay stable during a Session refresh and clear on failure
+ok 37 - catalog counts stay stable during a Session refresh and clear on failure
+  ---
+  duration_ms: 0.184333
+  type: 'test'
+  ...
+# Subtest: count is appended last on a wide official row and removed on cleanup
+ok 38 - count is appended last on a wide official row and removed on cleanup
+  ---
+  duration_ms: 30.260583
+  type: 'test'
+  ...
+# Subtest: count is omitted while data is unavailable or the official row is collapsed
+ok 39 - count is omitted while data is unavailable or the official row is collapsed
+  ---
+  duration_ms: 7.429417
+  type: 'test'
+  ...
+# Subtest: project styles leave the enhanced sidebar material under Desktop ownership
+ok 40 - project styles leave the enhanced sidebar material under Desktop ownership
+  ---
+  duration_ms: 0.516333
+  type: 'test'
+  ...
+# Subtest: project panel navigation restores Desktop and document geometry without transitions
+ok 41 - project panel navigation restores Desktop and document geometry without transitions
+  ---
+  duration_ms: 0.121208
+  type: 'test'
+  ...
+# Subtest: memory styles provide a responsive Markdown source editor
+ok 42 - memory styles provide a responsive Markdown source editor
+  ---
+  duration_ms: 0.070125
+  type: 'test'
+  ...
+# Subtest: Skill cards share the compact MCP grid and card chrome
+ok 43 - Skill cards share the compact MCP grid and card chrome
+  ---
+  duration_ms: 0.051125
+  type: 'test'
+  ...
+# Subtest: scrollbars reserve stable space inside existing right insets
+ok 44 - scrollbars reserve stable space inside existing right insets
+  ---
+  duration_ms: 0.428458
+  type: 'test'
+  ...
+# Subtest: long dialogs share the official settings scrolling adapter
+ok 45 - long dialogs share the official settings scrolling adapter
+  ---
+  duration_ms: 0.629292
+  type: 'test'
+  ...
+# Subtest: commit file selection discards late replies, retains tab state, scopes failures and cancels on close
+ok 46 - commit file selection discards late replies, retains tab state, scopes failures and cancels on close
+  ---
+  duration_ms: 0.667875
+  type: 'test'
+  ...
+# Subtest: commit preview uses explicit Task requests and per-tab lifetimes without a Session or arbitrary Git arguments
+ok 47 - commit preview uses explicit Task requests and per-tab lifetimes without a Session or arbitrary Git arguments
+  ---
+  duration_ms: 37.376917
+  type: 'test'
+  ...
+# Subtest: task continuation reads before opening and only prepares an unsent draft
+ok 48 - task continuation reads before opening and only prepares an unsent draft
+  ---
+  duration_ms: 29.362333
+  type: 'test'
+  ...
+# Subtest: task continuation deduplicates clicks and retries the same Session and task read
+ok 49 - task continuation deduplicates clicks and retries the same Session and task read
+  ---
+  duration_ms: 1.121292
+  type: 'test'
+  ...
+# Subtest: task continuation retries a lost creation response with its preallocated identity
+ok 50 - task continuation retries a lost creation response with its preallocated identity
+  ---
+  duration_ms: 6.855667
+  type: 'test'
+  ...
+# Subtest: task continuation preserves input typed while reading and ignores stale navigation
+ok 51 - task continuation preserves input typed while reading and ignores stale navigation
+  ---
+  duration_ms: 0.512042
+  type: 'test'
+  ...
+# Subtest: task continuation does not navigate after changing projects
+ok 52 - task continuation does not navigate after changing projects
+  ---
+  duration_ms: 0.437209
+  type: 'test'
+  ...
+# Subtest: task continuation preserves attachment-only and busy composer input
+ok 53 - task continuation preserves attachment-only and busy composer input
+  ---
+  duration_ms: 0.292583
+  type: 'test'
+  ...
+# Subtest: panel cancellation keeps the prepared Session available for a later retry
+ok 54 - panel cancellation keeps the prepared Session available for a later retry
+  ---
+  duration_ms: 3.77575
+  type: 'test'
+  ...
+# Subtest: continuation refreshes task status before generating the draft
+ok 55 - continuation refreshes task status before generating the draft
+  ---
+  duration_ms: 1.168291
+  type: 'test'
+  ...
+# Subtest: official preview reads use explicit Task authority; newer reloads and closed tabs discard stale responses
+ok 56 - official preview reads use explicit Task authority; newer reloads and closed tabs discard stale responses
+  ---
+  duration_ms: 5.665292
+  type: 'test'
+  ...
+# Subtest: official text and binary modes receive complete content and declared failures
+ok 57 - official text and binary modes receive complete content and declared failures
+  ---
+  duration_ms: 9.784833
+  type: 'test'
+  ...
+# Subtest: window startup recovers from network and Host errors before returning the actual mode
+ok 58 - window startup recovers from network and Host errors before returning the actual mode
+  ---
+  duration_ms: 35.60275
+  type: 'test'
+  ...
+# Subtest: window startup retains Web and non-Project Desktop modes and calls fetch without a receiver
+ok 59 - window startup retains Web and non-Project Desktop modes and calls fetch without a receiver
+  ---
+  duration_ms: 1.048417
+  type: 'test'
+  ...
+# Subtest: window startup stops after its retry budget and never fabricates a fallback mode
+ok 60 - window startup stops after its retry budget and never fabricates a fallback mode
+  ---
+  duration_ms: 3.192708
+  type: 'test'
+  ...
+# Subtest: window startup does not retry permanent HTTP errors or malformed mode responses
+ok 61 - window startup does not retry permanent HTTP errors or malformed mode responses
+  ---
+  duration_ms: 1.763791
+  type: 'test'
+  ...
+# Subtest: window startup retries request timeouts and HTTP 408/429
+ok 62 - window startup retries request timeouts and HTTP 408/429
+  ---
+  duration_ms: 20.172917
+  type: 'test'
+  ...
+# Subtest: disposing a plugin cancels an in-flight startup without registering a mode
+ok 63 - disposing a plugin cancels an in-flight startup without registering a mode
+  ---
+  duration_ms: 0.907125
+  type: 'test'
+  ...
+# Subtest: disposing a plugin cancels a scheduled startup retry
+ok 64 - disposing a plugin cancels a scheduled startup retry
+  ---
+  duration_ms: 2.847709
+  type: 'test'
+  ...
+# Subtest: maintenance waits for close, follows Safe Mode transitions and preserves the project Home
+ok 65 - maintenance waits for close, follows Safe Mode transitions and preserves the project Home
+  ---
+  duration_ms: 0.903
+  type: 'test'
+  ...
+# Subtest: closing recovery cancels without opening the project
+ok 66 - closing recovery cancels without opening the project
+  ---
+  duration_ms: 0.111583
+  type: 'test'
+  ...
+# Subtest: cancellation waits for the maintenance process to stop
+ok 67 - cancellation waits for the maintenance process to stop
+  ---
+  duration_ms: 0.602
+  type: 'test'
+  ...
+# Subtest: spawn failure and an unexpected termination never request a restart
+ok 68 - spawn failure and an unexpected termination never request a restart
+  ---
+  duration_ms: 1.95375
+  type: 'test'
+  ...
+# Subtest: a real maintenance child returns only after its process has exited
+ok 69 - a real maintenance child returns only after its process has exited
+  ---
+  duration_ms: 34.223458
+  type: 'test'
+  ...
+# Subtest: native storage follows the canonical Project path and separates editions and Projects
+ok 70 - native storage follows the canonical Project path and separates editions and Projects
+  ---
+  duration_ms: 2.033042
+  type: 'test'
+  ...
+# Subtest: stable: launch validation rejects a different channel or stale installed runtime
+ok 71 - stable: launch validation rejects a different channel or stale installed runtime
+  ---
+  duration_ms: 9.234417
+  type: 'test'
+  ...
+# Subtest: beta: launch validation rejects a different channel or stale installed runtime
+ok 72 - beta: launch validation rejects a different channel or stale installed runtime
+  ---
+  duration_ms: 7.939042
+  type: 'test'
+  ...
+# Subtest: host contributes Project knowledge, Task guidance, refreshed Memory, and identity protection
+ok 73 - host contributes Project knowledge, Task guidance, refreshed Memory, and identity protection
+  ---
+  duration_ms: 249.412959
+  type: 'test'
+  ...
+# Subtest: every Session sees the same independent task candidates and survives independently corrupt task data
+ok 74 - every Session sees the same independent task candidates and survives independently corrupt task data
+  ---
+  duration_ms: 70.048667
+  type: 'test'
+  ...
+# Subtest: leaving Project mode removes prompt, task tools, skills and MCP capabilities
+ok 75 - leaving Project mode removes prompt, task tools, skills and MCP capabilities
+  ---
+  duration_ms: 10.658083
+  type: 'test'
+  ...
+# Subtest: Desktop launcher source dependencies load in native Node without a TypeScript transform
+ok 76 - Desktop launcher source dependencies load in native Node without a TypeScript transform
+  ---
+  duration_ms: 241.786084
+  type: 'test'
+  ...
+# Subtest: Node version guard accepts supported stable releases and rejects incompatible versions
+ok 77 - Node version guard accepts supported stable releases and rejects incompatible versions
+  ---
+  duration_ms: 327.964958
+  type: 'test'
+  ...
+# fatal: Needed a single revision
+# Subtest: official runtime export uses the exact commit, excludes unrelated files and rejects invalid pins
+ok 78 - official runtime export uses the exact commit, excludes unrelated files and rejects invalid pins
+  ---
+  duration_ms: 352.064333
+  type: 'test'
+  ...
+# Subtest: project api authenticates every route and rejects invalid write envelopes before mutation
+ok 79 - project api authenticates every route and rejects invalid write envelopes before mutation
+  ---
+  duration_ms: 409.391125
+  type: 'test'
+  ...
+# Subtest: project api saves Markdown memory and enforces authentication, identity and UTF-8 byte limits
+ok 80 - project api saves Markdown memory and enforces authentication, identity and UTF-8 byte limits
+  ---
+  duration_ms: 44.791833
+  type: 'test'
+  ...
+# Subtest: task API resolves genuine persisted Sessions without activating them after restart
+ok 81 - task API resolves genuine persisted Sessions without activating them after restart
+  ---
+  duration_ms: 85.973792
+  type: 'test'
+  ...
+# Subtest: project api exposes Task artifacts and Project sessions, and archives without changing completion
+ok 82 - project api exposes Task artifacts and Project sessions, and archives without changing completion
+  ---
+  duration_ms: 86.807667
+  type: 'test'
+  ...
+# Subtest: task file API previews without sessions, requires authentication and rejects arbitrary paths
+ok 83 - task file API previews without sessions, requires authentication and rejects arbitrary paths
+  ---
+  duration_ms: 34.561625
+  type: 'test'
+  ...
+# Subtest: task commit API authenticates reads and fetches and accepts only recorded artifact authority
+ok 84 - task commit API authenticates reads and fetches and accepts only recorded artifact authority
+  ---
+  duration_ms: 648.097125
+  type: 'test'
+  ...
+# Subtest: task HTML preview reads bounded related assets without Session file authority
+ok 85 - task HTML preview reads bounded related assets without Session file authority
+  ---
+  duration_ms: 51.727375
+  type: 'test'
+  ...
+# Subtest: task API rejects stale writes and resets pagination after a committed archive
+ok 86 - task API rejects stale writes and resets pagination after a committed archive
+  ---
+  duration_ms: 48.556916
+  type: 'test'
+  ...
+# Subtest: task API isolates a damaged local map and bounds list results
+ok 87 - task API isolates a damaged local map and bounds list results
+  ---
+  duration_ms: 52.042333
+  type: 'test'
+  ...
+# Subtest: project api imports and toggles a real Skill Provider
+ok 88 - project api imports and toggles a real Skill Provider
+  ---
+  duration_ms: 118.806375
+  type: 'test'
+  ...
+# Subtest: project api preserves, replaces and clears MCP secrets; testing never writes or changes live tools
+ok 89 - project api preserves, replaces and clears MCP secrets; testing never writes or changes live tools
+  ---
+  duration_ms: 82.693125
+  type: 'test'
+  ...
+# Subtest: project api reports a failed MCP as off and retries the same declaration on explicit enable
+ok 90 - project api reports a failed MCP as off and retries the same declaration on explicit enable
+  ---
+  duration_ms: 30.180958
+  type: 'test'
+  ...
+# Subtest: project api serializes MCP persistence together with connection replacement
+ok 91 - project api serializes MCP persistence together with connection replacement
+  ---
+  duration_ms: 55.611042
+  type: 'test'
+  ...
+# Subtest: project api rejects oversized chunked bodies without destroying the error response
+ok 92 - project api rejects oversized chunked bodies without destroying the error response
+  ---
+  duration_ms: 24.472708
+  type: 'test'
+  ...
+# Subtest: project api shutdown waits for the active mutation and rejects late writes
+ok 93 - project api shutdown waits for the active mutation and rejects late writes
+  ---
+  duration_ms: 20.731167
+  type: 'test'
+  ...
+# Subtest: session catalogs include preset skills, tool restrictions and shadowing without creating Agents
+ok 94 - session catalogs include preset skills, tool restrictions and shadowing without creating Agents
+  ---
+  duration_ms: 44.212125
+  type: 'test'
+  ...
+# Subtest: session catalogs accept opaque DSH identities while preserving Project boundaries
+ok 95 - session catalogs accept opaque DSH identities while preserving Project boundaries
+  ---
+  duration_ms: 125.293833
+  type: 'test'
+  ...
+# Subtest: session catalog authorization and Project root checks precede preset mounting and Skill writes
+ok 96 - session catalog authorization and Project root checks precede preset mounting and Skill writes
+  ---
+  duration_ms: 100.431625
+  type: 'test'
+  ...
+# Subtest: live Session catalogs read isolated preset services and Skill writes keep the selected scope
+ok 97 - live Session catalogs read isolated preset services and Skill writes keep the selected scope
+  ---
+  duration_ms: 34.610458
+  type: 'test'
+  ...
+# Subtest: project changes are grouped into assets and unknown paths stay visible
+ok 98 - project changes are grouped into assets and unknown paths stay visible
+  ---
+  duration_ms: 34.815
+  type: 'test'
+  ...
+# Subtest: a fully deleted asset reports deletion while a partially deleted one reports an update
+ok 99 - a fully deleted asset reports deletion while a partially deleted one reports an update
+  ---
+  duration_ms: 2.539625
+  type: 'test'
+  ...
+# Subtest: MCP declarations become one entry per server, each owning its own file
+ok 100 - MCP declarations become one entry per server, each owning its own file
+  ---
+  duration_ms: 34.415917
+  type: 'test'
+  ...
+# Subtest: the retired single declaration file is skipped instead of becoming an asset
+ok 101 - the retired single declaration file is skipped instead of becoming an asset
+  ---
+  duration_ms: 0.2265
+  type: 'test'
+  ...
+# Subtest: a declaration change with no server-level difference still appears in the review
+ok 102 - a declaration change with no server-level difference still appears in the review
+  ---
+  duration_ms: 2.502291
+  type: 'test'
+  ...
+# Subtest: only repository-relative project paths can be staged
+ok 103 - only repository-relative project paths can be staged
+  ---
+  duration_ms: 0.431958
+  type: 'test'
+  ...
+# Subtest: declaration signatures ignore key order but not values
+ok 104 - declaration signatures ignore key order but not values
+  ---
+  duration_ms: 0.183292
+  type: 'test'
+  ...
+# Subtest: a non-ASCII asset directory arrives as a real path, not as Git octal escapes
+ok 105 - a non-ASCII asset directory arrives as a real path, not as Git octal escapes
+  ---
+  duration_ms: 517.874125
+  type: 'test'
+  ...
+# Subtest: committing a selection stages only the selected asset paths
+ok 106 - committing a selection stages only the selected asset paths
+  ---
+  duration_ms: 994.777584
+  type: 'test'
+  ...
+# Subtest: each selected asset becomes its own commit, in review order
+ok 107 - each selected asset becomes its own commit, in review order
+  ---
+  duration_ms: 1138.157458
+  type: 'test'
+  ...
+# Subtest: a selection is refused for unsafe paths, an empty selection, a missing message and a staged index
+ok 108 - a selection is refused for unsafe paths, an empty selection, a missing message and a staged index
+  ---
+  duration_ms: 1527.667375
+  type: 'test'
+  ...
+# Subtest: committing one Skill keeps the other Skills at the committed state
+ok 109 - committing one Skill keeps the other Skills at the committed state
+  ---
+  duration_ms: 1074.111625
+  type: 'test'
+  ...
+# Subtest: new project files initialize shareable metadata and leave memory empty until needed
+ok 110 - new project files initialize shareable metadata and leave memory empty until needed
+  ---
+  duration_ms: 18.50075
+  type: 'test'
+  ...
+# Subtest: creating from a folder names the project after it and preserves its workspace files
+ok 111 - creating from a folder names the project after it and preserves its workspace files
+  ---
+  duration_ms: 18.427875
+  type: 'test'
+  ...
+# Subtest: folder creation reopens an existing project and rejects ambiguous folders without writing
+ok 112 - folder creation reopens an existing project and rejects ambiguous folders without writing
+  ---
+  duration_ms: 8.808709
+  type: 'test'
+  ...
+# Subtest: recent projects persist in order, deduplicate and retain at most twelve entries
+ok 113 - recent projects persist in order, deduplicate and retain at most twelve entries
+  ---
+  duration_ms: 11.85225
+  type: 'test'
+  ...
+# Subtest: recent projects retain missing targets but mark them unavailable
+ok 114 - recent projects retain missing targets but mark them unavailable
+  ---
+  duration_ms: 11.221834
+  type: 'test'
+  ...
+# Subtest: failed project initialization leaves no manifest and preserves existing workspace data
+ok 115 - failed project initialization leaves no manifest and preserves existing workspace data
+  ---
+  duration_ms: 34.594875
+  type: 'test'
+  ...
+# Subtest: project capability directories are created without replacing existing content
+ok 116 - project capability directories are created without replacing existing content
+  ---
+  duration_ms: 8.657667
+  type: 'test'
+  ...
+# Subtest: Git includes memory and shared metadata while excluding machine and recovery records
+ok 117 - Git includes memory and shared metadata while excluding machine and recovery records
+  ---
+  duration_ms: 86.80525
+  type: 'test'
+  ...
+# Subtest: initialization refuses redirected metadata and memory directories without writing through links
+ok 118 - initialization refuses redirected metadata and memory directories without writing through links
+  ---
+  duration_ms: 1.688792
+  type: 'test'
+  ...
+# Subtest: an existing non-directory capability target fails without mutation
+ok 119 - an existing non-directory capability target fails without mutation
+  ---
+  duration_ms: 0.5045
+  type: 'test'
+  ...
+# Subtest: appending ignore rules preserves existing permissions even under a stricter umask
+ok 120 - appending ignore rules preserves existing permissions even under a stricter umask
+  ---
+  duration_ms: 1.616667
+  type: 'test'
+  ...
+# Subtest: an equivalent anchored ignore rule is not appended again
+ok 121 - an equivalent anchored ignore rule is not appended again
+  ---
+  duration_ms: 1.234083
+  type: 'test'
+  ...
+# Subtest: an unanchored rule stays distinct from the same anchored rule
+ok 122 - an unanchored rule stays distinct from the same anchored rule
+  ---
+  duration_ms: 1.339417
+  type: 'test'
+  ...
+# Subtest: a project using the anchored rules is left unchanged when reopened
+ok 123 - a project using the anchored rules is left unchanged when reopened
+  ---
+  duration_ms: 4.122792
+  type: 'test'
+  ...
+# Subtest: a new gitignore respects umask without changing private file defaults
+ok 124 - a new gitignore respects umask without changing private file defaults
+  ---
+  duration_ms: 4.68375
+  type: 'test'
+  ...
+# Subtest: atomic writes replace files and exclusive writes preserve an existing target
+ok 125 - atomic writes replace files and exclusive writes preserve an existing target
+  ---
+  duration_ms: 1.623792
+  type: 'test'
+  ...
+# Subtest: project mcp config merges private overrides but exposes only presence flags
+ok 126 - project mcp config merges private overrides but exposes only presence flags
+  ---
+  duration_ms: 52.11725
+  type: 'test'
+  ...
+# Subtest: project mcp config rejects duplicate server names and invalid transport fields
+ok 127 - project mcp config rejects duplicate server names and invalid transport fields
+  ---
+  duration_ms: 6.752709
+  type: 'test'
+  ...
+# Subtest: project mcp config validates URL, timeout, reconnect and secret placement
+ok 128 - project mcp config validates URL, timeout, reconnect and secret placement
+  ---
+  duration_ms: 4.049125
+  type: 'test'
+  ...
+# Subtest: project mcp config upserts, rejects namespace conflicts and deletes local overrides
+ok 129 - project mcp config upserts, rejects namespace conflicts and deletes local overrides
+  ---
+  duration_ms: 14.847666
+  type: 'test'
+  ...
+# Subtest: project mcp config rolls back the public file when the private commit fails
+ok 130 - project mcp config rolls back the public file when the private commit fails
+  ---
+  duration_ms: 3.55525
+  type: 'test'
+  ...
+# Subtest: project mcp config rejects oversized serialized public and local documents before any write
+ok 131 - project mcp config rejects oversized serialized public and local documents before any write
+  ---
+  duration_ms: 55.168042
+  type: 'test'
+  ...
+# Subtest: an existing single-file declaration is migrated to one file per server on open
+ok 132 - an existing single-file declaration is migrated to one file per server on open
+  ---
+  duration_ms: 11.194042
+  type: 'test'
+  ...
+# Subtest: an empty single-file declaration is cleaned up without inventing a server
+ok 133 - an empty single-file declaration is cleaned up without inventing a server
+  ---
+  duration_ms: 2.613542
+  type: 'test'
+  ...
+# Subtest: an unreadable single-file declaration is left alone instead of blocking the project
+ok 134 - an unreadable single-file declaration is left alone instead of blocking the project
+  ---
+  duration_ms: 3.904417
+  type: 'test'
+  ...
+# Subtest: project mcp runtime starts enabled servers and skips unchanged reconciles
+ok 135 - project mcp runtime starts enabled servers and skips unchanged reconciles
+  ---
+  duration_ms: 62.835792
+  type: 'test'
+  ...
+# Subtest: project mcp runtime mounts a successful candidate before disposing the previous instance
+ok 136 - project mcp runtime mounts a successful candidate before disposing the previous instance
+  ---
+  duration_ms: 28.188042
+  type: 'test'
+  ...
+# Subtest: project mcp runtime retains the previous instance when a candidate fails
+ok 137 - project mcp runtime retains the previous instance when a candidate fails
+  ---
+  duration_ms: 31.456666
+  type: 'test'
+  ...
+# Subtest: project mcp runtime disposal waits for every mounted instance
+ok 138 - project mcp runtime disposal waits for every mounted instance
+  ---
+  duration_ms: 10.404542
+  type: 'test'
+  ...
+# Subtest: project mcp runtime testConnection uses a temporary namespace and always disposes it
+ok 139 - project mcp runtime testConnection uses a temporary namespace and always disposes it
+  ---
+  duration_ms: 3.405875
+  type: 'test'
+  ...
+# Subtest: project mcp runtime testConnection contains discovery errors and still disposes the temporary instance
+ok 140 - project mcp runtime testConnection contains discovery errors and still disposes the temporary instance
+  ---
+  duration_ms: 3.970042
+  type: 'test'
+  ...
+# Subtest: project mcp runtime mounts the real stdio client and registers its discovered tool
+ok 141 - project mcp runtime mounts the real stdio client and registers its discovered tool
+  ---
+  duration_ms: 50.713875
+  type: 'test'
+  ...
+# Subtest: MCP process exit updates health and permits manual reconnect (empty tools: false)
+ok 142 - MCP process exit updates health and permits manual reconnect (empty tools: false)
+  ---
+  duration_ms: 142.879208
+  type: 'test'
+  ...
+# Subtest: MCP process exit updates health and permits manual reconnect (empty tools: true)
+ok 143 - MCP process exit updates health and permits manual reconnect (empty tools: true)
+  ---
+  duration_ms: 128.624208
+  type: 'test'
+  ...
+# Subtest: MCP automatic reconnect restores tools and reports retry exhaustion
+ok 144 - MCP automatic reconnect restores tools and reports retry exhaustion
+  ---
+  duration_ms: 298.947417
+  type: 'test'
+  ...
+# Subtest: MCP image results use the Host attachment store and model metadata
+ok 145 - MCP image results use the Host attachment store and model metadata
+  ---
+  duration_ms: 63.647667
+  type: 'test'
+  ...
+# Subtest: runtime disposal waits for connection tests and rejects new tests after closing
+ok 146 - runtime disposal waits for connection tests and rejects new tests after closing
+  ---
+  duration_ms: 4.840792
+  type: 'test'
+  ...
+# Subtest: previous connection refresh cannot hide a failed configuration replacement
+ok 147 - previous connection refresh cannot hide a failed configuration replacement
+  ---
+  duration_ms: 13.02525
+  type: 'test'
+  ...
+# Subtest: the project repository reports its own Git state without becoming a managed resource
+ok 148 - the project repository reports its own Git state without becoming a managed resource
+  ---
+  duration_ms: 524.588625
+  type: 'test'
+  ...
+# Subtest: project repository commit, changes, branch listing and switch reuse the resource Git rules
+ok 149 - project repository commit, changes, branch listing and switch reuse the resource Git rules
+  ---
+  duration_ms: 3053.691334
+  type: 'test'
+  ...
+# Subtest: a project repository check reuses the resource sync state machine and its error codes
+ok 150 - a project repository check reuses the resource sync state machine and its error codes
+  ---
+  duration_ms: 816.3685
+  type: 'test'
+  ...
+# Subtest: a project root that is not a Git working tree reports no repository instead of failing
+ok 151 - a project root that is not a Git working tree reports no repository instead of failing
+  ---
+  duration_ms: 96.907041
+  type: 'test'
+  ...
+# Subtest: project repository actions reject a stale project revision like every other project write
+ok 152 - project repository actions reject a stale project revision like every other project write
+  ---
+  duration_ms: 253.44325
+  type: 'test'
+  ...
+# Subtest: resources preserve YAML comments and keep external paths local across add, rename, bind and remove
+ok 153 - resources preserve YAML comments and keep external paths local across add, rename, bind and remove
+  ---
+  duration_ms: 159.649292
+  type: 'test'
+  ...
+# Subtest: resource revisions reject external edits and canonical paths reject duplicates without copying files
+ok 154 - resource revisions reject external edits and canonical paths reject duplicates without copying files
+  ---
+  duration_ms: 146.098125
+  type: 'test'
+  ...
+# Subtest: resource transactions recover a crash after journal without losing either file
+ok 155 - resource transactions recover a crash after journal without losing either file
+  ---
+  duration_ms: 70.039917
+  type: 'test'
+  ...
+# Subtest: resource transactions recover a crash after manifest without losing either file
+ok 156 - resource transactions recover a crash after manifest without losing either file
+  ---
+  duration_ms: 47.578167
+  type: 'test'
+  ...
+# Subtest: resource transactions recover a crash after local without losing either file
+ok 157 - resource transactions recover a crash after local without losing either file
+  ---
+  duration_ms: 44.820208
+  type: 'test'
+  ...
+# Subtest: resource recovery refuses unrelated external edits and metadata symlinks
+ok 158 - resource recovery refuses unrelated external edits and metadata symlinks
+  ---
+  duration_ms: 41.28
+  type: 'test'
+  ...
+# Subtest: unbound and unavailable resources do not fall back to root task artifacts or break the project
+ok 159 - unbound and unavailable resources do not fall back to root task artifacts or break the project
+  ---
+  duration_ms: 28.786166
+  type: 'test'
+  ...
+# Subtest: Git directory inspection recognizes roots and worktrees, filters credentials, and requires explicit origin rebinding
+ok 160 - Git directory inspection recognizes roots and worktrees, filters credentials, and requires explicit origin rebinding
+  ---
+  duration_ms: 769.0395
+  type: 'test'
+  ...
+# Subtest: a local Git working tree is accepted as a Git resource before it has an origin remote
+ok 161 - a local Git working tree is accepted as a Git resource before it has an origin remote
+  ---
+  duration_ms: 396.603917
+  type: 'test'
+  ...
+# Subtest: Git URL validation rejects credentials, option/helper injection and local transport
+ok 162 - Git URL validation rejects credentials, option/helper injection and local transport
+  ---
+  duration_ms: 0.451958
+  type: 'test'
+  ...
+# Subtest: development resolves the saved independent Shell and rejects the old checkout
+ok 163 - development resolves the saved independent Shell and rejects the old checkout
+  ---
+  duration_ms: 2.899209
+  type: 'test'
+  ...
+# Subtest: Shell validation rejects beta, altered pins, stale inventory and failed source integrity
+ok 164 - Shell validation rejects beta, altered pins, stale inventory and failed source integrity
+  ---
+  duration_ms: 34.009917
+  type: 'test'
+  ...
+# Subtest: project skills discover standard bundles, reject flat files and group inherited skills
+ok 165 - project skills discover standard bundles, reject flat files and group inherited skills
+  ---
+  duration_ms: 52.753375
+  type: 'test'
+  ...
+# Subtest: project skills invalidate the DSH catalog on enable changes and retain the last valid index
+ok 166 - project skills invalidate the DSH catalog on enable changes and retain the last valid index
+  ---
+  duration_ms: 67.763166
+  type: 'test'
+  ...
+# Subtest: project skills import a complete bundle without modifying the source and reject conflicts
+ok 167 - project skills import a complete bundle without modifying the source and reject conflicts
+  ---
+  duration_ms: 26.004709
+  type: 'test'
+  ...
+# Subtest: project skills reject sources inside the target and symbolic links escaping the bundle
+ok 168 - project skills reject sources inside the target and symbolic links escaping the bundle
+  ---
+  duration_ms: 19.469208
+  type: 'test'
+  ...
+# Subtest: project skills enforce file count, per-file and total import limits
+ok 169 - project skills enforce file count, per-file and total import limits
+  ---
+  duration_ms: 16.289166
+  type: 'test'
+  ...
+# Subtest: hand-edited and atomically replaced Skill indexes refresh the cached DSH catalog
+ok 170 - hand-edited and atomically replaced Skill indexes refresh the cached DSH catalog
+  ---
+  duration_ms: 1153.157125
+  type: 'test'
+  ...
+# Subtest: Skill enable writes enforce the index byte limit without changing disk or effective state
+ok 171 - Skill enable writes enforce the index byte limit without changing disk or effective state
+  ---
+  duration_ms: 286.643125
+  type: 'test'
+  ...
+# Subtest: project Skill management includes the selected preset and marks same-name shadowing as ineffective
+ok 172 - project Skill management includes the selected preset and marks same-name shadowing as ineffective
+  ---
+  duration_ms: 12.394375
+  type: 'test'
+  ...
+# Subtest: Demo Web capabilities survive reopening without rewriting project files
+ok 173 - Demo Web capabilities survive reopening without rewriting project files
+  ---
+  duration_ms: 109.867375
+  type: 'test'
+  ...
+# Subtest: two projects contribute only their own resource and memory context
+ok 174 - two projects contribute only their own resource and memory context
+  ---
+  duration_ms: 4.759
+  type: 'test'
+  ...
+# Subtest: local resource bindings override paths without changing portable metadata
+ok 175 - local resource bindings override paths without changing portable metadata
+  ---
+  duration_ms: 6.395125
+  type: 'test'
+  ...
+# Subtest: duplicate resource identities fail before a Project becomes available
+ok 176 - duplicate resource identities fail before a Project becomes available
+  ---
+  duration_ms: 4.426125
+  type: 'test'
+  ...
+# Subtest: a missing resource is visible instead of being silently omitted
+ok 177 - a missing resource is visible instead of being silently omitted
+  ---
+  duration_ms: 4.413875
+  type: 'test'
+  ...
+# Subtest: memory cannot follow a symlink outside the project memory directory
+ok 178 - memory cannot follow a symlink outside the project memory directory
+  ---
+  duration_ms: 9.170458
+  type: 'test'
+  ...
+# Subtest: memory edits atomically replace only the configured file and preserve its mode
+ok 179 - memory edits atomically replace only the configured file and preserve its mode
+  ---
+  duration_ms: 4.994542
+  type: 'test'
+  ...
+# Subtest: memory reads only root memory files and rejects legacy, absolute and traversal paths
+ok 180 - memory reads only root memory files and rejects legacy, absolute and traversal paths
+  ---
+  duration_ms: 59.424625
+  type: 'test'
+  ...
+# Subtest: the memory directory itself cannot redirect reads or writes through a symlink
+ok 181 - the memory directory itself cannot redirect reads or writes through a symlink
+  ---
+  duration_ms: 5.881125
+  type: 'test'
+  ...
+# Subtest: memory edits enforce UTF-8 document and aggregate byte limits before writing
+ok 182 - memory edits enforce UTF-8 document and aggregate byte limits before writing
+  ---
+  duration_ms: 6.438375
+  type: 'test'
+  ...
+# Subtest: an invalid local binding is not silently ignored
+ok 183 - an invalid local binding is not silently ignored
+  ---
+  duration_ms: 4.443792
+  type: 'test'
+  ...
+# Subtest: resource API authenticates every endpoint and validates native capability, origins, body limits and project scope
+ok 184 - resource API authenticates every endpoint and validates native capability, origins, body limits and project scope
+  ---
+  duration_ms: 504.665958
+  type: 'test'
+  ...
+# Subtest: authentication API is scoped to live operations, sanitizes invalid input and never echoes submitted secrets
+ok 185 - authentication API is scoped to live operations, sanitizes invalid input and never echoes submitted secrets
+  ---
+  duration_ms: 147.990708
+  type: 'test'
+  ...
+# Subtest: sync API returns before fetch completes, locks the resource and exposes a sanitized result after navigation
+ok 186 - sync API returns before fetch completes, locks the resource and exposes a sanitized result after navigation
+  ---
+  duration_ms: 1407.823208
+  type: 'test'
+  ...
+# Subtest: resource API updates project data, handles revision conflicts and registers actual local clone fixtures
+ok 187 - resource API updates project data, handles revision conflicts and registers actual local clone fixtures
+  ---
+  duration_ms: 905.047625
+  type: 'test'
+  ...
+# Subtest: resource endpoints refuse manifest identity changes during the same Host lifetime
+ok 188 - resource endpoints refuse manifest identity changes during the same Host lifetime
+  ---
+  duration_ms: 210.31075
+  type: 'test'
+  ...
+# Subtest: the project repository route is authenticated and validated separately from the resource API
+ok 189 - the project repository route is authenticated and validated separately from the resource API
+  ---
+  duration_ms: 185.065625
+  type: 'test'
+  ...
+# Subtest: real HTTPS clone pauses for authentication then continues without persisting a password
+ok 190 - real HTTPS clone pauses for authentication then continues without persisting a password
+  ---
+  duration_ms: 733.685333
+  type: 'test'
+  ...
+# Subtest: real Git credential helper binds secrets to one HTTPS repository and uses no credential files
+ok 191 - real Git credential helper binds secrets to one HTTPS repository and uses no credential files
+  ---
+  duration_ms: 819.492417
+  type: 'test'
+  ...
+# Subtest: SSH askpass supplies only the selected key passphrase and cleans its helper on close
+ok 192 - SSH askpass supplies only the selected key passphrase and cleans its helper on close
+  ---
+  duration_ms: 497.203584
+  type: 'test'
+  ...
+# Subtest: explicit credentials refuse Git URL rewrites before any authenticated transport
+ok 193 - explicit credentials refuse Git URL rewrites before any authenticated transport
+  ---
+  duration_ms: 199.606167
+  type: 'test'
+  ...
+# Subtest: parallel authentication requests isolate credentials and never project them in snapshots
+ok 194 - parallel authentication requests isolate credentials and never project them in snapshots
+  ---
+  duration_ms: 14.609958
+  type: 'test'
+  ...
+# Subtest: background checks never prompt and invalid credentials receive a fresh retry request
+ok 195 - background checks never prompt and invalid credentials receive a fresh retry request
+  ---
+  duration_ms: 35.611959
+  type: 'test'
+  ...
+# Subtest: authentication cancel releases the operation and removes its prompt
+ok 196 - authentication cancel releases the operation and removes its prompt
+  ---
+  duration_ms: 11.623625
+  type: 'test'
+  ...
+# Subtest: authentication abort releases the operation and removes its prompt
+ok 197 - authentication abort releases the operation and removes its prompt
+  ---
+  duration_ms: 11.09775
+  type: 'test'
+  ...
+# Subtest: authentication dispose releases the operation and removes its prompt
+ok 198 - authentication dispose releases the operation and removes its prompt
+  ---
+  duration_ms: 10.439666
+  type: 'test'
+  ...
+# Subtest: authentication expire releases the operation and removes its prompt
+ok 199 - authentication expire releases the operation and removes its prompt
+  ---
+  duration_ms: 104.126542
+  type: 'test'
+  ...
+# Subtest: key choices include only private keys and reject unsafe permissions without exposing their contents
+ok 200 - key choices include only private keys and reject unsafe permissions without exposing their contents
+  ---
+  duration_ms: 32.063292
+  type: 'test'
+  ...
+# Subtest: clone resumes after authentication and never persists its credentials
+ok 201 - clone resumes after authentication and never persists its credentials
+  ---
+  duration_ms: 468.814833
+  type: 'test'
+  ...
+# Subtest: clone resumes after authentication and preserves files created while waiting
+ok 202 - clone resumes after authentication and preserves files created while waiting
+  ---
+  duration_ms: 232.511334
+  type: 'test'
+  ...
+# Subtest: a manual resource check can authenticate after a silent background failure, and closing cancels a waiting update
+ok 203 - a manual resource check can authenticate after a silent background failure, and closing cancels a waiting update
+  ---
+  duration_ms: 2307.28225
+  type: 'test'
+  ...
+# Subtest: Git clone uses an exclusive project target and registers a verified working tree with a stable identity
+ok 204 - Git clone uses an exclusive project target and registers a verified working tree with a stable identity
+  ---
+  duration_ms: 524.235666
+  type: 'test'
+  ...
+# Subtest: Git clone rejects existing empty directories, reserved targets, symlink parents and tracked deleted targets
+ok 205 - Git clone rejects existing empty directories, reserved targets, symlink parents and tracked deleted targets
+  ---
+  duration_ms: 399.498667
+  type: 'test'
+  ...
+# Subtest: a clone completed after a configuration edit remains pending and can be registered without downloading again
+ok 206 - a clone completed after a configuration edit remains pending and can be registered without downloading again
+  ---
+  duration_ms: 468.111625
+  type: 'test'
+  ...
+# Subtest: cancellation and shutdown wait for the Git runner, retain directories and never register a cancelled resource
+ok 207 - cancellation and shutdown wait for the Git runner, retain directories and never register a cancelled resource
+  ---
+  duration_ms: 299.528
+  type: 'test'
+  ...
+# Subtest: cloning failures do not leak Git output and recovered records do not automatically run Git clone
+ok 208 - cloning failures do not leak Git output and recovered records do not automatically run Git clone
+  ---
+  duration_ms: 74.7845
+  type: 'test'
+  ...
+# Subtest: registration refuses a replaced directory and missing Git disables only cloning
+ok 209 - registration refuses a replaced directory and missing Git disables only cloning
+  ---
+  duration_ms: 351.227375
+  type: 'test'
+  ...
+# Subtest: partial clones of existing resources remain unavailable across restarts and can retry at a new target
+ok 210 - partial clones of existing resources remain unavailable across restarts and can retry at a new target
+  ---
+  duration_ms: 425.563209
+  type: 'test'
+  ...
+# Subtest: default branches and empty repositories register, while nonexistent branches leave no resource
+ok 211 - default branches and empty repositories register, while nonexistent branches leave no resource
+  ---
+  duration_ms: 931.613958
+  type: 'test'
+  ...
+# Subtest: system Git cancel terminates the actual Git, shell and helper process group
+ok 212 - system Git cancel terminates the actual Git, shell and helper process group
+  ---
+  duration_ms: 433.910333
+  type: 'test'
+  ...
+# Subtest: system Git timeout terminates the actual Git, shell and helper process group
+ok 213 - system Git timeout terminates the actual Git, shell and helper process group
+  ---
+  duration_ms: 1840.172458
+  type: 'test'
+  ...
+# Subtest: association records the portable remote and configures an unborn branch without touching local work
+ok 214 - association records the portable remote and configures an unborn branch without touching local work
+  ---
+  duration_ms: 690.489125
+  type: 'test'
+  ...
+# Subtest: failed association restores its config values and preserves unrelated concurrent Git configuration
+ok 215 - failed association restores its config values and preserves unrelated concurrent Git configuration
+  ---
+  duration_ms: 1036.139167
+  type: 'test'
+  ...
+# Subtest: association completes a prepared journal transaction with matching Git configuration
+ok 216 - association completes a prepared journal transaction with matching Git configuration
+  ---
+  duration_ms: 428.327917
+  type: 'test'
+  ...
+# Subtest: association completes a prepared manifest transaction with matching Git configuration
+ok 217 - association completes a prepared manifest transaction with matching Git configuration
+  ---
+  duration_ms: 528.452583
+  type: 'test'
+  ...
+# Subtest: association completes a prepared local transaction with matching Git configuration
+ok 218 - association completes a prepared local transaction with matching Git configuration
+  ---
+  duration_ms: 376.780083
+  type: 'test'
+  ...
+# Subtest: checks fetch remote state without changing files; explicit update refetches then fast-forwards without hooks
+ok 219 - checks fetch remote state without changing files; explicit update refetches then fast-forwards without hooks
+  ---
+  duration_ms: 2956.673916
+  type: 'test'
+  ...
+# Subtest: new local repositories are unlinked, stay out of automatic fetches and preserve root access for tasks
+ok 220 - new local repositories are unlinked, stay out of automatic fetches and preserve root access for tasks
+  ---
+  duration_ms: 149.216375
+  type: 'test'
+  ...
+# Subtest: removing an origin produces an unlinked state, and associating it restores tracking without a download
+ok 221 - removing an origin produces an unlinked state, and associating it restores tracking without a download
+  ---
+  duration_ms: 1712.627375
+  type: 'test'
+  ...
+# Subtest: update preserves modified local files and refuses to advance
+ok 222 - update preserves modified local files and refuses to advance
+  ---
+  duration_ms: 1123.97925
+  type: 'test'
+  ...
+# Subtest: update preserves staged local files and refuses to advance
+ok 223 - update preserves staged local files and refuses to advance
+  ---
+  duration_ms: 1117.4325
+  type: 'test'
+  ...
+# Subtest: update preserves untracked local files and refuses to advance
+ok 224 - update preserves untracked local files and refuses to advance
+  ---
+  duration_ms: 1059.234875
+  type: 'test'
+  ...
+# Subtest: ahead and diverged histories are distinguished; update never merges or resets divergent commits
+ok 225 - ahead and diverged histories are distinguished; update never merges or resets divergent commits
+  ---
+  duration_ms: 1581.98475
+  type: 'test'
+  ...
+# Subtest: reports detached and refuses an unsafe update
+ok 226 - reports detached and refuses an unsafe update
+  ---
+  duration_ms: 426.998041
+  type: 'test'
+  ...
+# Subtest: reports no-upstream and refuses an unsafe update
+ok 227 - reports no-upstream and refuses an unsafe update
+  ---
+  duration_ms: 450.173334
+  type: 'test'
+  ...
+# Subtest: reports origin and refuses an unsafe update
+ok 228 - reports origin and refuses an unsafe update
+  ---
+  duration_ms: 403.448709
+  type: 'test'
+  ...
+# Subtest: reports merge and refuses an unsafe update
+ok 229 - reports merge and refuses an unsafe update
+  ---
+  duration_ms: 568.167208
+  type: 'test'
+  ...
+# Subtest: remote deletion and authentication failure never report a stale remote as up to date
+ok 230 - remote deletion and authentication failure never report a stale remote as up to date
+  ---
+  duration_ms: 1334.215667
+  type: 'test'
+  ...
+# Subtest: ignored local files are retained if a remote update would overwrite them
+ok 231 - ignored local files are retained if a remote update would overwrite them
+  ---
+  duration_ms: 1266.276208
+  type: 'test'
+  ...
+# Subtest: a branch switch during fetch stops the update and subsequent checks use the current tracking branch
+ok 232 - a branch switch during fetch stops the update and subsequent checks use the current tracking branch
+  ---
+  duration_ms: 2114.040208
+  type: 'test'
+  ...
+# Subtest: sync excludes conflicting operations on the same resource; disposal prevents a working-tree update
+ok 233 - sync excludes conflicting operations on the same resource; disposal prevents a working-tree update
+  ---
+  duration_ms: 301.697333
+  type: 'test'
+  ...
+# Subtest: independent resources fetch concurrently; an automatic check does not block a manual update or duplicate a check
+ok 234 - independent resources fetch concurrently; an automatic check does not block a manual update or duplicate a check
+  ---
+  duration_ms: 1302.251958
+  type: 'test'
+  ...
+# Subtest: linked worktrees sharing Git refs wait for each other without a project-wide busy error
+ok 235 - linked worktrees sharing Git refs wait for each other without a project-wide busy error
+  ---
+  duration_ms: 1079.375417
+  type: 'test'
+  ...
+# Subtest: closing aborts every concurrent resource operation and waits for them to finish
+ok 236 - closing aborts every concurrent resource operation and waits for them to finish
+  ---
+  duration_ms: 403.680875
+  type: 'test'
+  ...
+# Subtest: changes to files during fetch stop a requested update
+ok 237 - changes to files during fetch stop a requested update
+  ---
+  duration_ms: 1224.660542
+  type: 'test'
+  ...
+# Subtest: changes to configuration during fetch stop a requested update
+ok 238 - changes to configuration during fetch stop a requested update
+  ---
+  duration_ms: 1119.419584
+  type: 'test'
+  ...
+# Subtest: startup checks run once without changing files; subsequent checks and updates remain manual
+ok 239 - startup checks run once without changing files; subsequent checks and updates remain manual
+  ---
+  duration_ms: 2180.693667
+  type: 'test'
+  ...
+# Subtest: commit stages every change, reports the branch ahead and never runs repository hooks
+ok 240 - commit stages every change, reports the branch ahead and never runs repository hooks
+  ---
+  duration_ms: 1082.614916
+  type: 'test'
+  ...
+# Subtest: commit refuses an empty message, a clean tree and a missing identity
+ok 241 - commit refuses an empty message, a clean tree and a missing identity
+  ---
+  duration_ms: 1603.4225
+  type: 'test'
+  ...
+# Subtest: push advances only a fast-forward, never forces and records the pushed tracking branch
+ok 242 - push advances only a fast-forward, never forces and records the pushed tracking branch
+  ---
+  duration_ms: 1323.130958
+  type: 'test'
+  ...
+# Subtest: push refuses diverged history and a branch with nothing to push
+ok 243 - push refuses diverged history and a branch with nothing to push
+  ---
+  duration_ms: 2094.35775
+  type: 'test'
+  ...
+# Subtest: changes reports the modified, untracked, deleted and renamed files a commit would include
+ok 244 - changes reports the modified, untracked, deleted and renamed files a commit would include
+  ---
+  duration_ms: 352.704958
+  type: 'test'
+  ...
+# Subtest: branches lists local and remote names; switching refuses local changes and unknown branches
+ok 245 - branches lists local and remote names; switching refuses local changes and unknown branches
+  ---
+  duration_ms: 1444.936417
+  type: 'test'
+  ...
+# Subtest: commit fetch authentication continues in the original task and resource scope
+ok 246 - commit fetch authentication continues in the original task and resource scope
+  ---
+  duration_ms: 732.136042
+  type: 'test'
+  ...
+# Subtest: commit fetch authentication ends when the preview closes
+ok 247 - commit fetch authentication ends when the preview closes
+  ---
+  duration_ms: 371.612583
+  type: 'test'
+  ...
+# Subtest: commit previews read immutable history, exact edits, renamed paths, binaries, large files and mode changes
+ok 248 - commit previews read immutable history, exact edits, renamed paths, binaries, large files and mode changes
+  ---
+  duration_ms: 1994.644042
+  type: 'test'
+  ...
+# Subtest: initial and merge commits use empty tree and first parent; replacement refs do not rewrite the preview
+ok 249 - initial and merge commits use empty tree and first parent; replacement refs do not rewrite the preview
+  ---
+  duration_ms: 622.760042
+  type: 'test'
+  ...
+# Subtest: missing commits fetch only on an explicit request without changing HEAD, index, working files or remote refs
+ok 250 - missing commits fetch only on an explicit request without changing HEAD, index, working files or remote refs
+  ---
+  duration_ms: 594.171875
+  type: 'test'
+  ...
+# Subtest: task revisions, exact artifacts, matching resources and unchanged bindings are mandatory
+ok 251 - task revisions, exact artifacts, matching resources and unchanged bindings are mandatory
+  ---
+  duration_ms: 325.950083
+  type: 'test'
+  ...
+# Subtest: shallow history can fetch its missing parent while deletion, newline and submodule changes remain previewable
+ok 252 - shallow history can fetch its missing parent while deletion, newline and submodule changes remain previewable
+  ---
+  duration_ms: 1319.801791
+  type: 'test'
+  ...
+# Subtest: tab cancellation and Host closure abort ongoing Git reads and wait for settlement
+ok 253 - tab cancellation and Host closure abort ongoing Git reads and wait for settlement
+  ---
+  duration_ms: 159.645625
+  type: 'test'
+  ...
+# Subtest: repository identities normalize supported transports without broad URL or command interpretation
+ok 254 - repository identities normalize supported transports without broad URL or command interpretation
+  ---
+  duration_ms: 0.420834
+  type: 'test'
+  ...
+# Subtest: official Session client filters create payload, retries the published identity and exposes its draft scope immediately
+ok 255 - official Session client filters create payload, retries the published identity and exposes its draft scope immediately
+  ---
+  duration_ms: 58.753583
+  type: 'test'
+  ...
+# Subtest: official Session list includes cold project records and makes their client navigation scope available
+ok 256 - official Session list includes cold project records and makes their client navigation scope available
+  ---
+  duration_ms: 3.890042
+  type: 'test'
+  ...
+# Subtest: source locations come from the runtime Session log and remain machine-local
+ok 257 - source locations come from the runtime Session log and remain machine-local
+  ---
+  duration_ms: 81.571583
+  type: 'test'
+  ...
+# Subtest: completion through the real ToolRuntime requires evidence for the commissioned design result
+ok 258 - completion through the real ToolRuntime requires evidence for the commissioned design result
+  ---
+  duration_ms: 48.585875
+  type: 'test'
+  ...
+# Subtest: tool search and history are bounded, revision-bound, and retain full saved Chinese content
+ok 259 - tool search and history are bounded, revision-bound, and retain full saved Chinese content
+  ---
+  duration_ms: 98.1095
+  type: 'test'
+  ...
+# Subtest: four explicit Task tools never bind conversations or infer Deliverable ownership
+ok 260 - four explicit Task tools never bind conversations or infer Deliverable ownership
+  ---
+  duration_ms: 41.23175
+  type: 'test'
+  ...
+# Subtest: task context is project based and bounded, with no session pointer or local-map dependency
+ok 261 - task context is project based and bounded, with no session pointer or local-map dependency
+  ---
+  duration_ms: 12.716375
+  type: 'test'
+  ...
+# Subtest: records survive reload; shared files omit local Session identities and receipts are private to Store
+ok 262 - records survive reload; shared files omit local Session identities and receipts are private to Store
+  ---
+  duration_ms: 53.879667
+  type: 'test'
+  ...
+# Subtest: revision conflicts, external edits and same-operation retries never replace newer work
+ok 263 - revision conflicts, external edits and same-operation retries never replace newer work
+  ---
+  duration_ms: 37.591292
+  type: 'test'
+  ...
+# Subtest: field omission preserves, explicit null clears, and entries cannot be overwritten
+ok 264 - field omission preserves, explicit null clears, and entries cannot be overwritten
+  ---
+  duration_ms: 39.758708
+  type: 'test'
+  ...
+# Subtest: completion requires current acceptance evidence; changed scope invalidates older passed evidence
+ok 265 - completion requires current acceptance evidence; changed scope invalidates older passed evidence
+  ---
+  duration_ms: 113.655709
+  type: 'test'
+  ...
+# Subtest: latest failed verification and superseded checks cannot hide behind an earlier pass
+ok 266 - latest failed verification and superseded checks cannot hide behind an earlier pass
+  ---
+  duration_ms: 60.764792
+  type: 'test'
+  ...
+# Subtest: removed then restored criterion identities get a fresh version
+ok 267 - removed then restored criterion identities get a fresh version
+  ---
+  duration_ms: 16.743916
+  type: 'test'
+  ...
+# Subtest: overview and history pages are bounded, newest-first and bound to file revision
+ok 268 - overview and history pages are bounded, newest-first and bound to file revision
+  ---
+  duration_ms: 395.377166
+  type: 'test'
+  ...
+# Subtest: failed Task commit leaves files unchanged; only confirmed dead lock owners are recovered
+ok 269 - failed Task commit leaves files unchanged; only confirmed dead lock owners are recovered
+  ---
+  duration_ms: 32.587958
+  type: 'test'
+  ...
+# Subtest: portable bundles survive project relocation and missing or corrupt conversation sources
+ok 270 - portable bundles survive project relocation and missing or corrupt conversation sources
+  ---
+  duration_ms: 13.780875
+  type: 'test'
+  ...
+# Subtest: create retries across conversations reuse identity; names are safe, distinct and stable on rename
+ok 271 - create retries across conversations reuse identity; names are safe, distinct and stable on rename
+  ---
+  duration_ms: 11.911042
+  type: 'test'
+  ...
+# Subtest: artifact files are explicitly copied into tasks and survive Resource removal; bad paths fail immediately
+ok 272 - artifact files are explicitly copied into tasks and survive Resource removal; bad paths fail immediately
+  ---
+  duration_ms: 31.775959
+  type: 'test'
+  ...
+# Subtest: completion requires an explicit current handoff; references can be corrected without deleting history
+ok 273 - completion requires an explicit current handoff; references can be corrected without deleting history
+  ---
+  duration_ms: 16.632959
+  type: 'test'
+  ...
+# Subtest: size limits, damaged records, duplicate ids and symlinks are isolated
+ok 274 - size limits, damaged records, duplicate ids and symlinks are isolated
+  ---
+  duration_ms: 12.41525
+  type: 'test'
+  ...
+# Subtest: window actions require DSH authentication and same-origin JSON before native operations
+ok 275 - window actions require DSH authentication and same-origin JSON before native operations
+  ---
+  duration_ms: 61.723791
+  type: 'test'
+  ...
+1..275
+# tests 275
+# suites 0
+# pass 275
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 36222.226
