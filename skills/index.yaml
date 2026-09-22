@@ -4,3 +4,5 @@ skills:
     enabled: true
   desktop-release:
     enabled: true
+  windows-powershell-51:
+    enabled: true
