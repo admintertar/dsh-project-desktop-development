@@ -6,11 +6,11 @@ title: 项目资产变更审阅：按任务/技能/记忆/MCP 分组提交
 objective: 把项目概览页的项目根 Git 能力从「仓库级提交」改造为「项目资产级变更审阅」：按任务/技能/记忆/MCP/其他文件分组列出新增、更新、删除的条目卡片，逐条勾选后只提交选中项，提交信息按资产类型自动生成；分支、领先落后与推送降级为区块顶部的同步状态行与详情入口。底层仍复用项目根仓库 Git，但用户面对的是项目资产而非文件 diff。
 status: completed
 createdAt: 2026-09-22T03:18:33.678Z
-updatedAt: 2026-09-22T06:39:55.230Z
+updatedAt: 2026-09-22T06:57:48.401Z
 artifacts:
   - type: file
     path: artifacts/project-changes-zh-light-1180.png
-    description: 区块只剩检查更新 / 仓库详情（推送已移入详情弹窗）
+    description: 区块「刷新」已与页头刷新一致（图标 + 文字）
   - type: file
     path: artifacts/project-changes-zh-dark-1180.png
     description: 中文/深色/1180px
@@ -37,13 +37,16 @@ artifacts:
     description: 工具栏：全选 / 清空 / 提交按钮
   - type: file
     path: artifacts/project-changes-after-commit.png
-    description: 提交后：两个资产离开审阅，且分支已领先上游 2 个提交
+    description: 提交后：两个资产离开审阅
   - type: file
     path: artifacts/native-smoke-result.json
-    description: 原生冒烟完整结果（含领先时主界面无推送按钮的断言）
+    description: 原生冒烟完整结果（含两处刷新按钮图标一致性断言）
   - type: file
     path: artifacts/native-smoke-run.log
     description: smoke:resources 运行日志（EXIT=0）
+  - type: file
+    path: artifacts/project-changes-plan-tooltip.png
+    description: 提交按钮悬浮气泡（按钮右侧）
 archived: false
 phase: validation
 brief:
@@ -87,9 +90,9 @@ handoff:
   nextSteps:
     - 发布时才需要：先 push 插件提交，再把 upstream.lock.json 的 project.commit/tree 指到该已推送提交，删除 .upstream/project 后重导并跑 yarn run verify:upstream。
     - 壳仓库 scripts/native-resource-state-checks.mjs 的验收扩展是未提交改动，需随壳一起提交。
-    - 待办：提交按钮悬浮气泡的视觉呈现尚未自动化验证（合成鼠标事件在无头窗口不可行），需人工 hover 确认。
-    - 待确认：推送入口现位于「仓库详情」；若确认不需要在界面推送，可进一步移除。
+    - 验收手法备注：隐藏窗口下 sendInputEvent 的连续合成按键会偶发丢失，需要两次连续按键时应改用一次按键 + 一次 click。
     - MCP 多 server 共享 mcp/servers.yaml：各自成为一个提交但每个提交都带上整个文件，需 partial staging 才能路径级隔离。
+    - 记忆条目仍无新增入口（task-e3ccde1c），只会以「更新」出现。
 references: []
 entries:
   - id: dec-1
@@ -499,6 +502,179 @@ entries:
       - ver-fix-8
       - ver-fix-9
     createdAt: 2026-09-22T06:39:55.230Z
+  - id: prog-10
+    kind: progress
+    content: 用户三点反馈：(1) 标题「项目空间变更」改为「项目资产」；(2) 卡片上的「新增」标签固定在该行右侧最后；(3) 鼠标移到提交按钮时气泡没有出来（真实缺陷）。
+    basis: user-request
+    createdAt: 2026-09-22T06:43:56.007Z
+  - id: ver-fix-10
+    kind: verification
+    content: 气泡不出现的根因：官方 Tooltip 需要一个能挂事件的 DOM 子元素，而我直接把 Button 传给了它；仓库内其他 Tooltip（如资源卡片的动作按钮）都是 .project-mcp-action-anchor span 包住 Button 的。改用相同写法后气泡正常显示。这一发现也推翻了上一轮的结论——当时以为「无头窗口无法合成鼠标悬停」，实际是气泡根本未挂载。
+    basis: observation
+    verification:
+      criterionId: ac2
+      criterionVersion: 1
+      method: "三处修正：(1) locales 标题改为「项目资产」/ Project assets；(2) .project-change-name 加 flex:1 占满剩余宽度，使新增/更新/删除标签固定在该行最右；(3) Tooltip 内改用 <span className=\"project-mcp-action-anchor\"> 包裹提交按钮。验证：window.show()+focus()+sendInputEvent(mouseMove) 移到按钮中心后，断言 document.body 文本包含 'feat(skills): 新增技能 review-fixture' 并落盘 project-changes-plan-tooltip.png（同一手法在修复前两次超时，修复后通过）。"
+      result: passed
+      coverage: 原生：真实 hover 后气泡内容断言 + 截图证据
+    createdAt: 2026-09-22T06:43:56.007Z
+  - id: done-10
+    kind: completion
+    content: 标题改名、标签右对齐、气泡修复三项均已完成并经原生验收。
+    basis: agent-proposal
+    verificationEntryIds:
+      - ver-ac1
+      - ver-ac2
+      - ver-ac3
+      - ver-ac4
+      - ver-ac5
+      - ver-ac6
+      - ver-fix-1
+      - ver-fix-2
+      - ver-fix-3
+      - ver-fix-4
+      - ver-fix-5
+      - ver-fix-6
+      - ver-fix-7
+      - ver-fix-8
+      - ver-fix-9
+      - ver-fix-10
+    createdAt: 2026-09-22T06:43:56.007Z
+  - id: prog-11
+    kind: progress
+    content: 用户觉得「检查更新 / 仓库详情」两个按钮放在资产审阅区块里不合适，征询方案。
+    basis: user-request
+    createdAt: 2026-09-22T06:49:52.870Z
+  - id: dec-11
+    kind: decision
+    content: 用户选定推荐方案：状态即入口 + 自动检查一次。
+    basis: user-request
+    createdAt: 2026-09-22T06:49:52.870Z
+  - id: dec-12
+    kind: decision
+    content: 实现：删除按钮行（.project-change-actions 与样式）；分支+状态标签包成无边框按钮 .project-change-repository（hover 底色、focus-visible 轮廓、aria-haspopup=dialog）打开仓库详情；检查更新与推送提交移入详情弹窗 footer；概览打开且状态未检查时自动检查一次。
+    basis: agent-proposal
+    createdAt: 2026-09-22T06:49:52.870Z
+  - id: ver-fix-11
+    kind: verification
+    content: 状态块已是详情入口；同时修掉自动检查锁住工具栏的缺陷。
+    basis: observation
+    verification:
+      criterionId: ac3
+      criterionVersion: 1
+      method: 原生冒烟断言：点击 .project-change-repository 后弹窗内包含「检查更新」与「目录」，Escape 关闭后弹窗消失；并断言自动检查进行期间工具栏可用（等待「清空」按钮 disabled === false）。实现上给 controller.sync 增加 silent 参数，自动检查不设 pending、不产生页面级错误（失败只反映在状态标签上），否则检查期间全选/清空/提交会全部禁用，远端不可达时要等到超时。
+      result: passed
+      coverage: 原生：状态入口打开详情 + 工具栏在自动检查期间仍可用 + 8 组视觉
+    createdAt: 2026-09-22T06:49:52.870Z
+  - id: done-11
+    kind: completion
+    content: 仓库动作已从主界面移除，状态块即入口，检查改为静默自动一次。
+    basis: agent-proposal
+    verificationEntryIds:
+      - ver-ac1
+      - ver-ac2
+      - ver-ac3
+      - ver-ac4
+      - ver-ac5
+      - ver-ac6
+      - ver-fix-1
+      - ver-fix-2
+      - ver-fix-3
+      - ver-fix-4
+      - ver-fix-5
+      - ver-fix-6
+      - ver-fix-7
+      - ver-fix-8
+      - ver-fix-9
+      - ver-fix-10
+      - ver-fix-11
+    createdAt: 2026-09-22T06:49:52.870Z
+  - id: prog-12
+    kind: progress
+    content: 用户三点打磨：(1) 气泡里的「将生成 x 个提交」说明不需要，且气泡位置希望改到后面；(2) 工具栏离上方太近，加间距；(3) 选中卡片不需要边框变黑。
+    basis: user-request
+    createdAt: 2026-09-22T06:55:20.300Z
+  - id: dec-13
+    kind: decision
+    content: 同意第 3 点：卡片页脚的勾选框与「包含在本次提交」已经表达了选择状态，主题色边框是多余的强调，已移除（data-selected 属性保留作语义标记）。
+    basis: agent-proposal
+    createdAt: 2026-09-22T06:55:20.300Z
+  - id: ver-fix-12
+    kind: verification
+    content: 气泡现为按钮右侧、只列提交信息；工具栏有间距；选中卡片无边框强调。
+    basis: observation
+    verification:
+      criterionId: ac2
+      criterionVersion: 1
+      method: 三项修改并用原生验收确认：(1) plan 只由各条提交信息组成（去掉首行说明），Tooltip 改为 side="right"，不再遮挡标题行——截图 project-changes-plan-tooltip.png 可见气泡出现在按钮右侧且内容仅两行；(2) .project-change-toolbar 增加 margin-top:12px；(3) 删除 .project-change-card[data-selected='true'] 的边框规则。验收侧同步修正两处：plan 断言不再丢弃首行；键盘验证改为「一次真实 Space 证明切换语义 + 一次 click 恢复选择」——第二次合成 Space 会被隐藏窗口偶发丢弃（上一轮因此失败一次），属测试手法局限而非产品缺陷。
+      result: passed
+      coverage: 原生：气泡位置与内容 + 8 组视觉（含卡片外观）
+    createdAt: 2026-09-22T06:55:20.300Z
+  - id: done-12
+    kind: completion
+    content: 气泡、间距、选中样式三项打磨完成并经原生验收。
+    basis: agent-proposal
+    verificationEntryIds:
+      - ver-ac1
+      - ver-ac2
+      - ver-ac3
+      - ver-ac4
+      - ver-ac5
+      - ver-ac6
+      - ver-fix-1
+      - ver-fix-2
+      - ver-fix-3
+      - ver-fix-4
+      - ver-fix-5
+      - ver-fix-6
+      - ver-fix-7
+      - ver-fix-8
+      - ver-fix-9
+      - ver-fix-10
+      - ver-fix-11
+      - ver-fix-12
+    createdAt: 2026-09-22T06:55:20.300Z
+  - id: prog-13
+    kind: progress
+    content: 用户指出区块的「刷新」按钮样式与页头（面板右上角）的刷新按钮不一致。
+    basis: user-request
+    createdAt: 2026-09-22T06:57:48.401Z
+  - id: ver-fix-13
+    kind: verification
+    content: 区块刷新按钮缺少图标，已补上 IconRefreshOutline16，与页头刷新控件一致；原生断言两处刷新按钮都包含 svg 图标。
+    basis: observation
+    verification:
+      criterionId: ac5
+      criterionVersion: 1
+      method: 给区块标题行的刷新按钮加上 icon={<IconRefreshOutline16 />}，与面板页头刷新保持一致（同为 outline + sm）；原生冒烟断言 document.querySelector('.project-panel-actions button svg') 与区块内 .project-card-top button svg 同时存在，并在 8 组 locale×theme×width 重新截图。
+      result: passed
+      coverage: 原生：页头与区块刷新按钮均含图标 + 8 组视觉
+    createdAt: 2026-09-22T06:57:48.401Z
+  - id: done-13
+    kind: completion
+    content: 刷新按钮已与页头样式统一。
+    basis: agent-proposal
+    verificationEntryIds:
+      - ver-ac1
+      - ver-ac2
+      - ver-ac3
+      - ver-ac4
+      - ver-ac5
+      - ver-ac6
+      - ver-fix-1
+      - ver-fix-2
+      - ver-fix-3
+      - ver-fix-4
+      - ver-fix-5
+      - ver-fix-6
+      - ver-fix-7
+      - ver-fix-8
+      - ver-fix-9
+      - ver-fix-10
+      - ver-fix-11
+      - ver-fix-12
+      - ver-fix-13
+    createdAt: 2026-09-22T06:57:48.401Z
 operations:
   6d5c5951206028b816d640ab59542dec9673a71e6bd83101abfe87246e549ca7:
     fingerprint: 0e03526cabd3be54d9460ff1809d5fe55618c30366932c3dde6ac071f2dd9271
@@ -592,6 +768,41 @@ operations:
       - dec-9
       - ver-fix-9
       - done-9
+  4528ee434440475f91e3c5aba93088dac84c343a83f01495e4ba24d166d2ad7b:
+    fingerprint: a68e33da9f3693e14191168d26cc1b1d20261ce0438255261462ebeac26d4735
+    kind: update
+    at: 2026-09-22T06:43:56.007Z
+    entryIds:
+      - prog-10
+      - ver-fix-10
+      - done-10
+  e166dbe03d414c813f991e260db66d73953cb37651f337a49afc01b374702a52:
+    fingerprint: 0ed4abeaf177f34bc050258239865da605a9c8f12489cbc178b60c3f4becb442
+    kind: update
+    at: 2026-09-22T06:49:52.870Z
+    entryIds:
+      - prog-11
+      - dec-11
+      - dec-12
+      - ver-fix-11
+      - done-11
+  9b9b89f8307ebd8109a70bec6d5b6a247c3f08cb7ae7c57061f2c94c91366ebd:
+    fingerprint: b2865f616a06cf35eaf26d34021dd98149f0b24fc5372dd5c2925e3376927611
+    kind: update
+    at: 2026-09-22T06:55:20.300Z
+    entryIds:
+      - prog-12
+      - dec-13
+      - ver-fix-12
+      - done-12
+  c5ebafbeb8c094c14957919a780d09a8b5cc7f1db08f8724236023fec49231b5:
+    fingerprint: ecf1ab09bbe79db16522572d26212f3e04cdf0bdde3f0e5bfc152207bcccceb8
+    kind: update
+    at: 2026-09-22T06:57:48.401Z
+    entryIds:
+      - prog-13
+      - ver-fix-13
+      - done-13
 criterionVersions:
   ac1: 1
   ac2: 1
@@ -601,4 +812,4 @@ criterionVersions:
   ac6: 1
 ---
 
-已实现并验证（含八轮用户反馈）：项目概览页的「项目空间变更」按项目资产维度审阅。区块动作只保留「检查更新 / 仓库详情」，原先会在领先时出现的「推送提交」已移入仓库详情弹窗（保留能力、不占主界面）；工具栏为「全选 / 清空 / 提交所选 N 项」，提交计划由提交按钮的悬浮气泡展示（内容同时写入 aria-description）。多选提交按资产逐个提交：每个资产各自一个 commit，只含自己的路径，携带该资产类型对应的自动信息。一张卡片 = 一个资产：任务为整个 tasks/<目录>（task.md 加全部附件）、技能为整个 skills/<技能名> 目录、MCP 为一条 server 配置、记忆为一份文档，其余归「其他文件」；卡片标新增/更新/删除并显示文件数与产物数；标题行「项目空间变更 + 分支 + 状态标签」垂直居中；卡片外壳/正文/页脚/网格复用共享的 .project-mcp-card 系列与 .project-mcp-grid。Host 侧 commitProjectSelection 在同一把仓库锁内逐资产 add+commit，并拒绝不安全路径、空信息、过期 revision 与已有暂存内容的 index；项目根用 --untracked-files=all 并关闭 core.quotePath。验证：插件 yarn check EXIT=0（268 tests）；原生冒烟 smoke:resources EXIT=0，8 组 locale×theme×width + 标题行居中断言 + 双资产双提交（路径各自隔离）+ 提交计划 aria-description + 键盘 Space。为让「领先时不显示推送按钮」真正可验证，fixture 补上了真实 upstream（原先 ahead 恒为 0，该断言形同虚设）。已知未覆盖：提交按钮悬浮气泡的视觉需人工 hover 确认。限制：(1) MCP 多 server 共享一个文件；(2)「其他文件」默认不勾选；(3) 记忆仍无新增入口；(4) 窄窗下面板约 133px 时标题行会换行；(5) 插件与壳改动均未提交、未 push。
+已实现并验证（含十二轮用户反馈）：项目概览页的「项目资产」区块按资产维度审阅变更，主界面两行——标题行（标题 + 可点的仓库状态入口 + 与页头一致的刷新按钮）与工具栏（全选 / 清空 / 提交所选 N 项）。仓库状态本身是详情入口（无边框按钮），检查更新/推送提交/分支切换/远端/目录都在详情弹窗内；概览打开且状态未检查时静默自动检查一次（不锁工具栏、不报页面错误）。提交计划由提交按钮右侧气泡展示，仅列各条提交信息。多选提交按资产逐个提交（每个资产生成一个 commit、只含自己的路径、信息自动生成）。一张卡片 = 一个资产（任务含全部附件、技能含整个目录、MCP 一条配置、记忆一份文档，其余归其他文件）；卡片标签右对齐并显示文件数与产物数；选中状态由页脚勾选框与文案表达，不用主题色边框；卡片样式复用共享的 .project-mcp-card 系列与 .project-mcp-grid。本轮修正：区块刷新按钮补上图标，与面板右上角刷新控件保持一致。Host 侧 commitProjectSelection 在同一把仓库锁内逐资产 add+commit，并拒绝不安全路径、空信息、过期 revision 与已有暂存内容的 index；项目根用 --untracked-files=all 并关闭 core.quotePath。验证：插件 yarn check EXIT=0（268 tests）；原生冒烟 smoke:resources EXIT=0，8 组 locale×theme×width + 标题行居中 + 状态入口 + 刷新按钮图标一致 + 自动检查不锁工具栏 + 领先时无推送按钮 + 双资产双提交 + 气泡可见 + 键盘 Space；证据已写入 artifacts/。限制：(1) MCP 多 server 共享一个文件；(2)「其他文件」默认不勾选；(3) 记忆仍无新增入口；(4) 窄窗下面板约 133px 时标题行会换行；(5) 插件与壳改动均未提交、未 push。
