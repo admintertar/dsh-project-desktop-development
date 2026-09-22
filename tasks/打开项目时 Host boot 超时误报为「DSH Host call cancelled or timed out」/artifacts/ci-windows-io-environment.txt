@@ -1,0 +1,22 @@
+--- Defender real-time protection
+
+RealTimeProtectionEnabled : False
+AntivirusEnabled          : True
+
+--- shell folders (a redirected AppData is a candidate cause)
+
+AppData       : C:\Users\runneradmin\AppData\Roaming
+Local AppData : C:\Users\runneradmin\AppData\Local
+
+--- volumes
+
+DriveLetter FileSystemType SizeRemaining
+----------- -------------- -------------
+          C NTFS             87451418624
+            NTFS               454893568
+            FAT32               67960832
+          D NTFS            153710047232
+
+##[group]Run node scripts/probe-host-boot-timing.mjs
+node scripts/probe-host-boot-timing.mjs
+shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}

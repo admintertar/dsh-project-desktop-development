@@ -1,0 +1,55 @@
+verdict=project-window elapsed=12s report=D:\a\dsh-project-desktop\dsh-project-desktop\.runtime\packaged\roaming\packaged-probe-roaming.json
+{
+  "label": "roaming",
+  "verdict": "project-window",
+  "elapsedSeconds": 12,
+  "timeoutSeconds": 240,
+  "executable": "D:\\a\\dsh-project-desktop\\dsh-project-desktop\\.runtime\\packaged\\app\\DSH Project Desktop.exe",
+  "manifest": "D:\\a\\dsh-project-desktop\\dsh-project-desktop\\.runtime\\packaged\\roaming\\probe-roaming\\probe-roaming.agent-project",
+  "userData": "C:\\Users\\runneradmin\\AppData\\Roaming\\dsh-project-desktop",
+  "isolatedUserData": false,
+  "windowTitles": [
+    "probe-roaming",
+    "C:\\ProgramData\\GitHub\\HostedComputeAgent\\hosted-compute-agent",
+    "Windows Input Experience"
+  ],
+  "projectStates": [
+    {
+      "id": "1c8108744a30001da534e18d0df5ea58ece6c2b56db2e3e915926789a200f68e",
+      "hasLockfile": true,
+      "pendingRecovery": 0,
+      "logs": []
+    }
+  ],
+  "finishedAt": "2026-09-22T08:10:34.7215110Z"
+}
+[36;1mpwsh -NoProfile -ExecutionPolicy Bypass -File scripts/probe-packaged-boot.ps1 -AppDirectory .runtime/packaged/app -WorkRoot .runtime/packaged/local -Label local -UserDataDirectory .runtime/packaged/userdata-local[0m
+shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+env:
+  DSH_TELEMETRY_DISABLED: 1
+  CSC_IDENTITY_AUTO_DISCOVERY: false
+verdict=project-window elapsed=10s report=D:\a\dsh-project-desktop\dsh-project-desktop\.runtime\packaged\local\packaged-probe-local.json
+{
+  "label": "local",
+  "verdict": "project-window",
+  "elapsedSeconds": 10,
+  "timeoutSeconds": 240,
+  "executable": "D:\\a\\dsh-project-desktop\\dsh-project-desktop\\.runtime\\packaged\\app\\DSH Project Desktop.exe",
+  "manifest": "D:\\a\\dsh-project-desktop\\dsh-project-desktop\\.runtime\\packaged\\local\\probe-local\\probe-local.agent-project",
+  "userData": "D:\\a\\dsh-project-desktop\\dsh-project-desktop\\.runtime\\packaged\\userdata-local",
+  "isolatedUserData": true,
+  "windowTitles": [
+    "probe-local",
+    "C:\\ProgramData\\GitHub\\HostedComputeAgent\\hosted-compute-agent",
+    "Windows Input Experience"
+  ],
+  "projectStates": [
+    {
+      "id": "e565b3feaf03c9a4fc6905ef047c9637b42ee914f069fca9b3ab4581098297d9",
+      "hasLockfile": true,
+      "pendingRecovery": 0,
+      "logs": []
+    }
+  ],
+  "finishedAt": "2026-09-22T08:10:45.5767858Z"
+}
