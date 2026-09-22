@@ -6,8 +6,12 @@ title: 打开项目即进入恢复模式：恢复原因未落盘
 objective: 定位「打开项目时自动进入恢复模式」的证据链，并让壳把每次进入恢复的原因（来源/是否手动/只读降级/失败阶段与详情/会话阶段/manifest）持久化到项目状态目录，使该原因在恢复窗口关闭后仍可从日志读到；本次不再依赖官方恢复助手窗口的 query 参数。改动落在 resources/dsh-project-desktop（壳），并通过 yarn check。
 status: completed
 createdAt: 2026-09-22T12:41:10.520Z
-updatedAt: 2026-09-22T12:47:59.666Z
-artifacts: []
+updatedAt: 2026-09-22T13:10:38.340Z
+artifacts:
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop.git
+    commit: e5ef3069d2748d76d2c53385a8c14a0fe392db8e
+    description: "feat: 恢复模式原因落盘到项目状态目录（src/app/recovery-journal.mjs 新增、main.mjs 接线、tests/recovery-journal.test.mjs、docs/architecture.md）"
 archived: false
 phase: validation
 brief:
@@ -40,9 +44,9 @@ brief:
       version: 1
 handoff:
   nextSteps:
-    - 如需在实机复现时读到该日志：cd resources/dsh-project-desktop && yarn package:win 后安装（当前安装版 0.1.3 不含本改动）
-    - 若要保留本次改动：本地提交这 4 个文件（未 push）；提交前确认 .upstream/project 按 pin 重导、.cache 依赖缓存重建是期望的工作区状态
-    - 可选后续（需明确授权）：启动恢复时先做一次真实打开自愈陈旧 failed 阶段，避免又出现『打开项目即进恢复模式、但项目其实健康』
+    - 要从本 commit 在实机使用该日志：cd resources/dsh-project-desktop && yarn package:win 后安装（已安装的 0.1.6 不含此改动；如需可区分产物，先 bump 版本号）
+    - CI 验证壳+插件组合才需 push（本次未 push；按约定需明确要求）
+    - 可选后续（需明确授权）：启动恢复时先做一次真实打开自愈陈旧 failed 阶段
   readBefore:
     - file-journal
     - file-architecture
@@ -134,6 +138,16 @@ entries:
       - v-ac3
       - v-ac4
     createdAt: 2026-09-22T12:47:59.666Z
+  - id: p-commit
+    kind: progress
+    content: 用户确认提交后已本地提交：壳仓库 master e5ef3069d2748d76d2c53385a8c14a0fe392db8e（4 文件 +158/-13，作者 钟鸿平 <waitylyou@163.com>），工作树已干净；提交前同一棵树 yarn check EXIT=0（四个文件 mtime 均早于 20:47 那次运行），并复核单测 5/5 与 verify:upstream 通过。未 push。
+    basis: user-request
+    createdAt: 2026-09-22T13:10:38.340Z
+  - id: p-installed-016
+    kind: progress
+    content: 用户把已安装版更新到 0.1.6（21:06 以 --updated 重启）；该安装包不含本次改动：C:\Program Files\DSH Project Desktop\resources\app 下无 src/app/recovery-journal.mjs，main.mjs 也无 recordRecoveryEvent。因此要在实机用上该日志仍需从本 commit 重新打包安装（任务 outOfScope 里写的 0.1.3 现已过时，属事实变化但完成态任务不允许改 scope，故记在这里）。
+    basis: observation
+    createdAt: 2026-09-22T13:10:38.340Z
 operations:
   5482ae222c8551122a97cde3f4d29ab9ccd22bda4f1090d09fa6ed97ce6cfda4:
     fingerprint: 0d3253c777d545f51aab43e305c62a786257a2e19be1a9b92550bd1748efe0fa
@@ -154,6 +168,13 @@ operations:
       - v-ac3
       - v-ac4
       - c-done
+  294e14ad5957ec05303d2de5db43c30c2d6b06ab77b72411aaf3baf9ee815e57:
+    fingerprint: 876a2353ffa228b721c3fc3c5e9b55d29eaabf01e20a2597e02864d8a26554c9
+    kind: update
+    at: 2026-09-22T13:10:38.340Z
+    entryIds:
+      - p-commit
+      - p-installed-016
 criterionVersions:
   ac1: 1
   ac2: 1
@@ -161,4 +182,4 @@ criterionVersions:
   ac4: 1
 ---
 
-恢复原因已落盘并验证：壳在打开官方恢复助手之前把 source/requested/readOnly/failureStage/detail/phase/manifestPath 追加到 <项目状态目录>/recovery-events.jsonl（新增 src/app/recovery-journal.mjs：有界、损坏行容忍、写失败只记一行错误且不影响恢复），六个自动入口（startup-restore/open/restart/runtime/safe-mode/safe-mode-exit）都标注来源，docs/architecture.md 记录该契约。验证：yarn check EXIT=0（43 秒；单测 98/98、test:recovery 7/7、test:safe-mode 1/1、check-project-files 与 smoke:host 通过），新增 5 个单测内含 main.mjs 接线源码守卫。为让 check 能运行，工作区另做两处修复：.upstream/project 快照原停留在插件 6d116e1（bf4ee3bb）与 lock pin 不符，已按 pin 7fa9925 重新导出；.cache/runtime 下的依赖缓存原为空，已按 README 的 setup 参数重建（620 MB / 54006 文件）。限制：改动尚未提交（4 文件，未 push）；安装版 0.1.3 不含该日志，需重新打包安装后才能在实机读到；未做 Electron 原生端到端（smoke:native / smoke:profiles 未跑），main.mjs 的恢复窗口联动目前只有源码级守卫与 node --check。
+恢复原因已落盘、验证并提交：壳在打开官方恢复助手之前把 source/requested/readOnly/failureStage/detail/phase/manifestPath 追加到 <项目状态目录>/recovery-events.jsonl（src/app/recovery-journal.mjs：有界、损坏行容忍、写失败只记一行错误且不影响恢复），六个自动入口都标注来源，docs/architecture.md 记录契约；本地提交 壳 master e5ef3069d2748d76d2c53385a8c14a0fe392db8e（4 文件 +158/-13，未 push）。验证：yarn check EXIT=0（单测 98/98、test:recovery 7/7、test:safe-mode 1/1、check-project-files 与 smoke:host 通过）+ 5 个新单测（含 main.mjs 接线源码守卫）；dev 壳实测启动自动恢复写出 source=startup-restore、failureStage=host-boot、detail=Previous project startup failed 的记录。为让 check 能运行，工作区另做两处修复并离线导入 Electron 43.3.0：.upstream/project 快照从陈旧插件 6d116e1（bf4ee3bb）按 lock pin 7fa9925（d1040404）重新导出；.cache/runtime 依赖缓存原为空，按 README setup 参数重建（620 MB / 54006 文件）。限制：已安装版已是 0.1.6 但仍不含该日志（需从本 commit 重新打包安装）；未做 Electron 原生端到端（smoke:native / smoke:profiles 未跑）。
