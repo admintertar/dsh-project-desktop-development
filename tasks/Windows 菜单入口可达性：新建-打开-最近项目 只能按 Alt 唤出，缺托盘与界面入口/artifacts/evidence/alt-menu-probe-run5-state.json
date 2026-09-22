@@ -1,0 +1,878 @@
+{
+    "startedAt":  "2026-09-22T14:28:08.911Z",
+    "electron":  "43.3.0",
+    "chrome":  "150.0.7871.212",
+    "node":  "24.18.1",
+    "platform":  "win32",
+    "arch":  "x64",
+    "osRelease":  "Windows_NT 10.0.26200",
+    "windows":  {
+                    "A":  {
+                              "hwnd":  "2820272",
+                              "options":  {
+                                              "autoHideMenuBar":  true,
+                                              "titleBarStyle":  "hidden",
+                                              "titleBarOverlay":  {
+                                                                      "color":  "#00000000",
+                                                                      "symbolColor":  "#7f858f",
+                                                                      "height":  40
+                                                                  },
+                                              "width":  1100,
+                                              "height":  760
+                                          }
+                          },
+                    "B":  {
+                              "hwnd":  "330476",
+                              "options":  {
+                                              "autoHideMenuBar":  true,
+                                              "width":  900,
+                                              "height":  520
+                                          }
+                          },
+                    "C":  {
+                              "hwnd":  "1181870",
+                              "options":  {
+                                              "autoHideMenuBar":  false,
+                                              "titleBarStyle":  "hidden",
+                                              "titleBarOverlay":  {
+                                                                      "color":  "#00000000",
+                                                                      "symbolColor":  "#7f858f",
+                                                                      "height":  40
+                                                                  },
+                                              "width":  1000,
+                                              "height":  600
+                                          }
+                          }
+                },
+    "displays":  [
+                     {
+                         "id":  2122156133,
+                         "bounds":  {
+                                        "x":  0,
+                                        "y":  0,
+                                        "width":  1920,
+                                        "height":  1080
+                                    },
+                         "size":  {
+                                      "width":  1920,
+                                      "height":  1080
+                                  },
+                         "scaleFactor":  2,
+                         "workArea":  {
+                                          "x":  0,
+                                          "y":  0,
+                                          "width":  1920,
+                                          "height":  1032
+                                      }
+                     }
+                 ],
+    "windowOptions":  {
+                          "A":  {
+                                    "autoHideMenuBar":  true,
+                                    "titleBarStyle":  "hidden",
+                                    "titleBarOverlay":  {
+                                                            "color":  "#00000000",
+                                                            "symbolColor":  "#7f858f",
+                                                            "height":  40
+                                                        },
+                                    "width":  1100,
+                                    "height":  760
+                                },
+                          "B":  {
+                                    "autoHideMenuBar":  true,
+                                    "width":  900,
+                                    "height":  520
+                                },
+                          "C":  {
+                                    "autoHideMenuBar":  false,
+                                    "titleBarStyle":  "hidden",
+                                    "titleBarOverlay":  {
+                                                            "color":  "#00000000",
+                                                            "symbolColor":  "#7f858f",
+                                                            "height":  40
+                                                        },
+                                    "width":  1000,
+                                    "height":  600
+                                }
+                      },
+    "steps":  [
+                  {
+                      "at":  "2026-09-22T14:28:09.391Z",
+                      "name":  "ready",
+                      "windows":  {
+                                      "A":  {
+                                                "hwnd":  "2820272",
+                                                "options":  {
+                                                                "autoHideMenuBar":  true,
+                                                                "titleBarStyle":  "hidden",
+                                                                "titleBarOverlay":  {
+                                                                                        "color":  "#00000000",
+                                                                                        "symbolColor":  "#7f858f",
+                                                                                        "height":  40
+                                                                                    },
+                                                                "width":  1100,
+                                                                "height":  760
+                                                            }
+                                            },
+                                      "B":  {
+                                                "hwnd":  "330476",
+                                                "options":  {
+                                                                "autoHideMenuBar":  true,
+                                                                "width":  900,
+                                                                "height":  520
+                                                            }
+                                            },
+                                      "C":  {
+                                                "hwnd":  "1181870",
+                                                "options":  {
+                                                                "autoHideMenuBar":  false,
+                                                                "titleBarStyle":  "hidden",
+                                                                "titleBarOverlay":  {
+                                                                                        "color":  "#00000000",
+                                                                                        "symbolColor":  "#7f858f",
+                                                                                        "height":  40
+                                                                                    },
+                                                                "width":  1000,
+                                                                "height":  600
+                                                            }
+                                            }
+                                  }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:10.320Z",
+                      "name":  "result",
+                      "seq":  1,
+                      "cmd":  "snapshot",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "A",
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  true,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  60,
+                                                    "y":  60,
+                                                    "width":  1100,
+                                                    "height":  760
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  61,
+                                                           "y":  60,
+                                                           "width":  1099,
+                                                           "height":  760
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  1099,
+                                                      "ih":  760,
+                                                      "dpr":  2,
+                                                      "sx":  54,
+                                                      "sy":  60,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:10.449Z",
+                      "name":  "result",
+                      "seq":  2,
+                      "cmd":  "applyMenu",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "done":  true,
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  true
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:11.315Z",
+                      "name":  "result",
+                      "seq":  3,
+                      "cmd":  "snapshot",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "A",
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  true,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  60,
+                                                    "y":  60,
+                                                    "width":  1100,
+                                                    "height":  760
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  61,
+                                                           "y":  60,
+                                                           "width":  1099,
+                                                           "height":  760
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  1099,
+                                                      "ih":  760,
+                                                      "dpr":  2,
+                                                      "sx":  54,
+                                                      "sy":  60,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:11.375Z",
+                      "name":  "result",
+                      "seq":  4,
+                      "cmd":  "setMenuBarVisibility",
+                      "label":  "A",
+                      "arg":  true,
+                      "result":  {
+                                     "done":  true
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:12.432Z",
+                      "name":  "result",
+                      "seq":  5,
+                      "cmd":  "snapshot",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "A",
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  true,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  60,
+                                                    "y":  60,
+                                                    "width":  1100,
+                                                    "height":  760
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  61,
+                                                           "y":  60,
+                                                           "width":  1099,
+                                                           "height":  760
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  1099,
+                                                      "ih":  760,
+                                                      "dpr":  2,
+                                                      "sx":  54,
+                                                      "sy":  60,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:13.182Z",
+                      "name":  "result",
+                      "seq":  6,
+                      "cmd":  "capture",
+                      "label":  "A",
+                      "arg":  "60-A-product-visibility-true",
+                      "result":  {
+                                     "display":  {
+                                                     "id":  2122156133,
+                                                     "bounds":  {
+                                                                    "x":  0,
+                                                                    "y":  0,
+                                                                    "width":  1920,
+                                                                    "height":  1080
+                                                                },
+                                                     "size":  {
+                                                                  "width":  1920,
+                                                                  "height":  1080
+                                                              },
+                                                     "scaleFactor":  2,
+                                                     "workArea":  {
+                                                                      "x":  0,
+                                                                      "y":  0,
+                                                                      "width":  1920,
+                                                                      "height":  1032
+                                                                  }
+                                                 },
+                                     "image":  {
+                                                   "width":  3840,
+                                                   "height":  2160
+                                               },
+                                     "k":  2,
+                                     "written":  [
+                                                     {
+                                                         "file":  "60-A-product-visibility-true-full.png",
+                                                         "size":  {
+                                                                      "width":  3840,
+                                                                      "height":  2160
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "60-A-product-visibility-true-window.png",
+                                                         "size":  {
+                                                                      "width":  2200,
+                                                                      "height":  1520
+                                                                  },
+                                                         "crop":  {
+                                                                      "x":  120,
+                                                                      "y":  120,
+                                                                      "width":  2200,
+                                                                      "height":  1520
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "60-A-product-visibility-true-tray-area.png"
+                                                     }
+                                                 ]
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:13.254Z",
+                      "name":  "result",
+                      "seq":  7,
+                      "cmd":  "setAutoHideMenuBar",
+                      "label":  "A",
+                      "arg":  false,
+                      "result":  {
+                                     "done":  true,
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  false
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:14.317Z",
+                      "name":  "result",
+                      "seq":  8,
+                      "cmd":  "snapshot",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "A",
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  false,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  60,
+                                                    "y":  60,
+                                                    "width":  1100,
+                                                    "height":  760
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  61,
+                                                           "y":  60,
+                                                           "width":  1099,
+                                                           "height":  760
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  1099,
+                                                      "ih":  760,
+                                                      "dpr":  2,
+                                                      "sx":  54,
+                                                      "sy":  60,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:15.125Z",
+                      "name":  "result",
+                      "seq":  9,
+                      "cmd":  "capture",
+                      "label":  "A",
+                      "arg":  "61-A-product-autoHide-false",
+                      "result":  {
+                                     "display":  {
+                                                     "id":  2122156133,
+                                                     "bounds":  {
+                                                                    "x":  0,
+                                                                    "y":  0,
+                                                                    "width":  1920,
+                                                                    "height":  1080
+                                                                },
+                                                     "size":  {
+                                                                  "width":  1920,
+                                                                  "height":  1080
+                                                              },
+                                                     "scaleFactor":  2,
+                                                     "workArea":  {
+                                                                      "x":  0,
+                                                                      "y":  0,
+                                                                      "width":  1920,
+                                                                      "height":  1032
+                                                                  }
+                                                 },
+                                     "image":  {
+                                                   "width":  3840,
+                                                   "height":  2160
+                                               },
+                                     "k":  2,
+                                     "written":  [
+                                                     {
+                                                         "file":  "61-A-product-autoHide-false-full.png",
+                                                         "size":  {
+                                                                      "width":  3840,
+                                                                      "height":  2160
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "61-A-product-autoHide-false-window.png",
+                                                         "size":  {
+                                                                      "width":  2200,
+                                                                      "height":  1520
+                                                                  },
+                                                         "crop":  {
+                                                                      "x":  120,
+                                                                      "y":  120,
+                                                                      "width":  2200,
+                                                                      "height":  1520
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "61-A-product-autoHide-false-tray-area.png"
+                                                     }
+                                                 ]
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:16.061Z",
+                      "name":  "result",
+                      "seq":  10,
+                      "cmd":  "snapshot",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "A",
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  false,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  60,
+                                                    "y":  60,
+                                                    "width":  1100,
+                                                    "height":  760
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  61,
+                                                           "y":  60,
+                                                           "width":  1099,
+                                                           "height":  760
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  1099,
+                                                      "ih":  760,
+                                                      "dpr":  2,
+                                                      "sx":  54,
+                                                      "sy":  60,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:16.887Z",
+                      "name":  "result",
+                      "seq":  11,
+                      "cmd":  "snapshot",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "A",
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  false,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  60,
+                                                    "y":  60,
+                                                    "width":  1100,
+                                                    "height":  760
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  61,
+                                                           "y":  60,
+                                                           "width":  1099,
+                                                           "height":  760
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  1099,
+                                                      "ih":  760,
+                                                      "dpr":  2,
+                                                      "sx":  54,
+                                                      "sy":  60,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:17.654Z",
+                      "name":  "result",
+                      "seq":  12,
+                      "cmd":  "capture",
+                      "label":  "A",
+                      "arg":  "62-A-product-after-keys",
+                      "result":  {
+                                     "display":  {
+                                                     "id":  2122156133,
+                                                     "bounds":  {
+                                                                    "x":  0,
+                                                                    "y":  0,
+                                                                    "width":  1920,
+                                                                    "height":  1080
+                                                                },
+                                                     "size":  {
+                                                                  "width":  1920,
+                                                                  "height":  1080
+                                                              },
+                                                     "scaleFactor":  2,
+                                                     "workArea":  {
+                                                                      "x":  0,
+                                                                      "y":  0,
+                                                                      "width":  1920,
+                                                                      "height":  1032
+                                                                  }
+                                                 },
+                                     "image":  {
+                                                   "width":  3840,
+                                                   "height":  2160
+                                               },
+                                     "k":  2,
+                                     "written":  [
+                                                     {
+                                                         "file":  "62-A-product-after-keys-full.png",
+                                                         "size":  {
+                                                                      "width":  3840,
+                                                                      "height":  2160
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "62-A-product-after-keys-window.png",
+                                                         "size":  {
+                                                                      "width":  2200,
+                                                                      "height":  1520
+                                                                  },
+                                                         "crop":  {
+                                                                      "x":  120,
+                                                                      "y":  120,
+                                                                      "width":  2200,
+                                                                      "height":  1520
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "62-A-product-after-keys-tray-area.png"
+                                                     }
+                                                 ]
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:17.974Z",
+                      "name":  "result",
+                      "seq":  13,
+                      "cmd":  "applyMenu",
+                      "label":  "B",
+                      "arg":  null,
+                      "result":  {
+                                     "done":  true,
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  true
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:18.601Z",
+                      "name":  "result",
+                      "seq":  14,
+                      "cmd":  "setMenuBarVisibility",
+                      "label":  "B",
+                      "arg":  true,
+                      "result":  {
+                                     "done":  true
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:19.661Z",
+                      "name":  "result",
+                      "seq":  15,
+                      "cmd":  "snapshot",
+                      "label":  "B",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "B",
+                                     "isMenuBarVisible":  true,
+                                     "isMenuBarAutoHide":  true,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  780,
+                                                    "y":  140,
+                                                    "width":  900,
+                                                    "height":  520
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  787,
+                                                           "y":  195,
+                                                           "width":  887,
+                                                           "height":  459
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  887,
+                                                      "ih":  459,
+                                                      "dpr":  2,
+                                                      "sx":  780,
+                                                      "sy":  140,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:20.475Z",
+                      "name":  "result",
+                      "seq":  16,
+                      "cmd":  "capture",
+                      "label":  "B",
+                      "arg":  "63-B-control-menu-bar",
+                      "result":  {
+                                     "display":  {
+                                                     "id":  2122156133,
+                                                     "bounds":  {
+                                                                    "x":  0,
+                                                                    "y":  0,
+                                                                    "width":  1920,
+                                                                    "height":  1080
+                                                                },
+                                                     "size":  {
+                                                                  "width":  1920,
+                                                                  "height":  1080
+                                                              },
+                                                     "scaleFactor":  2,
+                                                     "workArea":  {
+                                                                      "x":  0,
+                                                                      "y":  0,
+                                                                      "width":  1920,
+                                                                      "height":  1032
+                                                                  }
+                                                 },
+                                     "image":  {
+                                                   "width":  3840,
+                                                   "height":  2160
+                                               },
+                                     "k":  2,
+                                     "written":  [
+                                                     {
+                                                         "file":  "63-B-control-menu-bar-full.png",
+                                                         "size":  {
+                                                                      "width":  3840,
+                                                                      "height":  2160
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "63-B-control-menu-bar-window.png",
+                                                         "size":  {
+                                                                      "width":  1800,
+                                                                      "height":  1040
+                                                                  },
+                                                         "crop":  {
+                                                                      "x":  1560,
+                                                                      "y":  280,
+                                                                      "width":  1800,
+                                                                      "height":  1040
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "63-B-control-menu-bar-tray-area.png"
+                                                     }
+                                                 ]
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:21.288Z",
+                      "name":  "result",
+                      "seq":  17,
+                      "cmd":  "snapshot",
+                      "label":  "B",
+                      "arg":  null,
+                      "result":  {
+                                     "label":  "B",
+                                     "isMenuBarVisible":  false,
+                                     "isMenuBarAutoHide":  true,
+                                     "isFocused":  true,
+                                     "bounds":  {
+                                                    "x":  780,
+                                                    "y":  140,
+                                                    "width":  900,
+                                                    "height":  520
+                                                },
+                                     "contentBounds":  {
+                                                           "x":  787,
+                                                           "y":  169,
+                                                           "width":  887,
+                                                           "height":  485
+                                                       },
+                                     "renderer":  {
+                                                      "iw":  887,
+                                                      "ih":  485,
+                                                      "dpr":  2,
+                                                      "sx":  780,
+                                                      "sy":  140,
+                                                      "headerTop":  0
+                                                  },
+                                     "counters":  {
+                                                      "newProject":  0,
+                                                      "openProject":  0,
+                                                      "closeProject":  0,
+                                                      "welcome":  0,
+                                                      "reloads":  0
+                                                  }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:22.120Z",
+                      "name":  "result",
+                      "seq":  18,
+                      "cmd":  "capture",
+                      "label":  "B",
+                      "arg":  "64-B-control-after-alt",
+                      "result":  {
+                                     "display":  {
+                                                     "id":  2122156133,
+                                                     "bounds":  {
+                                                                    "x":  0,
+                                                                    "y":  0,
+                                                                    "width":  1920,
+                                                                    "height":  1080
+                                                                },
+                                                     "size":  {
+                                                                  "width":  1920,
+                                                                  "height":  1080
+                                                              },
+                                                     "scaleFactor":  2,
+                                                     "workArea":  {
+                                                                      "x":  0,
+                                                                      "y":  0,
+                                                                      "width":  1920,
+                                                                      "height":  1032
+                                                                  }
+                                                 },
+                                     "image":  {
+                                                   "width":  3840,
+                                                   "height":  2160
+                                               },
+                                     "k":  2,
+                                     "written":  [
+                                                     {
+                                                         "file":  "64-B-control-after-alt-full.png",
+                                                         "size":  {
+                                                                      "width":  3840,
+                                                                      "height":  2160
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "64-B-control-after-alt-window.png",
+                                                         "size":  {
+                                                                      "width":  1800,
+                                                                      "height":  1040
+                                                                  },
+                                                         "crop":  {
+                                                                      "x":  1560,
+                                                                      "y":  280,
+                                                                      "width":  1800,
+                                                                      "height":  1040
+                                                                  }
+                                                     },
+                                                     {
+                                                         "file":  "64-B-control-after-alt-tray-area.png"
+                                                     }
+                                                 ]
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:22.201Z",
+                      "name":  "result",
+                      "seq":  19,
+                      "cmd":  "trayCreate",
+                      "label":  "A",
+                      "arg":  "D:\\dsh-project-desktop-development\\resources\\dsh-project-desktop\\assets\\tray\\tray-icon-blue.png",
+                      "result":  {
+                                     "done":  true,
+                                     "bounds":  {
+                                                    "x":  1462,
+                                                    "y":  1032,
+                                                    "width":  32,
+                                                    "height":  48
+                                                },
+                                     "destroyed":  false
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:23.759Z",
+                      "name":  "result",
+                      "seq":  20,
+                      "cmd":  "trayPopup",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "done":  true,
+                                     "bounds":  {
+                                                    "x":  1462,
+                                                    "y":  1032,
+                                                    "width":  32,
+                                                    "height":  48
+                                                }
+                                 }
+                  },
+                  {
+                      "at":  "2026-09-22T14:28:24.802Z",
+                      "name":  "result",
+                      "seq":  21,
+                      "cmd":  "trayDestroy",
+                      "label":  "A",
+                      "arg":  null,
+                      "result":  {
+                                     "done":  true
+                                 }
+                  }
+              ],
+    "lastSeq":  21
+}

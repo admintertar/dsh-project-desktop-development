@@ -1,0 +1,266 @@
+{
+    "A_afterSetMenu":  {
+                           "label":  "A",
+                           "isMenuBarVisible":  false,
+                           "isMenuBarAutoHide":  true,
+                           "isFocused":  true,
+                           "bounds":  {
+                                          "x":  60,
+                                          "y":  60,
+                                          "width":  1100,
+                                          "height":  760
+                                      },
+                           "contentBounds":  {
+                                                 "x":  61,
+                                                 "y":  60,
+                                                 "width":  1099,
+                                                 "height":  760
+                                             },
+                           "renderer":  {
+                                            "iw":  1099,
+                                            "ih":  760,
+                                            "dpr":  2,
+                                            "sx":  54,
+                                            "sy":  60,
+                                            "headerTop":  0
+                                        },
+                           "counters":  {
+                                            "newProject":  0,
+                                            "openProject":  0,
+                                            "closeProject":  0,
+                                            "welcome":  0,
+                                            "reloads":  0
+                                        }
+                       },
+    "A_f10":  {
+                  "label":  "A",
+                  "isMenuBarVisible":  false,
+                  "isMenuBarAutoHide":  false,
+                  "isFocused":  true,
+                  "bounds":  {
+                                 "x":  60,
+                                 "y":  60,
+                                 "width":  1100,
+                                 "height":  760
+                             },
+                  "contentBounds":  {
+                                        "x":  61,
+                                        "y":  60,
+                                        "width":  1099,
+                                        "height":  760
+                                    },
+                  "renderer":  {
+                                   "iw":  1099,
+                                   "ih":  760,
+                                   "dpr":  2,
+                                   "sx":  54,
+                                   "sy":  60,
+                                   "headerTop":  0
+                               },
+                  "counters":  {
+                                   "newProject":  0,
+                                   "openProject":  0,
+                                   "closeProject":  0,
+                                   "welcome":  0,
+                                   "reloads":  0
+                               }
+              },
+    "B_controlAlt":  {
+                         "label":  "B",
+                         "isMenuBarVisible":  false,
+                         "isMenuBarAutoHide":  true,
+                         "isFocused":  true,
+                         "bounds":  {
+                                        "x":  780,
+                                        "y":  140,
+                                        "width":  900,
+                                        "height":  520
+                                    },
+                         "contentBounds":  {
+                                               "x":  787,
+                                               "y":  169,
+                                               "width":  887,
+                                               "height":  485
+                                           },
+                         "renderer":  {
+                                          "iw":  887,
+                                          "ih":  485,
+                                          "dpr":  2,
+                                          "sx":  780,
+                                          "sy":  140,
+                                          "headerTop":  0
+                                      },
+                         "counters":  {
+                                          "newProject":  0,
+                                          "openProject":  0,
+                                          "closeProject":  0,
+                                          "welcome":  0,
+                                          "reloads":  0
+                                      }
+                     },
+    "B_control":  {
+                      "label":  "B",
+                      "isMenuBarVisible":  true,
+                      "isMenuBarAutoHide":  true,
+                      "isFocused":  true,
+                      "bounds":  {
+                                     "x":  780,
+                                     "y":  140,
+                                     "width":  900,
+                                     "height":  520
+                                 },
+                      "contentBounds":  {
+                                            "x":  787,
+                                            "y":  195,
+                                            "width":  887,
+                                            "height":  459
+                                        },
+                      "renderer":  {
+                                       "iw":  887,
+                                       "ih":  459,
+                                       "dpr":  2,
+                                       "sx":  780,
+                                       "sy":  140,
+                                       "headerTop":  0
+                                   },
+                      "counters":  {
+                                       "newProject":  0,
+                                       "openProject":  0,
+                                       "closeProject":  0,
+                                       "welcome":  0,
+                                       "reloads":  0
+                                   }
+                  },
+    "A_afterAutoHideFalse":  {
+                                 "label":  "A",
+                                 "isMenuBarVisible":  false,
+                                 "isMenuBarAutoHide":  false,
+                                 "isFocused":  true,
+                                 "bounds":  {
+                                                "x":  60,
+                                                "y":  60,
+                                                "width":  1100,
+                                                "height":  760
+                                            },
+                                 "contentBounds":  {
+                                                       "x":  61,
+                                                       "y":  60,
+                                                       "width":  1099,
+                                                       "height":  760
+                                                   },
+                                 "renderer":  {
+                                                  "iw":  1099,
+                                                  "ih":  760,
+                                                  "dpr":  2,
+                                                  "sx":  54,
+                                                  "sy":  60,
+                                                  "headerTop":  0
+                                              },
+                                 "counters":  {
+                                                  "newProject":  0,
+                                                  "openProject":  0,
+                                                  "closeProject":  0,
+                                                  "welcome":  0,
+                                                  "reloads":  0
+                                              }
+                             },
+    "A_alt":  {
+                  "label":  "A",
+                  "isMenuBarVisible":  false,
+                  "isMenuBarAutoHide":  false,
+                  "isFocused":  true,
+                  "bounds":  {
+                                 "x":  60,
+                                 "y":  60,
+                                 "width":  1100,
+                                 "height":  760
+                             },
+                  "contentBounds":  {
+                                        "x":  61,
+                                        "y":  60,
+                                        "width":  1099,
+                                        "height":  760
+                                    },
+                  "renderer":  {
+                                   "iw":  1099,
+                                   "ih":  760,
+                                   "dpr":  2,
+                                   "sx":  54,
+                                   "sy":  60,
+                                   "headerTop":  0
+                               },
+                  "counters":  {
+                                   "newProject":  0,
+                                   "openProject":  0,
+                                   "closeProject":  0,
+                                   "welcome":  0,
+                                   "reloads":  0
+                               }
+              },
+    "A_afterVisibilityTrue":  {
+                                  "label":  "A",
+                                  "isMenuBarVisible":  false,
+                                  "isMenuBarAutoHide":  true,
+                                  "isFocused":  true,
+                                  "bounds":  {
+                                                 "x":  60,
+                                                 "y":  60,
+                                                 "width":  1100,
+                                                 "height":  760
+                                             },
+                                  "contentBounds":  {
+                                                        "x":  61,
+                                                        "y":  60,
+                                                        "width":  1099,
+                                                        "height":  760
+                                                    },
+                                  "renderer":  {
+                                                   "iw":  1099,
+                                                   "ih":  760,
+                                                   "dpr":  2,
+                                                   "sx":  54,
+                                                   "sy":  60,
+                                                   "headerTop":  0
+                                               },
+                                  "counters":  {
+                                                   "newProject":  0,
+                                                   "openProject":  0,
+                                                   "closeProject":  0,
+                                                   "welcome":  0,
+                                                   "reloads":  0
+                                               }
+                              },
+    "A_baseline":  {
+                       "label":  "A",
+                       "isMenuBarVisible":  false,
+                       "isMenuBarAutoHide":  true,
+                       "isFocused":  true,
+                       "bounds":  {
+                                      "x":  60,
+                                      "y":  60,
+                                      "width":  1100,
+                                      "height":  760
+                                  },
+                       "contentBounds":  {
+                                             "x":  61,
+                                             "y":  60,
+                                             "width":  1099,
+                                             "height":  760
+                                         },
+                       "renderer":  {
+                                        "iw":  1099,
+                                        "ih":  760,
+                                        "dpr":  2,
+                                        "sx":  54,
+                                        "sy":  60,
+                                        "headerTop":  0
+                                    },
+                       "counters":  {
+                                        "newProject":  0,
+                                        "openProject":  0,
+                                        "closeProject":  0,
+                                        "welcome":  0,
+                                        "reloads":  0
+                                    }
+                   }
+}

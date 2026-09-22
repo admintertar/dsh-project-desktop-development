@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>ALT-MENU PROBE B</title>
+<style>
+  html, body {margin: 0; height: 100%; background: #101418; color: #e6e8eb;
+    font: 15px/1.6 "Segoe UI", system-ui, sans-serif;}
+  header {height: 28px; display: flex; align-items: center; padding: 0 12px;
+    background: #2a2f36; font-size: 12px; color: #cfd3d9;}
+  main {padding: 20px 24px;}
+  code {background: #000; padding: 1px 6px; border-radius: 4px; color: #9ee493;}
+</style>
+</head>
+<body>
+<header>CONTROL WINDOW B — 标准系统边框（只有 autoHideMenuBar:true）</header>
+<main>
+  <h1>ALT-MENU PROBE B（对照组）</h1>
+  <p>这个窗口只有 <code>autoHideMenuBar:true</code>，没有 <code>titleBarStyle:'hidden'</code>、没有 <code>titleBarOverlay</code>。</p>
+  <p>用途：把「Alt 唤不出菜单栏」这件事在「我们窗口选项」与「Electron 43.3.0 回归」之间做归因。</p>
+  <p>innerHeight=<code id="ih">?</code> innerWidth=<code id="iw">?</code></p>
+</main>
+<script>
+  function upd() {document.getElementById('ih').textContent = innerHeight; document.getElementById('iw').textContent = innerWidth;}
+  upd(); addEventListener('resize', upd);
+</script>
+</body>
+</html>

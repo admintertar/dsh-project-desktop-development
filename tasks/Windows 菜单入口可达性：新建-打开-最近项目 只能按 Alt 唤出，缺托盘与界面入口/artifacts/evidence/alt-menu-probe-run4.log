@@ -1,0 +1,28 @@
+[22:26:30.323] started electron pid=25160
+[22:26:31.981] SNAP A-order-before-reapply                 label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760 content=1099x760 inner=1099x760 counters N/O/W/rel=0/0/0/0
+[22:26:32.091] REAPPLY Menu.setApplicationMenu() with window already open -> {"done":true,"isMenuBarVisible":false,"isMenuBarAutoHide":true}
+[22:26:33.005] SNAP A-order-after-reapply                  label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760 content=1099x760 inner=1099x760 counters N/O/W/rel=0/0/0/0
+[22:26:33.796] CAPTURE 40-A-after-reapply-app-menu            image=3840x2160
+[22:26:34.609] SNAP A-reapply-left-Alt-1                   label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760 content=1099x760 inner=1099x760 counters N/O/W/rel=0/0/0/0
+[22:26:36.246] CAPTURE 41-A-reapply-after-alt1                image=3840x2160
+[22:26:37.054] SNAP A-reapply-left-Alt-2                   label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760 content=1099x760 inner=1099x760 counters N/O/W/rel=0/0/0/0
+[22:26:38.596] CAPTURE 42-A-reapply-after-alt2                image=3840x2160
+[22:26:39.416] SNAP A-reapply-F10                          label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760 content=1099x760 inner=1099x760 counters N/O/W/rel=0/0/0/0
+[22:26:40.136] SNAP A-reapply-after-removeMenu             label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760 content=1099x760 inner=1099x760 counters N/O/W/rel=0/0/0/0
+[22:26:40.939] SNAP A-reapply-removeMenu-left-Alt          label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760 content=1099x760 inner=1099x760 counters N/O/W/rel=0/0/0/0
+[22:26:42.431] CAPTURE 43-A-reapply-after-removeMenu          image=3840x2160
+[22:26:42.789] SNAP C-geom-before                          label=C menuBarVisible=False autoHide=False focused=True  bounds=1000x600 content=999x600 inner=999x600 counters N/O/W/rel=0/0/0/0
+[22:26:42.896] APPLY C.setMenu(appMenu) -> {"done":true,"isMenuBarVisible":false,"isMenuBarAutoHide":false}
+[22:26:43.912] SNAP C-geom-after-setMenu                   label=C menuBarVisible=False autoHide=False focused=True  bounds=1000x600 content=999x600 inner=999x600 counters N/O/W/rel=0/0/0/0
+[22:26:45.031] SNAP C-geom-after-visibility-true           label=C menuBarVisible=False autoHide=False focused=True  bounds=1000x600 content=999x600 inner=999x600 counters N/O/W/rel=0/0/0/0
+[22:26:45.789] CAPTURE 44-C-menu-bar-visible                  image=3840x2160
+[22:26:46.600] SNAP C-geom-after-left-Alt                  label=C menuBarVisible=False autoHide=False focused=True  bounds=1000x600 content=999x600 inner=999x600 counters N/O/W/rel=0/0/0/0
+[22:26:47.357] CAPTURE 45-C-after-left-Alt                    image=3840x2160
+[22:26:47.430] TRAY right-click at physical (2999,2112)
+[22:26:48.307] TRAY after right-click: FindWindow('#32768')=0 foregroundClass='Shell_TrayWnd'
+[22:26:48.376] TRAY screenshot -> 51-tray-after-rightclick-x2999.png
+[22:26:49.051] TRAY right-click at physical (2956,2112)
+[22:26:49.884] TRAY after right-click: FindWindow('#32768')=0 foregroundClass='Chrome_WidgetWin_1'
+[22:26:49.972] TRAY screenshot -> 51-tray-after-rightclick-x2956.png
+[22:27:15.705] WARN probe command timed out: quit (label=A, seq=22)
+[22:27:16.329] done -> D:\dsh-project-desktop-development\tasks\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\artifacts\evidence

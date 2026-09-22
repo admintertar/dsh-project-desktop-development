@@ -1,0 +1,46 @@
+{
+    "afterLeftAlt2":  {
+                          "hwnd":  460670,
+                          "className":  "Chrome_WidgetWin_1",
+                          "menuHandle":  0,
+                          "menuItemCount":  0,
+                          "menuLabels":  [
+
+                                         ],
+                          "clientRect":  "1798x1279",
+                          "windowRect":  "1824x1292@1008,392"
+                      },
+    "afterLeftAlt":  {
+                         "hwnd":  460670,
+                         "className":  "Chrome_WidgetWin_1",
+                         "menuHandle":  0,
+                         "menuItemCount":  0,
+                         "menuLabels":  [
+
+                                        ],
+                         "clientRect":  "1798x1279",
+                         "windowRect":  "1824x1292@1008,392"
+                     },
+    "afterF10":  {
+                     "hwnd":  460670,
+                     "className":  "Chrome_WidgetWin_1",
+                     "menuHandle":  0,
+                     "menuItemCount":  0,
+                     "menuLabels":  [
+
+                                    ],
+                     "clientRect":  "1798x1279",
+                     "windowRect":  "1824x1292@1008,392"
+                 },
+    "baseline":  {
+                     "hwnd":  460670,
+                     "className":  "Chrome_WidgetWin_1",
+                     "menuHandle":  0,
+                     "menuItemCount":  0,
+                     "menuLabels":  [
+
+                                    ],
+                     "clientRect":  "1798x1279",
+                     "windowRect":  "1824x1292@1008,392"
+                 }
+}

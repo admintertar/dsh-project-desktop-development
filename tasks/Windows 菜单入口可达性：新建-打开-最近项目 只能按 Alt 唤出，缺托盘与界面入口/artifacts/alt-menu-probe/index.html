@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>ALT-MENU PROBE</title>
+<style>
+  html, body {margin: 0; height: 100%; background: #1c1f24; color: #e6e8eb;
+    font: 15px/1.6 "Segoe UI", system-ui, sans-serif;}
+  header {height: 40px; display: flex; align-items: center; padding: 0 14px;
+    background: #24272d; border-bottom: 1px solid #34383f; -webkit-app-region: drag;
+    font-size: 13px; color: #cfd3d9;}
+  main {padding: 22px 26px;}
+  h1 {font-size: 22px; margin: 0 0 6px;}
+  code {background: #0d0f12; padding: 1px 6px; border-radius: 4px; color: #9ee493;}
+  .warn {color: #ffcf70;}
+</style>
+</head>
+<body>
+<header>ALT-MENU PROBE — 本 40px 条模拟我们 win32 的自定义标题栏（titleBarOverlay）</header>
+<main>
+  <h1>ALT-MENU PROBE</h1>
+  <p>innerHeight=<code id="ih">?</code> innerWidth=<code id="iw">?</code> dpr=<code id="dpr">?</code></p>
+  <p>与产品窗口一致的关键选项：<code>autoHideMenuBar:true</code>、<code>titleBarStyle:'hidden'</code>、<code>titleBarOverlay</code>。</p>
+  <p class="warn">若原生菜单栏被 Alt 唤出，它属于窗口客户区顶端，会与上面这条 40px 标题栏争位置。</p>
+</main>
+<script>
+  function upd() {
+    document.getElementById('ih').textContent = innerHeight;
+    document.getElementById('iw').textContent = innerWidth;
+    document.getElementById('dpr').textContent = devicePixelRatio;
+  }
+  upd();
+  addEventListener('resize', upd);
+</script>
+</body>
+</html>

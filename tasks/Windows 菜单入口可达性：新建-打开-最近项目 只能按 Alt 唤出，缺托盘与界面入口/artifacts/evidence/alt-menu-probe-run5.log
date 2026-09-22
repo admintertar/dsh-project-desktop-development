@@ -1,0 +1,24 @@
+[22:28:08.839] started electron pid=240
+[22:28:10.440] SNAP A-product-baseline                       label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760 content=1099x760 inner=1099x760
+[22:28:10.541] A.setMenu(appMenu) -> {"done":true,"isMenuBarVisible":false,"isMenuBarAutoHide":true}
+[22:28:11.348] SNAP A-product-after-setMenu                  label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760 content=1099x760 inner=1099x760
+[22:28:11.459] A.setMenuBarVisibility(true) -> {"done":true}
+[22:28:12.482] SNAP A-product-after-visibility-true          label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760 content=1099x760 inner=1099x760
+[22:28:13.243] CAPTURE 60-A-product-visibility-true             image=3840x2160
+[22:28:13.352] A.setAutoHideMenuBar(false) -> {"done":true,"isMenuBarVisible":false,"isMenuBarAutoHide":false}
+[22:28:14.367] SNAP A-product-autoHide-false                 label=A menuBarVisible=False autoHide=False focused=True  bounds=1100x760 content=1099x760 inner=1099x760
+[22:28:15.202] CAPTURE 61-A-product-autoHide-false              image=3840x2160
+[22:28:16.111] SNAP A-product-left-Alt                       label=A menuBarVisible=False autoHide=False focused=True  bounds=1100x760 content=1099x760 inner=1099x760
+[22:28:16.936] SNAP A-product-F10                            label=A menuBarVisible=False autoHide=False focused=True  bounds=1100x760 content=1099x760 inner=1099x760
+[22:28:17.667] CAPTURE 62-A-product-after-keys                  image=3840x2160
+[22:28:18.053] B.setMenu(appMenu) -> {"done":true,"isMenuBarVisible":false,"isMenuBarAutoHide":true}
+[22:28:19.695] SNAP B-control-menu-bar                       label=B menuBarVisible=True  autoHide=True  focused=True  bounds=900x520 content=887x459 inner=887x459
+[22:28:20.566] CAPTURE 63-B-control-menu-bar                    image=3840x2160
+[22:28:21.387] SNAP B-control-after-left-Alt                 label=B menuBarVisible=False autoHide=True  focused=True  bounds=900x520 content=887x485 inner=887x485
+[22:28:22.146] CAPTURE 64-B-control-after-alt                   image=3840x2160
+[22:28:22.256] TRAY create(product icon) -> {"done":true,"bounds":{"x":1462,"y":1032,"width":32,"height":48},"destroyed":false}
+[22:28:23.786] TRAY popUpContextMenu() -> {"done":true,"bounds":{"x":1462,"y":1032,"width":32,"height":48}}
+[22:28:24.203] TRAY popup FindWindow('#32768')=0 class='<null>'
+[22:28:24.258] TRAY menu screenshot -> 65-tray-proposed-menu.png
+[22:28:49.848] WARN probe command timed out: quit (label=A, seq=22)
+[22:28:50.469] done -> D:\dsh-project-desktop-development\tasks\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\artifacts\evidence

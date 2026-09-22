@@ -1,0 +1,34 @@
+[22:25:09.072] synthetic tray icon: D:\dsh-project-desktop-development\tasks\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\artifacts\alt-menu-probe\run3\magenta-tray.png
+[22:25:09.088] electron: D:\dsh-project-desktop-development\resources\dsh-project-desktop\.cache\runtime\dsh-plugin-desktop\node_modules\electron\dist\electron.exe
+[22:25:09.090] virtual screen: 3840x2160
+[22:25:09.116] started electron pid=22208
+[22:25:10.739] SNAP C-autoHideMenuBar-false            label=C menuBarVisible=False autoHide=False bounds=1000x600 content=999x600 inner=999x600
+[22:25:11.748] CAPTURE 20-C-autohide-false-baseline       image=3840x2160 k=2
+[22:25:12.493] SNAP C-F10                              label=C menuBarVisible=False autoHide=False bounds=1000x600 content=999x600 inner=999x600
+[22:25:13.191] SNAP C-left-Alt                         label=C menuBarVisible=False autoHide=False bounds=1000x600 content=999x600 inner=999x600
+[22:25:13.303] APPLY C.setMenu(appMenu) -> {"error":"TypeError: win(...).getMenu is not a function\n    at Timeout._onTimeout (D:\\dsh-project-desktop-development\\tasks\\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\\artifacts\\alt-menu-probe\\main.js:197:59)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)"}
+[22:25:13.915] SNAP C-after-setMenu                    label=C menuBarVisible=False autoHide=False bounds=1000x600 content=999x600 inner=999x600
+[22:25:14.917] CAPTURE 21-C-after-setMenu                 image=3840x2160 k=2
+[22:25:15.645] SNAP C-after-setMenuBarVisibility-true  label=C menuBarVisible=False autoHide=False bounds=1000x600 content=999x600 inner=999x600
+[22:25:16.654] CAPTURE 22-C-visibility-true               image=3840x2160 k=2
+[22:25:17.014] APPLY B.setMenu(appMenu) -> {"error":"TypeError: win(...).getMenu is not a function\n    at Timeout._onTimeout (D:\\dsh-project-desktop-development\\tasks\\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\\artifacts\\alt-menu-probe\\main.js:197:59)\n    at listOnTimeout (node:internal/timers:605:17)\n    at process.processTimers (node:internal/timers:541:7)"}
+[22:25:18.129] SNAP B-after-setMenu                    label=B menuBarVisible=True  autoHide=True  bounds=900x520 content=887x459 inner=887x459
+[22:25:18.971] CAPTURE 23-B-after-setMenu                 image=3840x2160 k=2
+[22:25:20.604] CAPTURE 30-tray-before-create              image=3840x2160 k=2
+[22:25:20.713] TRAY create(magenta) -> {"done":true,"bounds":{"x":1462,"y":1032,"width":32,"height":48},"destroyed":false}
+[22:25:23.086] CAPTURE 31-tray-after-create               image=3840x2160 k=2
+[22:25:23.101] TRAY pixel diff in icon strip: minX=2147483647 minY=2147483647 maxX=-1 maxY=-1 changedPixels=0
+[22:25:23.103] TRAY conclusion: the new icon is NOT drawn in the visible notification area -> Windows put it in the overflow flyout
+[22:25:23.211] TRAY getBounds() (DIP) -> {"bounds":{"x":1462,"y":1032,"width":32,"height":48}}
+[22:25:23.221] TRAY right-click on the magenta icon at physical (2956,2112)
+[22:25:24.044] TRAY popup after right-click on new icon: FindWindow('#32768')=0 class='<null>'
+[22:25:25.063] TRAY right-click installed-app candidate physical (2999,2112)
+[22:25:25.858] TRAY popup class='<null>' (FindWindow=0)
+[22:25:25.860] TRAY right-click installed-app candidate physical (3043,2112)
+[22:25:26.638] TRAY popup class='<null>' (FindWindow=0)
+[22:25:26.640] TRAY right-click installed-app candidate physical (3090,2112)
+[22:25:27.431] TRAY popup class='<null>' (FindWindow=0)
+[22:25:27.433] TRAY right-click installed-app candidate physical (3151,2112)
+[22:25:28.239] TRAY popup class='<null>' (FindWindow=0)
+[22:25:53.317] WARN probe command timed out: quit (label=A, seq=20)
+[22:25:53.944] done -> D:\dsh-project-desktop-development\tasks\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\artifacts\evidence

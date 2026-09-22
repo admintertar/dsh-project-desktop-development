@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>ALT-MENU PROBE C</title>
+<style>
+  html, body {margin: 0; height: 100%; background: #12161c; color: #e6e8eb;
+    font: 15px/1.6 "Segoe UI", system-ui, sans-serif;}
+  header {height: 40px; display: flex; align-items: center; padding: 0 14px;
+    background: #2f3640; border-bottom: 1px solid #3c4550; -webkit-app-region: drag;
+    font-size: 13px; color: #ffffff;}
+  main {padding: 20px 24px;}
+  h1 {font-size: 20px; margin: 0 0 6px;}
+  code {background: #000; padding: 1px 6px; border-radius: 4px; color: #9ee493;}
+  .hi {color: #ffcf70;}
+</style>
+</head>
+<body>
+<header>PROBE C — 这条 40px 深色条就是自定义标题栏（titleBarOverlay）</header>
+<main>
+  <h1>ALT-MENU PROBE C</h1>
+  <p>窗口选项：<code>autoHideMenuBar:false</code> + <code>titleBarStyle:'hidden'</code> + <code>titleBarOverlay</code>（其余与产品窗口一致）。</p>
+  <p class="hi">若原生菜单栏真的能显示，它会画在哪里？在 40px 深色标题栏之上、之内，还是下面？这条深色条是唯一的参照物。</p>
+  <p>innerHeight=<code id="ih">?</code> innerWidth=<code id="iw">?</code></p>
+</main>
+<script>
+  function upd() {document.getElementById('ih').textContent = innerHeight; document.getElementById('iw').textContent = innerWidth;}
+  upd(); addEventListener('resize', upd);
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[22:30:33.450] target: pid=12364 title='欢迎使用 DSH Project Desktop' hwnd=460670
+[22:30:33.509] BASELINE menuHandle=0 items=0 labels=[] client=1798x1279 window=1824x1292@1008,392 class=Chrome_WidgetWin_1
+[22:30:34.266] foreground proof: True
+[22:30:34.372] screenshot 70-devshell-welcome-baseline.png 1824x1292@1008,392
+[22:30:35.134] AFTER LEFT ALT menuHandle=0 items=0 client=1798x1279
+[22:30:35.205] screenshot 71-devshell-welcome-after-left-alt.png
+[22:30:35.848] AFTER LEFT ALT #2 client=1798x1279
+[22:30:36.622] AFTER F10 menuHandle=0 items=0 client=1798x1279
+[22:30:36.701] screenshot 72-devshell-welcome-after-f10.png
+[22:30:36.764] pixel diff top 160px: baseline-vs-leftAlt minX=2147483647 minY=2147483647 maxX=-1 maxY=-1 changed=0
+[22:30:36.765] pixel diff top 160px: baseline-vs-F10     minX=0 minY=0 maxX=1823 maxY=159 changed=17118
+[22:30:36.814] done

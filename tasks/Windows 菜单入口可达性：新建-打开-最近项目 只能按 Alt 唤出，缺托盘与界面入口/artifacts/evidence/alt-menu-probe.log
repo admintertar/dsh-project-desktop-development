@@ -1,0 +1,39 @@
+[22:21:33.202] electron: D:\dsh-project-desktop-development\resources\dsh-project-desktop\.cache\runtime\dsh-plugin-desktop\node_modules\electron\dist\electron.exe
+[22:21:33.214] evidence: D:\dsh-project-desktop-development\tasks\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\artifacts\evidence
+[22:21:33.238] started electron pid=19328
+[22:21:33.832] electron=43.3.0 chrome=150.0.7871.212 node=24.18.1 os=Windows_NT 10.0.26200
+[22:21:33.842] display id=2122156133 bounds=1920x1080@0,0 scaleFactor=2 workArea=0,0 1920x1032
+[22:21:34.832] foreground proof [A]: GetForegroundWindow==hwnd -> True
+[22:21:34.980] SNAP A-baseline                     label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:36.396] CAPTURE 01-A-baseline                  image=3840x2160 k=2 files=01-A-baseline-full.png, 01-A-baseline-window.png, 01-A-baseline-tray-area.png
+[22:21:37.215] SNAP A-after-left-Alt               label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:38.020] SNAP A-after-left-Alt-2nd           label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:38.825] SNAP A-after-VK_MENU                label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:39.645] SNAP A-after-Alt-scanonly           label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:40.452] SNAP A-after-F10                    label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:41.270] SNAP A-after-right-Alt              label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:43.286] CAPTURE 02-A-after-alt-variants        image=3840x2160 k=2 files=02-A-after-alt-variants-full.png, 02-A-after-alt-variants-window.png, 02-A-after-alt-variants-tray-area.png
+[22:21:43.998] SNAP A-menu-forced-visible          label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:45.950] CAPTURE 03-A-menu-forced-visible       image=3840x2160 k=2 files=03-A-menu-forced-visible-full.png, 03-A-menu-forced-visible-window.png, 03-A-menu-forced-visible-tray-area.png
+[22:21:46.573] SNAP A-menu-forced-hidden           label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=0/0/0/0
+[22:21:47.725] SNAP A-accel-CtrlShiftN             label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/0/0/0
+[22:21:48.776] SNAP A-accel-CtrlO                  label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/0
+[22:21:50.591] SNAP A-accel-CtrlR                  label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:51.322] SNAP A-after-removeMenu             label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:52.446] SNAP A-post-removeMenu-CtrlShiftN   label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:53.463] SNAP A-post-removeMenu-CtrlO        label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:55.269] SNAP A-post-removeMenu-CtrlR        label=A menuBarVisible=False autoHide=True  focused=True  bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:56.070] SNAP A-post-removeMenu-left-Alt     label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:56.882] SNAP A-post-removeMenu-F10          label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:58.393] CAPTURE 04-A-post-remove-menu          image=3840x2160 k=2 files=04-A-post-remove-menu-full.png, 04-A-post-remove-menu-window.png, 04-A-post-remove-menu-tray-area.png
+[22:21:58.750] foreground proof [B]: GetForegroundWindow==hwnd -> True
+[22:21:58.862] SNAP B-baseline                     label=B menuBarVisible=False autoHide=True  focused=True  bounds=900x520@780,140 content=887x485 inner=887x485 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:21:59.686] SNAP B-after-left-Alt               label=B menuBarVisible=False autoHide=True  focused=True  bounds=900x520@780,140 content=887x485 inner=887x485 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:22:00.488] SNAP B-after-F10                    label=B menuBarVisible=False autoHide=True  focused=True  bounds=900x520@780,140 content=887x485 inner=887x485 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:22:01.203] SNAP B-menu-forced-visible          label=B menuBarVisible=False autoHide=True  focused=True  bounds=900x520@780,140 content=887x485 inner=887x485 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:22:02.601] CAPTURE 05-B-menu-forced-visible       image=3840x2160 k=2 files=05-B-menu-forced-visible-full.png, 05-B-menu-forced-visible-window.png, 05-B-menu-forced-visible-tray-area.png
+[22:22:03.398] foreground proof [A]: GetForegroundWindow==hwnd -> True
+[22:22:04.923] SNAP A-after-CtrlW                  label=A menuBarVisible=False autoHide=True  focused=False bounds=1100x760@60,60 content=1099x760 inner=1099x760 hdrTop=0 N/O/W/rel=1/1/0/1
+[22:22:04.934] FINAL counters new/open/close/welcome/reloads = 1/1/0/0/1
+[22:22:29.955] WARN probe command timed out: quit (label=A, seq=37)
+[22:22:30.785] done -> D:\dsh-project-desktop-development\tasks\Windows 菜单入口可达性：新建-打开-最近项目 只能按 Alt 唤出，缺托盘与界面入口\artifacts\evidence
