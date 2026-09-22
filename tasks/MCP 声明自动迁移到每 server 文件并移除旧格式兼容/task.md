@@ -6,7 +6,7 @@ title: MCP 声明自动迁移到每 server 文件并移除旧格式兼容
 objective: 把 MCP 声明迁移到每-server 文件并彻底移除旧格式兼容：项目打开时自动把 mcp/servers.yaml 拆成 mcp/servers/<id>.yaml（先全部写入成功再删旧文件，失败则保留），之后只读新格式；同时删除为实现双源兼容而保留的 legacy 读取、shared 标记与 legacy 精确暂存代码，并补齐单测与原生验收。
 status: completed
 createdAt: 2026-09-22T11:10:13.753Z
-updatedAt: 2026-09-22T11:20:53.683Z
+updatedAt: 2026-09-22T11:50:04.670Z
 artifacts:
   - type: file
     path: artifacts/project-changes-zh-light-1180.png
@@ -46,10 +46,13 @@ artifacts:
     description: 原生冒烟完整结果
   - type: file
     path: artifacts/native-smoke-run.log
-    description: smoke:resources 运行日志（EXIT=0）
+    description: macOS 原生冒烟日志（EXIT=0）
   - type: file
     path: artifacts/unit-tests.log
-    description: 插件 yarn check 日志（275 tests 全绿）
+    description: 插件 yarn check 日志（275 tests 全绿，发布前验证）
+  - type: file
+    path: artifacts/release-0.1.6.md
+    description: 0.1.6 发布说明（中英双语，含破坏性变更说明）
 archived: false
 phase: validation
 brief:
@@ -92,10 +95,9 @@ brief:
       version: 1
 handoff:
   nextSteps:
-    - 本次改动已提交但未推送：插件 5e6e280（迁移与去兼容）、7fa9925（测试与示例项目适配）；壳 3ffa8ab、00f6580（原生验收 fixture）。要不要推送等用户决定。
-    - 破坏性变更的发布说明：旧版 DSH 将读不到迁移后的声明，写下一版发布说明时需要明确告知。
-    - 如需把这些带进发布：按 desktop-release 技能走 pin bump → 重导快照 → verify:upstream → 中英双语发布说明 → 推 tag。
-    - 可选跟进：为迁移写一条可见提示或日志（目前迁移是静默的，只在工作区产生删除与新增变更）。
+    - 0.1.6 已发布并推送完毕，本轮工作已收尾；插件 7fa9925 与壳 238ff10 均在远端。
+    - 下一版发布照 desktop-release 技能走即可；注意迁移是破坏性变更，发布说明里已向用户声明，后续版本可以淡化该提示。
+    - 可选跟进：为迁移加一条可见提示（目前静默）；MCP 面板文案已更新为每 server 一个文件。
 references: []
 entries:
   - id: dec-0
@@ -196,6 +198,11 @@ entries:
       - ver-ac5
       - ver-ac6
     createdAt: 2026-09-22T11:20:53.683Z
+  - id: prog-3
+    kind: progress
+    content: "已发布 0.1.6。发布前完整验证：插件 yarn check EXIT=0（275 tests）、壳 yarn check EXIT=0、原生 smoke:resources EXIT=0。按 desktop-release 流程：先 push 插件（29a482f..7fa9925）→ lock bump（commit 7fa9925 / tree d104040，repository 与插件 remote 三方核对一致）→ 删 .upstream/project 重导并 verify:upstream EXIT=0 → package.json 提升到 0.1.6 → 新增 docs/releases/0.1.6.md（中英双语，含「破坏性变更：旧版 DSH 读不到迁移后的声明」）→ 提交 238ff10 并 push → 推 tag v0.1.6。Package Desktop #21 全绿（plan / win-x64 / mac-universal / Verify universal DMG on Intel / Publish verified release），Release 已发布（2026-09-22T11:49:33Z，资产为 mac dmg + win Portable zip + win Setup.exe 及各自 sha256 与 update.json），tag v0.1.6 指向 238ff10。发布提交同时带起 Verify Resources on Windows（run 35721168881，success，含我修改过的原生 fixture）、Probe project boot timing 与 Verify Guide on Windows；Windows 资源验证一次通过，无需再读日志排查。"
+    basis: observation
+    createdAt: 2026-09-22T11:50:04.670Z
 operations:
   4ed99e81816e103e1bf1a46ae13582258665a99e25edc9c7c8a67e9978e2ba39:
     fingerprint: 3688996d1c9de28bfb8030b1f3469ddcee31bdf61bc1b7de96a5e895c82e01f6
@@ -223,6 +230,12 @@ operations:
       - ver-ac5
       - ver-ac6
       - done-1
+  adbfa7af3735f2b9967e6d1fcf9e9bb96b7d20627f4a9c747b161cf1302a8b25:
+    fingerprint: 6c291e160da9160bc3aadffa451cf61af724e05107241e2adef14035a97f5de5
+    kind: update
+    at: 2026-09-22T11:50:04.670Z
+    entryIds:
+      - prog-3
 criterionVersions:
   ac1: 1
   ac2: 1
