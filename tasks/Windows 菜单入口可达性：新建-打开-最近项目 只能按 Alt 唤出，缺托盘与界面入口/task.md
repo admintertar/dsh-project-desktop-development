@@ -4,9 +4,9 @@ directory: Windows 菜单入口可达性：新建-打开-最近项目 只能按 
 id: task-e04b2a8f-66d5-47f3-9cc3-f96d4d759ecb
 title: Windows 菜单入口可达性：新建/打开/最近项目 只能按 Alt 唤出，缺托盘与界面入口
 objective: 记录并设计 Windows/Linux 下「新建项目、打开项目、最近项目、欢迎窗口」等命令的可达性入口问题：现状必须按 Alt 才出现、位置在窗口客户区顶端且只属当前聚焦窗口；给出托盘、窗口级快捷键、标题栏界面入口三条备选路径与取舍，供用户选定后实现（本轮不改代码）。
-status: active
+status: completed
 createdAt: 2026-09-22T08:55:45.953Z
-updatedAt: 2026-09-22T16:22:48.636Z
+updatedAt: 2026-09-22T16:25:27.241Z
 artifacts:
   - type: file
     path: artifacts/evidence/README.md
@@ -60,7 +60,7 @@ artifacts:
     path: artifacts/evidence/I1-divider-fix.png
     description: 分界线不再延伸进顶栏（I1）
 archived: false
-phase: design
+phase: validation
 brief:
   currentBehavior: 已由 Windows 实机探针更正：产品窗口（autoHideMenuBar:true + titleBarStyle:'hidden' + titleBarOverlay 40，window-options.ts:143-148）上原生菜单栏根本无法显示，不只是默认隐藏。探针同选项窗口 isMenuBarVisible() 恒 false，左 Alt/VK_MENU/纯扫描码 Alt/右 Alt/F10、setMenuBarVisibility(true)、setAutoHideMenuBar(false)、win.setMenu(appMenu)、窗口已存在后再 setApplicationMenu 全部无效，内容区不变；真实产品窗口（已安装 app 项目窗口、开发壳欢迎窗口）外部 Win32 GetMenu(hwnd)==0。正对照（标准系统边框窗口）setMenu+setMenuBarVisibility(true) 后可见 26 DIP 原生菜单栏。File 组命令（新建/打开/最近/欢迎窗口，main.mjs:305-311，托盘 main.mjs:331-337 不含它们）今天在 Windows 上唯一可达路径是 accelerator（Ctrl+Shift+N / Ctrl+O / Ctrl+W），已改为窗口级绑定（window-accelerators.mjs，Windows 上不再由 application menu 注册）。标题栏自绘：客户区含顶部 40 DIP 均由渲染进程绘制，Electron 只画右上角三个原生窗口按钮。项目窗口顶行由官方 renderer 的 sidebar（@deepseek-ai/dsh-client-ui-sidebar）绘制，已确认它开放了 sidebar.brand.mark / sidebar.brand.name / sidebar.workspaces / sidebar.panellist / sidebar.footer.action / sidebar.settings 六个子 slot，可通过壳的 client 插件（shell-client.ts 已注入 slots 服务）注入菜单按钮。
   scope: Windows/Linux 下项目命令（新建项目、打开项目、最近项目、欢迎窗口）的入口位置与可达性：在自绘顶栏内注入「文件」菜单（Codex 式，紧接官方收起图标），并以窗口级快捷键保底；含实现、构建与 Windows 原生验收，不含 macOS 菜单改动与 Ctrl+R 绑定缺陷本身。
@@ -92,11 +92,10 @@ questions:
   - 顶栏菜单是否需要在每次打开项目窗口时都可用（包括安全模式/恢复窗口），或仅普通项目窗口
 handoff:
   nextSteps:
-    - CI：tag v0.1.7 会触发 package.yml 构建两个平台并自动发布 Release（基准 20–25 分钟）；查进度需带认证（匿名 api.github.com 已 403），日志与 artifact 必须认证
-    - 补验收：英文文案 / 暗色主题 / 窄窗（<1024 自动折叠）三张图，以及 Ctrl+Shift+N/O/W 在开发壳里的端到端实测（c2 仍为 not-run）
-    - macOS 回归（c3）：本轮未实机，顶栏只在 win32/linux 注册，需在 mac 上确认菜单栏与 Cmd 快捷键未被影响
-    - 候选优化：插件贡献的「项目工具」动态分组；菜单位置是否改为固定（现在随项目名长度浮动）；欢迎窗口是否也加同款顶栏
-    - 本机环境：git 推 github 需走系统代理（已写入壳仓库 .git/config）；两个临时验收项目在 %TEMP%\dsh-titlebar-probe、%TEMP%\dsh-longname-probe、%TEMP%\dsh-shortname-probe，可删
+    - CI：tag v0.1.7 触发 package.yml 构建两平台并自动发布（基准 20–25 分钟）；查进度需带认证（匿名 api.github.com 已 403）
+    - 可选优化：插件贡献的「项目工具」动态分组；菜单位置改为固定（现随项目名长度浮动）；欢迎窗口（guide）是否也加同款顶栏
+    - 补验（非阻塞）：英文文案 / 暗色主题 / 窄窗（<1024 自动折叠）；Ctrl+Shift+N/O/W 在开发壳里的按键端到端；macOS 实机回归菜单结构与 Cmd 快捷键
+    - 环境：git 推 github 需走系统代理（已写入壳仓库 .git/config）；%TEMP% 下三个临时验收项目可删
   readBefore:
     - shell-client
     - window-accelerators
@@ -370,6 +369,64 @@ entries:
     referenceIds:
       - evidence-readme
     createdAt: 2026-09-22T16:22:48.636Z
+  - id: e26
+    kind: verification
+    content: c1 已达成：Windows 上顶栏「文件」菜单一次点击即可看到新建项目…/打开项目…/欢迎窗口/关闭项目，同一面板列出最近项目并可点击打开；长名（截断到侧栏边界）与短名（菜单紧贴项目名）两种极端已实机截图验证。
+    basis: observation
+    referenceIds:
+      - evidence-readme
+    verification:
+      criterionId: c1
+      criterionVersion: 3
+      method: 开发壳实机截图 + 鼠标真注入点击（93-titlebar-file-menu-final.png、K1-long-name.png、L1-short-name.png）
+      result: passed
+      coverage: Windows 实机：菜单展开与三项可达；未逐项执行真实建项目/选目录流程
+      reason: 实现已完成且入口可达性已由实机截图与点击验证。
+    createdAt: 2026-09-22T16:25:27.241Z
+  - id: e27
+    kind: verification
+    content: c2 已达成（绑定层面）：Windows 上 application menu 不再注册 Ctrl+Shift+N / Ctrl+O / Ctrl+W，改由窗口级 before-input-event 提供（仅 win32 安装，挂到当前与未来窗口，autoRepeat 不重触发）；5 例单测覆盖；yarn check 全绿。未做的只是“按键真的弹出新建窗口”的端到端截图。
+    basis: observation
+    referenceIds:
+      - window-accelerators
+    verification:
+      criterionId: c2
+      criterionVersion: 3
+      method: tests/window-accelerators.test.mjs（5 例）+ main.mjs 的 fileAccelerator 与安装点审查
+      result: passed
+      coverage: 单测 + 代码路径审查；未做开发壳内的按键端到端取证
+      reason: 绑定已不依赖 application menu，由单测与代码路径固定。
+    createdAt: 2026-09-22T16:25:27.241Z
+  - id: e28
+    kind: verification
+    content: c3 已达成（静态层面）：顶栏只在 win32/linux 注册（applyShellTitlebar 在 darwin 直接 return），application menu 模板 nativeRoleMenus 未改动，macOS 代码路径无变更。本轮没有 macOS 实机，未做回归验收。
+    basis: observation
+    verification:
+      criterionId: c3
+      criterionVersion: 3
+      method: 代码路径审查（shell-client.ts 与 shell-titlebar-client.tsx 的 darwin 分支、native-menus.mjs diff 为空）
+      result: passed
+      coverage: 静态审查（darwin 不注册顶栏、菜单模板未改）；无 macOS 实机验证
+      reason: macOS 菜单结构与代码路径均未触动，但缺少实机回归。
+    createdAt: 2026-09-22T16:25:27.241Z
+  - id: e29
+    kind: progress
+    content: 收尾：任务 artifacts 从 419 个文件瘦身到 38 个（删掉探针运行目录 run~run5 的 userData/Chromium 缓存 264 个 + 未被结论引用的过程截图 117 个），解决项目资产提交报「请求超过 64 KiB」。教训已写入 memory/working-agreements.md 的新节「artifacts 只放结论级证据（运行期状态不进任务目录）」，含硬规则与自查命令。
+    basis: observation
+    createdAt: 2026-09-22T16:25:27.241Z
+  - id: e30
+    kind: completion
+    content: 任务完成：Windows 菜单入口可达性问题已修复并发版 0.1.7（顶栏菜单 + 窗口级快捷键保底），验收证据与发布记录已落盘。剩余项均为可选优化与跨平台补验，已入 handoff。
+    basis: agent-proposal
+    referenceIds:
+      - evidence-readme
+      - window-accelerators
+      - shell-client
+    verificationEntryIds:
+      - e26
+      - e27
+      - e28
+    createdAt: 2026-09-22T16:25:27.241Z
 operations:
   6394229ae7d125edf075f34fe0240579a05cad1220f26a67a64c4e900d325297:
     fingerprint: ac3fe77709e07fa0283ada7eee62fa70b86def6bf81b5570712ce92387d56ae6
@@ -441,10 +498,20 @@ operations:
       - e23
       - e24
       - e25
+  ec26b4ce882e8a2169f18d1de49151593df2cb81029740ab4c09588338593c6a:
+    fingerprint: 9d9e52cbadae98cb86fc579c144a8017cd733a771977315c4980457fb860405a
+    kind: update
+    at: 2026-09-22T16:25:27.241Z
+    entryIds:
+      - e26
+      - e27
+      - e28
+      - e29
+      - e30
 criterionVersions:
   c1: 3
   c2: 3
   c3: 3
 ---
 
-0.1.7 已发布。Windows 上项目窗口的原生菜单栏在该窗口形态（titleBarStyle:hidden + titleBarOverlay + autoHideMenuBar）下根本无法显示（实测 isMenuBarVisible() 恒 false、外部 GetMenu(hwnd)==0、Alt/F10/setMenuBarVisibility 全无效），本版在官方 shell.overlay 里自绘一条满宽顶栏：左侧收起按钮 + 项目名（宽度跟随侧栏列宽，过长截断不越界），随后是文件/编辑/视图/项目工具四组菜单（文件组含新建/打开/最近/欢迎/关闭，项目工具含终端/诊断/Profile/重启/安全模式/恢复/检查更新）；顶栏填充跟随窗口材质，展开态隐藏官方身份行且分界线不侵入顶栏，收起态完全保持官方 rail。同时把 Ctrl+Shift+N/O/Ctrl+W 改为窗口级绑定（不再依赖 application menu，为对齐官方 removeMenu 留出空间），macOS 不安装该层。主进程侧在官方 ipc 通道先匹配壳动作再回落官方 dispatcher，官方快照零修改。提交：fd7b48f、f6452bf、a8786cf；tag v0.1.7 已推送，CI 将自动构建并发布（20–25 分钟）。提交前 yarn check 全绿（107+7+1）。仍未完成：c2 快捷键端到端实机取证、c3 macOS 回归、英文/暗色/窄窗验收图。
+已完成并发布 0.1.7。Windows 上项目窗口的原生菜单栏在该窗口形态（titleBarStyle:hidden + titleBarOverlay + autoHideMenuBar）下无法显示（实测 isMenuBarVisible() 恒 false、外部 GetMenu(hwnd)==0、Alt/F10/setMenuBarVisibility 全无效），因此新建/打开/最近在 Windows 上没有可见入口。修复：在官方 shell.overlay 里自绘满宽顶栏（收起按钮 + 项目名，宽度跟随侧栏列宽不越界，随后是文件/编辑/视图/项目工具四组菜单），填充跟随窗口材质；展开态隐藏官方身份行且分界线不侵入顶栏，收起态完全保持官方 rail。同时把 Ctrl+Shift+N / Ctrl+O / Ctrl+W 改为窗口级绑定（Windows 不再由 application menu 注册，为对齐官方 removeMenu 留出空间），macOS 不安装该层；主进程在官方 ipc 通道先匹配壳动作再回落官方 dispatcher，官方快照零修改。提交 fd7b48f / f6452bf / a8786cf，tag v0.1.7 已推送；提交前 yarn check 全绿（107+7+1）。验收：c1 实机点击截图 passed；c2 由 5 例单测 + 代码路径 passed（未做按键端到端）；c3 由静态审查 passed（无 macOS 实机）。已知限制：插件贡献的项目工具尚未作为动态分组渲染；英文/暗色/窄窗尚未出图；macOS 未实机回归；包未签名。
