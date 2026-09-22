@@ -1,0 +1,295 @@
+{
+  "ok": true,
+  "userData": "D:\\dsh-project-desktop-development\\resources\\dsh-project-desktop\\.runtime\\resource-states-pg2UIw",
+  "measurements": [
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 1180,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 1179,
+        "rowLeft": 327,
+        "rowRight": 1132,
+        "changes": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        },
+        "resources": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 420,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 419,
+        "rowLeft": 97,
+        "rowRight": 399,
+        "changes": {
+          "scrollWidth": 302,
+          "clientWidth": 302
+        },
+        "resources": {
+          "scrollWidth": 302,
+          "clientWidth": 302
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 1180,
+      "before": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 1180,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 1179,
+        "rowLeft": 327,
+        "rowRight": 1132,
+        "changes": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        },
+        "resources": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 420,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 419,
+        "rowLeft": 80,
+        "rowRight": 399,
+        "changes": {
+          "scrollWidth": 319,
+          "clientWidth": 319
+        },
+        "resources": {
+          "scrollWidth": 319,
+          "clientWidth": 319
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 1180,
+      "before": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 1180,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 1179,
+        "rowLeft": 327,
+        "rowRight": 1132,
+        "changes": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        },
+        "resources": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 420,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 419,
+        "rowLeft": 82,
+        "rowRight": 399,
+        "changes": {
+          "scrollWidth": 317,
+          "clientWidth": 317
+        },
+        "resources": {
+          "scrollWidth": 317,
+          "clientWidth": 317
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 1180,
+      "before": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 1180,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 1179,
+        "rowLeft": 327,
+        "rowRight": 1132,
+        "changes": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        },
+        "resources": {
+          "scrollWidth": 805,
+          "clientWidth": 805
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 420,
+      "changes": {
+        "bodyOverflow": false,
+        "innerWidth": 419,
+        "rowLeft": 81,
+        "rowRight": 399,
+        "changes": {
+          "scrollWidth": 318,
+          "clientWidth": 318
+        },
+        "resources": {
+          "scrollWidth": 318,
+          "clientWidth": 318
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 1180,
+      "before": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 585.765625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 306,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    }
+  ],
+  "manifest": "D:\\dsh-project-desktop-development\\resources\\dsh-project-desktop\\.runtime\\resource-states-pg2UIw\\Resource states\\Resource states.agent-project"
+}
