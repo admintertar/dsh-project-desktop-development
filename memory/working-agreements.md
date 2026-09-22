@@ -42,6 +42,24 @@
 - `memory/`：知识文档；只有 manifest 中 `memory[]` 声明的文件会被加载（单篇上限 64 KB，合计上限 128 KB）。
 - `skills/`、`mcp/`：项目级能力目录。
 
+### artifacts 只放结论级证据（运行期状态不进任务目录）
+
+**实测代价**：一个原生验收任务把 Electron 探针的 `userData` 与运行目录写进了 `tasks/<任务>/artifacts/<探针>/run*/`，
+Chromium 缓存把它撑到 **419 个文件**；项目资产提交直接报 **「请求超过 64 KiB，请缩小配置内容。」**
+（419 条路径 × ~150 字符 ≈ 60 KB+，明细清单本身就超了请求体上限）。清理到 38 个文件后才正常。
+
+硬规则：
+
+1. 探针/冒烟/开发壳的**运行期目录一律放 `%TEMP%`**（或仓库被忽略的 `.runtime/`），绝不放进 `tasks/<任务>/artifacts/`。
+   典型雷区：`app.setPath('userData', <任务目录>)`、`--remote-debugging-port` 的 profile、Playwright/Electron 的 `user-data`、
+   下载缓存、`node_modules`、解包产物。
+2. `artifacts/` 里只放**结论级证据**：一份报告 + 每个结论 1~2 张截图 + 关键日志/JSON。过程截图（同一效果的中间版本）随手删。
+3. 放证据前后各查一次数量与体积，超标先瘦身再提交：
+   ```powershell
+   (Get-ChildItem tasks\<任务> -Recurse -File -Force | Measure-Object).Count
+   ```
+4. 任务记录的 artifacts 索引引用的文件必须真实存在；删除时同步索引，或只删未被索引引用的文件。
+
 ## 本地插件 UI 迭代
 
 改插件界面**不要**走「提交 → bump lock → 重新导出 `.upstream/project` → 构建」那套，用开发期开关直接从本地工作区编译：
