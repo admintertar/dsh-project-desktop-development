@@ -1,0 +1,295 @@
+{
+  "ok": true,
+  "userData": "/Volumes/DATA/work-space2/com.github.public/dsh-project-desktop-development/resources/dsh-project-desktop/.runtime/resource-states-pYllmj",
+  "measurements": [
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 1180,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 1180,
+        "cardLeft": 327,
+        "cardRight": 1133,
+        "repository": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        },
+        "resources": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 420,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 420,
+        "cardLeft": 267,
+        "cardRight": 400,
+        "repository": {
+          "scrollWidth": 150,
+          "clientWidth": 133
+        },
+        "resources": {
+          "scrollWidth": 165,
+          "clientWidth": 133
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 1180,
+      "before": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 1180,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 1180,
+        "cardLeft": 327,
+        "cardRight": 1133,
+        "repository": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        },
+        "resources": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 420,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 420,
+        "cardLeft": 267,
+        "cardRight": 400,
+        "repository": {
+          "scrollWidth": 150,
+          "clientWidth": 133
+        },
+        "resources": {
+          "scrollWidth": 165,
+          "clientWidth": 133
+        }
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 1180,
+      "before": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 1180,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 1180,
+        "cardLeft": 327,
+        "cardRight": 1133,
+        "repository": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        },
+        "resources": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 420,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 420,
+        "cardLeft": 241,
+        "cardRight": 400,
+        "repository": {
+          "scrollWidth": 159,
+          "clientWidth": 159
+        },
+        "resources": {
+          "scrollWidth": 159,
+          "clientWidth": 159
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 1180,
+      "before": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 1180,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 1180,
+        "cardLeft": 327,
+        "cardRight": 1133,
+        "repository": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        },
+        "resources": {
+          "scrollWidth": 806,
+          "clientWidth": 806
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 420,
+      "repository": {
+        "bodyOverflow": false,
+        "innerWidth": 420,
+        "cardLeft": 242,
+        "cardRight": 400,
+        "repository": {
+          "scrollWidth": 158,
+          "clientWidth": 158
+        },
+        "resources": {
+          "scrollWidth": 158,
+          "clientWidth": 158
+        }
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 1180,
+      "before": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 586.265625,
+        "width": 301.234375,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 420,
+      "before": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      },
+      "after": {
+        "x": 56.5,
+        "width": 307,
+        "overflow": false,
+        "bodyOverflow": false
+      }
+    }
+  ],
+  "manifest": "/Volumes/DATA/work-space2/com.github.public/dsh-project-desktop-development/resources/dsh-project-desktop/.runtime/resource-states-pYllmj/Resource states/Resource states.agent-project"
+}
