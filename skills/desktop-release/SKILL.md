@@ -95,6 +95,7 @@ curl -s -H "Authorization: Bearer $PW" \
 
 ## 八、踩过的坑
 
+- **`publish` 要求 `all`**：只构建单平台时即使勾上 publish 也不会发布；覆盖重发同样必须 `platform=all`。
 - **`upstream.lock.json` 的 `repository` 写错**（例如把 `dsh-plugin-project` 写成 `dsh-project-plugin`）：CI 在 checkout 阶段失败。改完务必与插件 remote 逐字比对。
 - **改 lock 和 push 插件必须是同一个动作**：只改 lock 不推插件，等于让 CI checkout 一个远端不存在的 ref。
 - **发布提交会带起额外工作流**：`resources-windows.yml` 与 `probe-boot-timing.yml` 都监听 master push，且 paths 含 `package.json` / `upstream.lock.json`，所以清理它们的红是发布的一部分，不是误触。
