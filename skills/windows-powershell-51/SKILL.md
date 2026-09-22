@@ -122,3 +122,19 @@ $token = ($cred | Where-Object { $_ -like 'password=*' }) -replace '^password=',
   这**不是卡死**，去读那个日志文件（`Get-Content $log -Tail 10`）。
 - `Write-Host` 不进管道（适合做进度），`Write-Output` 会进返回值管道（函数里混用会让返回值变成数组，
   用 `@()`/`return` 明确收口）。
+
+### PowerShell 管道会破坏二进制流（tar/zip 等）
+
+- **症状**：`git archive --format=tar <ref> | tar -xf -` 得到
+  `tar.exe: Damaged tar archive (bad header checksum)` 并**无限重试**，快照导出后是 0 个文件，
+  随后 `verify:upstream` 失败——看起来像"pin 不存在"，其实是管道把字节流毁了。
+- **原因**：PowerShell 管道不是字节流（会按字符串/行处理），二进制数据在管道里必然损坏。
+- **修法**：**先落盘再解包**：
+  ```powershell
+  git -C <repo> archive --format=tar -o "$env:TEMP\pin.tar" <ref>
+  Push-Location <targetDir>; tar -xf "$env:TEMP\pin.tar"; Pop-Location
+  ```
+  （`cmd /c "a | b"` 也能保住字节流，但落盘更直观。）
+- 附带：用 `[System.IO.File]::WriteAllLines` 写 `.json` 会带 **CRLF**（Git 提交时会警告
+  `CRLF will be replaced by LF`）。JSON 解析不受影响，但要避免与仓库的 LF 约定打架时，
+  写文本前先 `-replace "`r`n", "`n"`。
