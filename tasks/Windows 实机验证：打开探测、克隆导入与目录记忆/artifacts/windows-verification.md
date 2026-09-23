@@ -2,8 +2,8 @@
 
 验证机器：Windows 11（NT 10.0.26200，AMD64）、Node.js v22.23.2、Windows PowerShell 5.1（无 pwsh）。
 被测提交：壳仓库 `2bad7f300efef95e5803f346fb36850a71642947`（工作树干净），
-其中包含本任务待验证改动 `d6da5b6951b35e5033f79bfaebda3980f6a5fe61`。
-验证期间只运行命令与探针，未修改仓库源码（探针全部放在被忽略的 `.runtime/`）。
+其中包含本任务待验证改动 `d6da5b6951b35e5033f79bfaebda3980f6a5fe61`；后续修复提交 `ee21ec2`（只改验证脚本）。
+验证期间只运行命令与探针，未修改产品源码（探针全部放在被忽略的 `.runtime/`）。
 
 ## 一、环境前置修复：插件快照曾落后一个提交（必须先修，否则一切验证都跑不起来）
 
@@ -160,7 +160,55 @@ heartbeat windows=0 …                              ← 窗口随后消失，�
   「非 agent-project 仓库回滚删除」「私有仓库凭据弹窗」本轮未执行（正式检查挂在 D1，未走到该路径；桩池也不产生真实克隆失败）。
 - **W5：通过。** 导入目录记忆在 Windows 上生效，`last-directories.json` 落盘（reopen 验证见 PASS 7/8）。
 
-## 五、W6：当前**无法**在实机验证（缺文件关联）
+## 五、D1 修复与修复后重跑（已提交 `ee21ec2`）
+
+修法是让那次点击与窗口关闭竞争（只改验证脚本 `scripts/native-guide-checks.mjs`，产品代码未动）：
+
+```js
+const ambiguousOpened = destroyed(window);
+await Promise.race([ambiguousOpened, clickOpen(window)]);   // 被关闭的窗口不会回答 executeJavaScript
+await ambiguousOpened;
+```
+
+修复后在 Windows 上重跑（同一台机器）：
+
+| 命令 | 结果 |
+| --- | --- |
+| `yarn smoke:guide:focused` | **EXIT=0**，checks 为 `open-folder-and-repository-import` + `create-guide-project-path-preview-separator`（`.runtime/guide-frame-bCutlm`） |
+| `yarn smoke:resources` | **EXIT=0**（`.runtime/resource-states-DjfOp0`） |
+| `yarn check`（壳） | EXIT=0，125+7+1 |
+| `yarn check`（插件，工作树） | EXIT=0，308 tests / 301 pass / 7 skip / 0 fail |
+
+也就是说：多入口补选、其后原本永不执行的导入目录记忆断言、以及英文/深色/窄窗那几组，现在在 Windows 上一次跑完。
+提交 `ee21ec2` 只改这一个脚本；未 push（按仓库纪律，push 需明确要求）。
+
+### CI 外部验证（`windows-2022`，修复后首次转绿）
+
+`ee21ec2` 随后随 `74a82e6` 推送到 `origin/master`（本地与远程一致，无待推送提交）。CI 结果：
+
+| 运行 | 提交 | 结论 |
+| --- | --- | --- |
+| [Verify Guide on Windows #35863134305](https://github.com/admintertar/dsh-project-desktop/actions/runs/35863134305) | `74a82e6` | **success**（`Corepack yarn run smoke:guide:focused` 与 `Upload guide evidence` 均 success，12:52:12Z→12:54:32Z） |
+| [Verify Resources on Windows #35863134327](https://github.com/admintertar/dsh-project-desktop/actions/runs/35863134327) | `74a82e6` | **success** |
+| Verify Guide on Windows #35856054742 / #35851464588 | `2bad7f3`（修复前） | cancelled —— 即在 D1 挂死下被取消/超时 |
+
+这一组对照就是 D1 影响的直接外部证明：同一个 workflow、同一台 runner 镜像，修复前在引导检查上挂到被取消，修复后 2 分 20 秒跑完。
+
+## 六、用户手工验收（2026-09-23，同一台 Windows 实机）
+
+用开发壳（`DSH_PROJECT_PLUGIN_SOURCE=..\dsh-plugin-project` + 隔离 userData）按本任务给出的手工清单执行，
+fixture 在 `%TEMP%\dsh-manual-acceptance`（`01-single` / `02-empty` / `03-multi` / `Destination` / `Taken`）。
+用户结论：**全部通过，没有发现问题**。
+
+- 覆盖到的：文件夹选择器退化、唯一入口直接打开、空文件夹中文提示、多入口补选文件、
+  **第二次对话框取消后无动作**、克隆导入表单校验与文件夹名推导（Windows 分隔符预览）、导入进度与自动打开、
+  非项目仓库回滚、同名目标拒绝、私有仓库凭据弹窗、导入目录记忆（含「浏览」立即记住）与
+  `last-directories.json` 落盘、中英文/深浅色/窄窗口。
+- **证据说明（如实记录）**：本轮手工验收**没有留下截图或录屏**，`artifacts/manual/` 不存在；
+  该结论的来源是用户口头确认，属于人工观察，不是可复核的文件证据。
+  与之对应的自动断言在第五节已全部绿；如需文件级证据，可在需要时按同一清单补一次截图。
+
+## 七、W6：本轮**不验证**（用户决定先不做文件关联）
 
 - 打包脚本确实声明了关联：`scripts/package-windows.mjs:27`（`fileAssociations: [{ext: 'agent-project', …}]`，NSIS 安装器注册）。
 - 本机注册表实测：`.agent-project` 在 `HKCU\…\Explorer\FileExts` 与 `HKCR` 下**都没有**任何关联；
@@ -169,7 +217,7 @@ heartbeat windows=0 …                              ← 窗口随后消失，�
   注册后双击 `<name>.agent-project` → 第二个实例把路径交给已运行的实例（`src/app/main.mjs:385-390`）→ 对应项目窗口被打开。
   本轮不安装候选构建（任务约定：不做发布/打包产物验收，且不改动本机已装应用）。
 
-## 六、证据清单
+## 八、证据清单
 
 | 文件 | 内容 |
 | --- | --- |

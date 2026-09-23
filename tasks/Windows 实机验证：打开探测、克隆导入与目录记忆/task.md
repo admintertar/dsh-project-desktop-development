@@ -4,9 +4,9 @@ directory: Windows 实机验证：打开探测、克隆导入与目录记忆
 id: task-7af5d595-cad0-4494-bc80-ccd37002512f
 title: Windows 实机验证：打开探测、克隆导入与目录记忆
 objective: 在真实 Windows 上验证 task-7be557ec 的三块改动并给出平台结论：(1)「打开」在 Windows 上退化为文件夹选择器时的行为——唯一入口直接打开、没有入口给出本地化提示、多个入口补一次只选文件的对话框；(2)「克隆仓库」导入事务在 Windows 上的端到端表现——目标路径分隔符与文件夹名校验、成功打开、非项目回滚、私有仓库凭据；(3) 目录记忆在 Windows 上生效（Windows 走 browse 后端落到壳的 pickDirectory）。本轮只做验证与记录，不在 Windows 上顺手改代码；发现缺陷另开任务。
-status: active
+status: completed
 createdAt: 2026-09-23T08:07:16.828Z
-updatedAt: 2026-09-23T12:30:29.593Z
+updatedAt: 2026-09-23T13:04:31.117Z
 artifacts:
   - type: commit
     repository: https://github.com/admintertar/dsh-project-desktop.git
@@ -14,7 +14,11 @@ artifacts:
     description: 待验证的壳仓库提交（打开探测、克隆导入、目录记忆、focused 扩展），尚未 push
   - type: file
     path: artifacts/windows-verification.md
-    description: Windows 实机验证报告：前置快照修复、W1–W6 逐项结论、缺陷 D1 复现与证据清单
+    description: Windows 实机验证报告（第 5 节 D1 修复与重跑、第 6 节手工验收、第 7 节 W6 本轮不做）
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop.git
+    commit: ee21ec2825c0f06902ffd181ccdf25b8a212b0bd
+    description: D1 修复（只改验证脚本：与 closed 竞争后再等待），修复后 Windows 上 smoke:guide:focused / smoke:resources / 两侧 yarn check 全部 EXIT=0
 archived: false
 phase: validation
 brief:
@@ -35,9 +39,9 @@ brief:
       required: true
       version: 1
     - id: W2
-      text: 在 Windows 上 yarn run smoke:resources 通过，含新增断言：资源页第一次目录选择器无 defaultPath、第二次的 defaultPath 等于上次选中的目录（或 resources-windows.yml 的 artifact 为绿）
+      text: 在 Windows 上 yarn run smoke:resources 通过，含新增断言：资源页第一次目录选择器无 defaultPath、第二次的 defaultPath 等于上次选中的目录
       required: true
-      version: 1
+      version: 2
     - id: W3
       text: 欢迎窗口「打开」在 Windows 上只弹出文件夹选择器：含唯一 .agent-project 的文件夹直接打开；空文件夹显示「不是 agent-project 项目」；含多个 .agent-project 的文件夹补一次只选文件的对话框，取消则无动作、不报错
       required: true
@@ -50,33 +54,26 @@ brief:
       text: 导入目录记忆在 Windows 上生效：选定父目录并导入后，关闭再打开弹窗预填该目录；userData 下生成 last-directories.json
       required: true
       version: 1
-    - id: W6
-      text: 资源管理器双击 .agent-project 文件能经 second-instance 打开对应项目
-      required: true
-      version: 1
     - id: W7
-      text: 决定是否把 checkRepositoryImport 加进 --focused（guide-windows.yml 目前只跑 checkGuide，欢迎窗口的退化分支与克隆导入在 CI 上无覆盖）
+      text: 决定是否把 checkRepositoryImport 加进 --focused（已决定加进，并在 Windows 实机跑通）
       required: false
-      version: 1
+      version: 2
 questions:
-  - D1 已用三次复现定位到多入口补选分支：现在另开缺陷任务（修 'closed' 不到达 + 给该 await 加超时以免 CI 挂死），还是先只保留结论？
-  - W4 的「非项目回滚 / 私有仓库凭据」与 W6 的文件关联双击都必须在装了包或安装器的 Windows 上手工验证：是否安排安装候选构建（0.1.8+）后你手工点一次？
-  - 本机 .agent-project 目前没有任何文件关联，本轮不安装、不改注册表；若希望我先准备一个不改注册表的 second-instance 复现（以项目文件为参数启动第二个实例，验证路径是否交给已运行实例），请确认。
+  - W6 已按你的决定移出本任务验收标准；将来做了文件关联后，需要另开一次双击验收（步骤已留在报告第七节）。
 handoff:
   nextSteps:
-    - 缺陷 D1（多入口补选分支挂死）需另开任务修复：查清 src/windows/guide-window.mjs:241-246 的 pickProjectFile → openProject 路径为何不发出 closed；修复前 guide-windows.yml 的 smoke:guide:focused 在 Windows 上只会被 job timeout 杀掉，且 checkRepositoryImport 里排在后面的导入断言永不执行。
-    - W3/W4 剩余子项与 W6 的收尾：D1 修复后重跑 yarn smoke:guide（完整模式，含 checkGuideFrame）与 smoke:guide:focused；W6 需在安装了带 .agent-project 关联的候选构建的 Windows 上双击验证（本机当前无关联、未安装候选构建）。
-    - 是否让 CI 免于挂死需要用户决定：可在 checkRepositoryImport 的 ambiguous 分支给 await 加超时，或把 focused 集合暂时改回只跑 checkGuide（本轮不擅自改代码）。
-    - 环境坑提醒：只要 .upstream/project 不是从 lock 的 commit 导出，verify:upstream 就会再次失败；重导方法见 artifacts/windows-verification.md 第一节（先导出到 %TEMP% 校验 tree 再替换）。
-    - 探针陷阱：后台作业里探针不要向 stdout 写日志（EPIPE 会把 Electron 主进程卡成模态错误框，表现为「窗口一闪而逝后卡死」）；只落盘 .runtime/*.trace。
+    - 推送已完成：壳仓库 master 已与 origin/master 一致（74a82e6，包含 D1 修复 ee21ec2）；无待推送提交。
+    - CI 已验证：Guide on Windows run 35863134305 与 Resources on Windows run 35863134327 在 74a82e6 上均 success（修复前 2bad7f30 的两次为 cancelled）。
+    - 遗留（已不在本任务验收标准内）：W6 双击 .agent-project 需先给候选构建带上文件关联，再双击验证 second-instance 转发（报告第七节与 w17）。
+    - 环境提醒：只要 .upstream/project 不是从 lock 的 commit 导出，verify:upstream 就会失败；重导方法见 artifacts/windows-verification.md 第一节（先导出到 %TEMP% 校验 tree 再替换）。
+    - 工具提醒：后台作业里的 Electron 探针不要写 stdout（未排空管道会 EPIPE 并卡死主进程）；只落盘 .runtime/*.trace。
+    - 工作方式约定：修改产品代码（src/ 等）时开独立 git worktree（见 memory/worktree-for-product-code.md）。
   readBefore:
     - windows-verification
-    - guide-window
-    - last-directories
   verifyBefore:
     - cd resources/dsh-project-desktop && yarn check
     - cd resources/dsh-project-desktop && yarn smoke:resources
-    - cd resources/dsh-project-desktop && yarn smoke:guide:focused（预期在 D1 处挂死）
+    - cd resources/dsh-project-desktop && yarn smoke:guide:focused
 references:
   - id: source-task
     label: 源任务：欢迎窗口打开/克隆导入 + 目录记忆（macOS 已验证）
@@ -205,6 +202,105 @@ entries:
     content: D1 根因已在实机确认（修正之前的描述）：对「在本次调用过程中被关闭的窗口」调 webContents.executeJavaScript，Promise 永不 settle。最小复现只做一件事——await contents.executeJavaScript('...button[data-guide-action=open].click()')——点击执行了、两次对话框都返回、窗口也关了（同次运行的 'closed' 观察可见），但其后第一行日志从未出现，而主进程 setInterval 心跳仍在继续（heartbeat windows=0），即主进程没死、只是这个 Promise 悬着。对应 scripts/native-guide-checks.mjs:343 的 await clickOpen(window)（clickOpen 定义在第 304 行），而引导窗口处理完 open 后会在 setImmediate 里 window.close()（src/windows/guide-window.mjs:258）；同文件的 clickAndWaitForClose（第 15-25 行）已用 Promise.race 处理这种情况，补选分支漏了。建议修法：第 343 行改为 await Promise.race([ambiguousOpened, clickOpen(window)]) 或复用 clickAndWaitForClose。新证据：artifacts/d1-executejavascript-hang-trace.log、d1-executejavascript-hang-probe.mjs。
     basis: observation
     createdAt: 2026-09-23T12:30:29.593Z
+  - id: w15
+    kind: progress
+    content: D1 已修复并提交为壳仓库 ee21ec2（只改验证脚本 scripts/native-guide-checks.mjs：把 await clickOpen(window) 改为 await Promise.race([ambiguousOpened, clickOpen(window)]) 后再 await ambiguousOpened；产品代码一行未动）。修复后 Windows 实机重跑：yarn smoke:guide:focused EXIT=0（checks 为 open-folder-and-repository-import + create-guide-project-path-preview-separator，.runtime/guide-frame-bCutlm）；yarn smoke:resources EXIT=0（.runtime/resource-states-DjfOp0）；壳 yarn check EXIT=0（125+7+1）；插件工作树 yarn check EXIT=0（308 tests / 301 pass / 7 skip / 0 fail）。未 push。
+    basis: user-request
+    createdAt: 2026-09-23T13:02:31.636Z
+  - id: w16
+    kind: progress
+    content: 用户在同一台 Windows 实机用开发壳（DSH_PROJECT_PLUGIN_SOURCE=..\dsh-plugin-project + 隔离 userData）按手工清单验收，fixture 在 %TEMP%\dsh-manual-acceptance，结论：全部通过、没有发现问题。覆盖：文件夹选择器退化、唯一入口直接打开、空文件夹中文提示、多入口补选文件、第二次对话框取消后无动作、克隆导入表单校验与文件夹名推导（Windows 分隔符预览）、导入进度与自动打开、非项目仓库回滚、同名目标拒绝、私有仓库凭据弹窗、导入目录记忆（含「浏览」立即记住）与 last-directories.json 落盘、中英文/深浅色/窄窗口。如实记录：本轮手工验收没有留下截图/录屏（artifacts/manual/ 不存在），该结论来源是用户口头确认；对应的自动断言已在 w15 全绿。
+    basis: user-request
+    createdAt: 2026-09-23T13:02:31.636Z
+  - id: w17
+    kind: progress
+    content: W6（资源管理器双击 .agent-project 经 second-instance 打开）本轮不验证：用户决定先不做文件关联，也不安装候选构建。本机现状已核实：打包脚本 scripts/package-windows.mjs:27 声明了关联，但注册表 HKCU\...\Explorer\FileExts 与 HKCR 下都没有 .agent-project，已装的是 0.1.8。若将来要验：安装带关联的候选构建后双击 <name>.agent-project，确认第二个实例把路径交给已运行实例（src/app/main.mjs:385-390）并打开对应项目窗口。
+    basis: user-request
+    createdAt: 2026-09-23T13:02:31.636Z
+  - id: w18
+    kind: verification
+    content: W3 在 Windows 实机通过：唯一入口文件夹直接打开、选择器属性为 ['openFile','openDirectory']；空文件夹显示「这个文件夹不是 agent-project 项目：没有找到 .agent-project 项目文件。」；多入口文件夹补一次只选文件的对话框（选 One.agent-project 即打开）；第二次对话框取消后无动作、不报错。
+    basis: observation
+    verification:
+      criterionId: W3
+      criterionVersion: 1
+      method: yarn smoke:guide:focused（Windows 实机）+ 用户手工界面验收
+      result: passed
+      coverage: 自动：修复后 yarn smoke:guide:focused EXIT=0（checkRepositoryImport 的 4 个分支全部跑到）；手工：用户用开发壳 + %TEMP%\dsh-manual-acceptance 的 01-single/02-empty/03-multi 逐项验收通过。
+      reason: D1 修复后本机 smoke:guide:focused 首次跑完整个 checkRepositoryImport 并 EXIT=0；手工验收由用户在同一台机器上完成并确认无问题。
+    createdAt: 2026-09-23T13:02:31.636Z
+  - id: w19
+    kind: verification
+    content: W4 在 Windows 实机通过：公开仓库导入推导文件夹名并在父目录下安装 <name>.agent-project 后直接打开；非 agent-project 仓库提示后回滚删除；私有仓库弹出凭据弹窗。
+    basis: observation
+    verification:
+      criterionId: W4
+      criterionVersion: 1
+      method: Windows 探针 + yarn smoke:guide:focused + 用户手工界面验收
+      result: passed
+      coverage: 自动：与 checkRepositoryImport 同桩的探针 9/9 PASS（校验、推导名、Windows 分隔符预览、真实阶段进度、安装并打开）+ 修复后 focused 全绿；手工：用户按清单跑完全部导入场景（含回滚、同名目标拒绝、私有仓库凭据）无问题。
+      reason: 自动部分（导入弹窗端到端）在实机探针与 focused 检查中均通过；回滚、同名目标、私有凭据属于只能手工触发的场景，由用户按清单验收确认。
+    createdAt: 2026-09-23T13:02:31.636Z
+  - id: w20
+    kind: verification
+    content: W6 本轮不适用（用户决定先不做文件关联、不装候选构建）；验收方式与前置条件已记在 w17，将来需要时可另行验收。
+    basis: user-request
+    verification:
+      criterionId: W6
+      criterionVersion: 1
+      method: 用户决定暂不验收 + 注册表/打包脚本核实
+      result: not-applicable
+      coverage: 本轮不验证：注册表无 .agent-project 关联，无法从资源管理器双击；已在报告中留下后续验收步骤（装带关联的构建后双击，观察 second-instance 将路径交给运行中实例）。
+      reason: 用户明确本轮不做文件关联、不安装候选构建；缺少关联时该场景在本机无法复现，故不适用而不是失败。
+    createdAt: 2026-09-23T13:02:31.636Z
+  - id: w22
+    kind: scope
+    content: 范围调整：验收项 W6（双击 .agent-project 经 second-instance 打开）移出本任务验收标准。理由：它需要先安装带 .agent-project 关联的候选构建，而本任务 outOfScope 已排除打包产物验收，用户也确认本轮不验收该场景；本机注册表确实无任何关联。保留：验收方式与前置条件已写入报告第七节与 w17，需要时可在带关联的构建上单独验收。
+    basis: user-request
+    referenceIds: []
+    reason: W6 的前置条件（打包/安装带文件关联的构建）不在本任务范围内，用户确认本轮不验收；不移出会让任务永远无法完成。
+    createdAt: 2026-09-23T13:02:53.083Z
+  - id: w24
+    kind: verification
+    content: W2 v2（验收文本去掉「或 CI artifact 为绿」的替代口径后重新确认）在 Windows 实机通过：yarn smoke:resources EXIT=0，win32 专有分支全部执行，第一次选择器无 defaultPath、第二次 defaultPath 等于上次选中的 picked-resource，userData 落盘 last-directories.json（resource 键）。修复 D1 后于 2026-09-23 重跑仍为 EXIT=0（%TEMP% 侧日志与 .runtime/resource-states-DjfOp0）。
+    basis: observation
+    verification:
+      criterionId: W2
+      criterionVersion: 2
+      method: cd resources/dsh-project-desktop && yarn smoke:resources（修复前后各一次）
+      result: passed
+      coverage: scripts/native-resource-state-checks.mjs:695-760 的 win32 分支：添加资源/绑定目录/技能导入都走 desktop-runtime 选择器，含目录记忆两条断言；证据 artifacts/w2-resource-states-result.json、w2-last-directories.json、w2-resource-add-local.png、w2-resource-bind-and-skill.png
+      reason: 验收文本仅去掉了「或 resources-windows.yml 的 artifact 为绿」这一替代口径，判定内容未变；两次本机运行均 EXIT=0。
+    createdAt: 2026-09-23T13:03:05.694Z
+  - id: w25
+    kind: verification
+    content: W7 v2（验收文本改为「已决定加进，并在 Windows 实机跑通」后重新确认）通过：checkRepositoryImport 已在 scripts/native-guide-case.mjs 的 focused 集合里，修复 D1 后 Windows 实机 yarn smoke:guide:focused EXIT=0，checks 为 open-folder-and-repository-import + create-guide-project-path-preview-separator。
+    basis: observation
+    verification:
+      criterionId: W7
+      criterionVersion: 2
+      method: Windows 实机 yarn smoke:guide:focused + 工作流 paths 核对
+      result: passed
+      coverage: guide-windows.yml 的 paths 覆盖 scripts/native-guide-case.mjs；本机 focused 修复前挂死、修复后 EXIT=0（.runtime/guide-frame-bCutlm）。
+      reason: 验收文本只是把当时的待决定改成已决定并实机验证，判定内容未变；窗口探测、多项目补选与导入在 Windows 上均已随 focused 一起跑通。
+    createdAt: 2026-09-23T13:03:05.694Z
+  - id: w26
+    kind: completion
+    content: Windows 实机验证收尾：必需验收项均有当前版本下的通过证据（W1 w7、W2 v2 w24、W3 w18、W4 w19、W5 w9），可选 W7 v2 已通过（w25），W6 经用户决定移出验收标准（w22）；D1 已修复（ee21ec2）并在修复后重跑 focused/resources/两侧 check 全绿（w15），用户手工验收确认无问题（w16）。任务目标——在真实 Windows 上给出三块改动的平台结论——已达成。
+    basis: agent-proposal
+    verificationEntryIds:
+      - w7
+      - w24
+      - w18
+      - w19
+      - w9
+      - w25
+    createdAt: 2026-09-23T13:03:12.013Z
+  - id: w27
+    kind: progress
+    content: 外部验证（windows-2022 CI）已跟到位：壳仓库 ee21ec2（D1 修复）已随 74a82e6 推送到 origin/master（本地与远程一致，无待推送提交）。“Verify Guide on Windows” 在 74a82e6 上 success（run 35863134305，12:52:12Z→12:54:32Z），其中 “Verify the create guide project path preview on Windows”（corepack yarn run smoke:guide:focused）与 “Upload guide evidence” 均为 success；“Verify Resources on Windows” 也 success（run 35863134327）。对照：同一 workflow 在修复前的 2bad7f30 上两次均 cancelled（35856054742、35851464588）——即在 D1 挂死下被取消/超时，修复后首次跑通。
+    basis: observation
+    createdAt: 2026-09-23T13:04:20.804Z
 operations:
   2e57ae13d9d855c084b0d4f559de1948ebb5a891d105734e9cd9fcfd159c8492:
     fingerprint: e83f92eb6fdb8e31ebe052910812971f1075677b755892afc5786b32292c38b9
@@ -260,14 +356,55 @@ operations:
     at: 2026-09-23T12:30:29.593Z
     entryIds:
       - w14
+  b64506c022691a5b7fa12bb134df29d7b18daa7438202962181d52e12b134a55:
+    fingerprint: 2cf6fdfbe7c800693646b71d3666551a3f4399076eae76143f38fa04839f2fbe
+    kind: update
+    at: 2026-09-23T13:02:31.636Z
+    entryIds:
+      - w15
+      - w16
+      - w17
+      - w18
+      - w19
+      - w20
+  5d2eda9c82f3fd3b83b2738a77509a835c568332e5b212d3c2b251ced59971f2:
+    fingerprint: b98234cb6c4cc9afc9142d2d361438453f7e0b8a297214238ad2c489b96834a9
+    kind: update
+    at: 2026-09-23T13:02:53.083Z
+    entryIds:
+      - w22
+  ce27b8e05f9b980bcdba75735c294a55f09d926b5fd512c3672a2e9aef6e9e34:
+    fingerprint: f210a9f643cc1f3c4e2f1499ad32493c83dac1dc51349fefaa56eb5fd58323a5
+    kind: update
+    at: 2026-09-23T13:03:05.694Z
+    entryIds:
+      - w24
+      - w25
+  372679003bd011649969d3205957fd4f52f520cc3487f91686520e3fbb6eb15d:
+    fingerprint: 5de663a6fced48a09ca4bb88e2f155c413b48adc502c30aab8efeb6bc3fd7061
+    kind: update
+    at: 2026-09-23T13:03:12.013Z
+    entryIds:
+      - w26
+  c3a7b84873d6b55744b4ce14e4bdb834a92bea36af00ef8ef7bf95a2b23ab765:
+    fingerprint: b2ed3a2a96bbe73825c08ad7b38c4634602127afb89174b7d4445df48ab11a1c
+    kind: update
+    at: 2026-09-23T13:04:20.804Z
+    entryIds:
+      - w27
+  1f2bda83a3048a08e287578ba5273202b4b22dc77e6a238abbb7893c238fac41:
+    fingerprint: 6c40a9e4f1550509f426e43547882c502b26d018fc20aa3c4f32d2dab8d67172
+    kind: update
+    at: 2026-09-23T13:04:31.117Z
+    entryIds: []
 criterionVersions:
   W1: 1
-  W2: 1
+  W2: 2
   W3: 1
   W4: 1
   W5: 1
   W6: 1
-  W7: 1
+  W7: 2
 ---
 
-Windows 实机验证已在真实 Windows 上执行（NT 10.0.26200 / AMD64、Node 22.23.2、Windows PowerShell 5.1），被测是工作树干净的 2bad7f3（含 d6da5b6 的改动）。前置修复：.upstream/project 是落后一个提交的陈旧快照（实测 tree 880e45f8 = 插件 dd85e1a），verify:upstream 因此直接失败；按 lock 的 5193e81 重新导出并先验证 tree = dcd0f0e8 后再替换，随后全部检查可跑。结论：W1 通过（check EXIT=0，125+7+1，smoke:host 也过）；W2 通过（smoke:resources EXIT=0，Windows 专有目录记忆断言全跑：第一次无 defaultPath、第二次等于上次选中目录，userData 落盘 last-directories.json）；W5 通过（导入目录记忆与 last-directories.json 的 import 键在实机确认）；W3/W4 部分通过（唯一入口文件夹、空文件夹本地化文案、导入弹窗端到端 9 项 PASS 均实机确认，但「多个 .agent-project 补选文件」分支挂死，非项目回滚与私有凭据未走到）；W6 无法验证（本机注册表没有 .agent-project 文件关联，未安装带关联的候选构建）。发现缺陷 D1：多入口文件夹的 Windows 补选分支里 open() 已调用、窗口随后消失但 'closed' 不到达调用方，导致 yarn smoke:guide:focused 挂死而非失败（复现 3 次，CI 只能被 job timeout 杀掉），该分支后面的导入目录记忆断言因此永不执行。未改任何仓库源码，证据只落 tasks/<任务>/artifacts（报告 windows-verification.md + 11 个结论级文件）。
+Windows 实机验证完成（含 CI 外部验证）。机器：Windows 11（NT 10.0.26200/AMD64）、Node 22.23.2、Windows PowerShell 5.1；被测：壳 2bad7f3（含 d6da5b6 的改动），修复提交 ee21ec2，已随 74a82e6 推送到 origin/master。前置修复：.upstream/project 曾是落后一个提交的陈旧快照导致 verify:upstream 失败，按 lock 的 5193e81 重导并先校验 tree 再替换。结果：W1 通过（yarn check EXIT=0，125+7+1，smoke:host 也过）；W2 通过（smoke:resources EXIT=0，win32 目录记忆断言全跑并落盘 last-directories.json）；W3 通过（唯一入口直接打开、空文件夹中文提示、多入口补选文件、取消无动作——自动 focused + 用户手工双确认）；W4 通过（导入表单校验/文件夹名推导/Windows 分隔符预览/真实阶段进度/安装并打开，以及回滚、同名目标拒绝、私有仓库凭据，由用户手工确认）；W5 通过（导入目录预填与 last-directories.json 的 import 键）；W7 通过（checkRepositoryImport 已入 focused 集合并实机跑通）；W6 经用户决定移出验收标准（前置条件属打包产物验收，已写入报告第七节与 w17，将来可单独验收）。过程中发现并修复 D1：非 darwin 补选分支对「在调用中被关闭的窗口」await executeJavaScript 导致 Promise 永不 settle，smoke:guide:focused 在 Windows 上挂死（CI 只能等 job timeout）；修法为与 closed 竞争（只改验证脚本 scripts/native-guide-checks.mjs，产品代码未动）。CI 外部验证：74a82e6 上 Guide/Resources 两个 Windows workflow 均 success（run 35863134305 / 35863134327），而修复前的 2bad7f30 上 Guide workflow 两次 cancelled——D1 影响的直接对照。证据：artifacts/windows-verification.md + 15 个结论级文件（共 16 个文件 / ≈422 KB）。遗留：手工验收没有截图留档（口头确认）。
