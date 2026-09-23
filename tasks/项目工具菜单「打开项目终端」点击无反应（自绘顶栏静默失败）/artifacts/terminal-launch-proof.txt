@@ -1,0 +1,40 @@
+Terminal launch acceptance — shell under test: working tree of resources/dsh-project-desktop
+(Windows NT 10.0.26200 / AMD64, Electron 43.3.0, Node 22.23.2, Windows PowerShell 5.1)
+
+Final state: after the contract fix (src/desktop-adapter/terminal-launch.mjs) and after the
+titlebar i18n rework. Date of run: 2026-09-23.
+
+Setup
+  userData   .runtime/verify-shell/userdata                      (isolated, never in this task dir)
+  command    node scripts/start.mjs --remote-debugging-port=9333 <manifest>
+  driver     .runtime/verify-shell/click-terminal.mjs            (CDP, clicks the self-drawn titlebar)
+
+Step 1 — the menu opens
+  evidence: project-tools-menu.png, project-tools-menu.json
+  menu items: 打开项目终端 / 导出项目诊断… / Profile… / 重启当前项目 / 在安全模式中打开 /
+              项目恢复… / 检查更新… / 关于 DSH Project Desktop
+  error-dialog windows after the click: none (after-click.json)
+
+Step 2 — console processes before the click (terminal-processes-before.txt)
+  cmd 15116, cmd 19756, cmd 21340
+  conhost 3632, 10104, 14972, 19720, 19772
+  WindowsTerminal 21608   "管理员:  C:\WINDOWS\system32\cmd.exe"     <- the operator's own window
+
+Step 3 — click "打开项目终端" (terminal-processes-after.txt)
+  WindowsTerminal 19904   "DSH Desktop"                              <- NEW, this click's console
+  WindowsTerminal 21608   "管理员:  C:\WINDOWS\system32\cmd.exe"     <- unchanged
+  plus one additional conhost (3484/21920)
+
+  The new window is the generated interactive console: the official Windows broker runs
+  `cmd.exe /D /S /C launch.cmd`, and launch.cmd then issues
+  `start "DSH Desktop" /D <profileDir> pwsh.exe -NoLogo -NoExit -ExecutionPolicy Bypass -File <welcome.ps1>`.
+  Only a delta is meaningful here: the machine already had a Windows Terminal open, so presence
+  alone would not have been evidence.
+
+Step 4 — the acceptance console and the acceptance shell were closed again
+  (Stop-Process -Id 19904; development shell stopped; debug port 9333 confirmed closed).
+
+Before the fix the same click produced no console at all: the Shell handed the pinned generator an
+option object without the required `spawn`, the generator threw
+`TypeError: options.spawn is not a function`, and neither the official renderer dispatcher nor the
+titlebar surfaced anything to the user.
