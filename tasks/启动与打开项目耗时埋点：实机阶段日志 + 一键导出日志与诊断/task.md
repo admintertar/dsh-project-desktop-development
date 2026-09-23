@@ -6,7 +6,7 @@ title: 启动与打开项目耗时埋点：实机阶段日志 + 一键导出日�
 objective: 让“Windows 启动卡二三十秒”“打开项目有时也慢”这类实机延迟可以被定位到具体阶段：在主进程启动链路、打开项目链路与 Host 进程内部加入常开的分阶段时间戳追踪并落到 userData/boot.log；把恢复模式原因并入同一份证据；在项目工具菜单提供一个导出入口，产出可直接发送的“日志 + 官方诊断包”分析材料。
 status: active
 createdAt: 2026-09-23T13:44:07.489Z
-updatedAt: 2026-09-23T13:44:07.489Z
+updatedAt: 2026-09-23T14:51:04.026Z
 artifacts: []
 archived: false
 phase: implementation
@@ -92,6 +92,22 @@ entries:
       result: passed
       coverage: 12 项断言全部通过
     createdAt: 2026-09-23T13:44:07.489Z
+  - id: e7
+    kind: progress
+    content: 发布 0.1.9：版本号提到 0.1.9；插件 pin 从 5193e81 提到已推送的 d45b54f（tree f8fe0b42b631df28cf5b7eeb81d1294919813cbf），.upstream/project 快照重导（188 文件）并通过 verify:upstream；新增 docs/releases/0.1.9.md（中英双语）；master 发布提交 24ca2db，tag v0.1.9 已推送，Package Desktop 工作流 run 35877171879 已触发。
+    basis: observation
+    createdAt: 2026-09-23T14:51:04.026Z
+  - id: e8
+    kind: verification
+    content: 发布前全量校验：yarn check EXIT=0（verify:upstream + build + 全部单测 + recovery + safe-mode + project-files + smoke:host）。
+    basis: observation
+    verification:
+      criterionId: C6
+      criterionVersion: 1
+      method: yarn check（仓库根）
+      result: passed
+      coverage: 发布提交前的完整校验链全部通过
+    createdAt: 2026-09-23T14:51:04.026Z
 operations:
   77c44e0f10e7de935c6d2d8b92c9fa2cc2ab55e3dfab9f05a5244ca3fc0ec452:
     fingerprint: 1847f9a04e6a1e00968de879be9af8a6ca73339fae71a255b68a024f3de43dc4
@@ -104,6 +120,13 @@ operations:
       - e4
       - e5
       - e6
+  7ca1b8162cb9b573e9275becb55d1b98029afe46ad3dc02d25ba7e1485176ca9:
+    fingerprint: 724ec2a9a16db9b05564755f8dc97f8add774b17535c5f83320ad09c42241492
+    kind: update
+    at: 2026-09-23T14:51:04.026Z
+    entryIds:
+      - e7
+      - e8
 criterionVersions:
   C1: 1
   C2: 1
