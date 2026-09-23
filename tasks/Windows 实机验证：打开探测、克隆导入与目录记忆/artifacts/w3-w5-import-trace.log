@@ -1,0 +1,13 @@
+2026-09-23T12:21:25.923Z PASS unique-entry folder opens directly; the picker degrades to openFile+openDirectory
+2026-09-23T12:21:26.401Z empty folder copy: 这个文件夹不是 agent-project 项目：没有找到 .agent-project 项目文件。
+2026-09-23T12:21:26.401Z PASS folder without a project reports 不是 agent-project 项目 in the window locale
+2026-09-23T12:21:27.600Z PASS empty import form reports its own validation error; destination starts at the window default
+2026-09-23T12:21:27.617Z PASS repository URL derives the folder name imported-project and previews the target path with the host separator
+2026-09-23T12:21:27.843Z PASS clone progress reports the plugin job phase (接收对象, 42%)
+2026-09-23T12:21:28.322Z PASS a finished import installs <name>.agent-project under the chosen parent and opens it
+2026-09-23T12:21:28.816Z PASS a new dialog starts at the previous import destination
+2026-09-23T12:21:28.943Z PASS browsing a directory remembers it before any clone starts; Escape closes without importing
+2026-09-23T12:21:30.039Z PASS English copy, dark theme, Escape and a 420px window keep the dialog inside the viewport
+2026-09-23T12:21:30.044Z last-directories.json: {"version":1,"paths":{"import":"C:\\Users\\PING\\AppData\\Local\\Temp\\win-import-c238f7\\import-fixtures\\Picked"}}
+2026-09-23T12:21:30.044Z ALL PASSED (9)
+2026-09-23T12:21:30.044Z exiting 0

@@ -1,0 +1,20 @@
+2026-09-23T12:16:02.215Z +95ms launch enter
+2026-09-23T12:16:02.587Z +467ms launch returned 1
+2026-09-23T12:16:02.636Z +516ms actions rendered
+2026-09-23T12:16:02.638Z +518ms dialog call ["openFile","openDirectory"]
+2026-09-23T12:16:02.639Z +519ms dialog call ["openFile"]
+2026-09-23T12:16:02.639Z +519ms open called C:\Users\PING\AppData\Local\Temp\diag-amb-bc82de\import-fixtures\Ambiguous\One.agent-project
+2026-09-23T12:16:07.228Z +5108ms heartbeat windows=0
+2026-09-23T12:16:12.243Z +10123ms heartbeat windows=0
+2026-09-23T12:16:17.244Z +15124ms heartbeat windows=0
+2026-09-23T12:16:22.254Z +20134ms heartbeat windows=0
+2026-09-23T12:16:27.262Z +25142ms heartbeat windows=0
+2026-09-23T12:16:32.269Z +30149ms heartbeat windows=0
+2026-09-23T12:16:37.279Z +35159ms heartbeat windows=0
+2026-09-23T12:16:42.292Z +40171ms heartbeat windows=0
+2026-09-23T12:16:47.304Z +45184ms heartbeat windows=0
+2026-09-23T12:16:52.312Z +50192ms heartbeat windows=0
+2026-09-23T12:16:57.318Z +55198ms heartbeat windows=0
+2026-09-23T12:17:02.320Z +60199ms heartbeat windows=0
+2026-09-23T12:17:07.333Z +65213ms heartbeat windows=0
+2026-09-23T12:17:12.345Z +70224ms heartbeat windows=0

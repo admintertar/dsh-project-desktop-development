@@ -1,0 +1,4 @@
+Guide frame evidence: D:\dsh-project-desktop-development\resources\dsh-project-desktop\.runtime\guide-frame-Yop73M
+
+[11996:0923/201430.870:ERROR:content\browser\gpu\gpu_process_host.cc:1089] GPU process exited unexpectedly: exit_code=-1
+[11996:0923/201432.474:ERROR:content\browser\network_service_instance_impl.cc:721] Network service crashed or was terminated, restarting service.
