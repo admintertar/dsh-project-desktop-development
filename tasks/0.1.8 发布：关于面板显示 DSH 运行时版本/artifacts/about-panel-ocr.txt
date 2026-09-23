@@ -1,0 +1,19 @@
+# macOS 关于面板验收记录（开发壳，2026-09-23）
+
+环境
+- 壳：resources/dsh-project-desktop 工作树（package.json version 0.1.8），Electron 43.3.0 开发模式
+- userData：/tmp/dsh-about-inspect（隔离，非任务目录）
+- 触发：主进程 inspector（--inspect=9333）+ Runtime.evaluate
+  require('electron').app.focus({steal:true}); require('electron').app.showAboutPanel()
+- 定位面板窗口：CGWindowListCopyWindowInfo，owner=Electron、onscreen=true、284x166、无标题
+- 截图：screencapture -x -o -l <面板窗口 id> → about-panel-0.1.8.png（568x332 像素，Retina）
+- 取字：macOS Vision OCR（VNRecognizeTextRequest，zh-Hans + en-US，accurate），截图先按 2x 放大
+
+OCR 输出（逐字）
+DSH Project Desktop
+版本0.1.8（DSH 0.1.5-rc.2）
+
+结论
+- 关于面板确实由 setAboutPanelOptions 覆盖（否则显示的是 Electron 默认信息）。
+- DSH（Harness）版本 0.1.5-rc.2 与壳版本 0.1.8 渲染在同一版本行（macOS 的 "版本 X（Y）" 形式），即同一字号；满足“DSH 版本与现有版本号字体一致”的要求。
+- 未覆盖：Windows/Linux 顶栏入口无实机；视觉细节（对齐、换行）未逐像素核对。
