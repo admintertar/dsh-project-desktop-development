@@ -6,10 +6,10 @@ title: 启动与打开项目耗时埋点：实机阶段日志 + 一键导出日�
 objective: 让“Windows 启动卡二三十秒”“打开项目有时也慢”这类实机延迟可以被定位到具体阶段：在主进程启动链路、打开项目链路与 Host 进程内部加入常开的分阶段时间戳追踪并落到 userData/boot.log；把恢复模式原因并入同一份证据；在项目工具菜单提供一个导出入口，产出可直接发送的“日志 + 官方诊断包”分析材料。
 status: active
 createdAt: 2026-09-23T13:44:07.489Z
-updatedAt: 2026-09-23T14:51:04.026Z
+updatedAt: 2026-09-23T15:28:43.586Z
 artifacts: []
 archived: false
-phase: implementation
+phase: validation
 brief:
   currentBehavior: 启动与打开项目的耗时光靠离线探针（scripts/probe-host-boot-timing.mjs、probe-boot-timing 工作流）或失败信息推测；实机启动/打开变慢时 shell 没有任何分阶段计时，Host 内部（首次 Profile 准备的 pnpm 依赖实体化、官方插件树）对主进程完全不可见。恢复模式原因只写在项目状态目录的 recovery-events.jsonl，实际没人知道去那里找。
   scope: 壳主进程启动链路、打开项目链路、Host 进程内部阶段埋点；trace 落盘与保留策略；恢复原因并入 trace；项目工具菜单的日志+诊断导出入口；开发与架构文档；真实启动验证探针；单测覆盖 trace 语义与导出报告渲染。
@@ -48,6 +48,8 @@ brief:
       text: yarn check 通过（含全部单测与 smoke:host）
       required: true
       version: 1
+questions:
+  - C5 待端到端验收：装 0.1.9 后在项目工具菜单执行一次「导出日志与诊断…」，确认同一目录同时得到报告（含 boot/project-open 追踪与恢复原因）与 dsh-diagnostics-*.zip。
 references: []
 entries:
   - id: e1
@@ -108,6 +110,45 @@ entries:
       result: passed
       coverage: 发布提交前的完整校验链全部通过
     createdAt: 2026-09-23T14:51:04.026Z
+  - id: e9
+    kind: verification
+    content: C1（真实启动写入 boot 段）：yarn probe:startup-trace 真实启动 Electron 壳，boot 段依次含 early electron main / cleanup guide clones / theme and recent-projects state / app.whenReady / updates service / disposable project state cleanup / tray, accelerators, menus / workspace restore / welcome window created，并在 will-quit 收尾 total。
+    basis: observation
+    verification:
+      criterionId: C1
+      criterionVersion: 1
+      method: 真实 Electron 启动 + 读取 boot.log 的 boot 段
+      result: passed
+      coverage: 启动段各关键阶段均出现在真实启动日志中
+    createdAt: 2026-09-23T15:28:43.586Z
+  - id: e10
+    kind: verification
+    content: "C3（慢阶段标记与段落汇总）：实机日志中单阶段 ≥1000 ms 行带 [SLOW >1000ms]（实测 official host booted 6433 ms、host boot rpc returned 6960 ms），每段结束输出 `--- <name> total <n> ms --- slowest: <stage> <n> ms`；tests/boot-log.test.mjs 另有专项断言（含“快阶段不得被标 SLOW”）。"
+    basis: observation
+    verification:
+      criterionId: C3
+      criterionVersion: 1
+      method: 实机日志核对 + tests/boot-log.test.mjs
+      result: passed
+      coverage: 标记、total 与最慢阶段同时在实机日志与单测中被验证
+    createdAt: 2026-09-23T15:28:43.586Z
+  - id: e11
+    kind: verification
+    content: C5（一次导出产出报告 + 官方诊断 zip）——仅完成到单元层，未做端到端验收：renderExportReport 的报告渲染有单测（12/12 含该项），但“在项目工具菜单点一次「导出日志与诊断…」→ 同目录出现报告与 dsh-diagnostics-*.zip”这一步需要真实 Electron 对话框（showSaveDialog）与真实点击，尚未执行。
+    basis: observation
+    verification:
+      criterionId: C5
+      criterionVersion: 1
+      method: 单测（报告渲染）+ 待补的菜单点击端到端
+      result: not-run
+      coverage: 仅覆盖报告渲染的纯函数层；菜单→对话框→落盘链路未验证
+      reason: 导出入口依赖真实 Electron 保存对话框与原生菜单点击，本轮未做端到端点击验收，待装 0.1.9 后人工执行一次。
+    createdAt: 2026-09-23T15:28:43.586Z
+  - id: e12
+    kind: progress
+    content: 0.1.9 发布：首次 tag 构建被取消，已用 workflow_dispatch（platform=all / publish=true / replace_existing=true）重发，构建提交 c9b3222（含 reveal 修复），run 35880579416。
+    basis: observation
+    createdAt: 2026-09-23T15:28:43.586Z
 operations:
   77c44e0f10e7de935c6d2d8b92c9fa2cc2ab55e3dfab9f05a5244ca3fc0ec452:
     fingerprint: 1847f9a04e6a1e00968de879be9af8a6ca73339fae71a255b68a024f3de43dc4
@@ -127,6 +168,15 @@ operations:
     entryIds:
       - e7
       - e8
+  5194fd12c88ff74954e9a932143d579515c24873a03b259fbf8fcd4d3b02b9a7:
+    fingerprint: f775777fd4484339eb1f572c685f61eda980154c4134059758ea0a5191bdd4ca
+    kind: update
+    at: 2026-09-23T15:28:43.586Z
+    entryIds:
+      - e9
+      - e10
+      - e11
+      - e12
 criterionVersions:
   C1: 1
   C2: 1
@@ -136,4 +186,4 @@ criterionVersions:
   C6: 1
 ---
 
-已实现并实机验证：src/app/boot-log.mjs 提供显式 trace 对象（stage/event/measure/end），写 <userData>/boot.log，默认常开、按 256 KiB 半量截断、单阶段 ≥1000 ms 打 [SLOW >1000ms]、段落结束给 total + 最慢阶段；DSH_PROJECT_BOOT_LOG 改路径（空串关闭）、DSH_PROJECT_BOOT_TRACE=1 同时打 stdout、DSH_PROJECT_BOOT_LOG_BYTES 改保留预算。启动链路埋点覆盖 run() 入口/清理/主题/ready/更新服务/托盘菜单/工作区恢复/欢迎窗口；打开项目链路覆盖 open() 请求与项目文件解析、workspace.open、createProject、Host 监督（profile 选择、官方 rpc 模块、代理解析、fork、ready、boot RPC、渲染 URL 认证）、建窗/渲染认证/loadURL 与健康上报/检查点/聚焦。Host 内部通过 DSH_PROJECT_BOOT_LOG_FILE + DSH_PROJECT_BOOT_SESSION 复用同一段 trace，覆盖 boot 请求、Profile 准备（含 pnpm 依赖实体化的独立计时）、官方 Host 启动、渲染进程注册。恢复模式原因在写 recovery-events.jsonl 的同时记入该次 trace。项目工具菜单“导出日志与诊断…”复用官方 diagnostics 动作：写报告（环境/数据来源/追踪全文/各项目恢复原因）+ 复制项目官方诊断 zip 到同目录并在文件管理器定位；失败复用官方 diagnosticsErrorTitle/ErrorMessage 文案。
+实现与实机验证已完成：src/app/boot-log.mjs 提供显式 trace 对象并写 <userData>/boot.log（常开、≥256 KiB 半量截断、单阶段 ≥1000 ms 标 [SLOW >1000ms]、段落结束给 total 与最慢阶段）；启动/打开项目链路与 Host 进程阶段均已埋点，恢复模式原因并入同段追踪；项目工具菜单提供「导出日志与诊断…」一次导出报告 + 官方诊断 zip。证据：probe:startup-trace 7/7、tests/boot-log.test.mjs 12/12、yarn check EXIT=0；已随 0.1.9 发布（覆盖重发 run 35880579416，构建 c9b3222）。唯一未覆盖：C5 的菜单→对话框→落盘端到端验收（仍待装包后人工执行一次）。
