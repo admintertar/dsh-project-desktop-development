@@ -1,0 +1,267 @@
+{
+  "ok": true,
+  "userData": "C:\\Users\\PING\\AppData\\Local\\Temp\\clone-action-probe-bTDvQM",
+  "checks": [
+    {
+      "locale": "en",
+      "theme": "light",
+      "cloneLabel": "Clone: Clone action-backend",
+      "tooltipTrigger": "focus",
+      "windowFocused": true,
+      "row": [
+        {
+          "aria": "Resource details: Clone action-backend",
+          "text": "Details",
+          "action": false,
+          "width": 56,
+          "height": 28,
+          "radius": "14px",
+          "color": "rgb(15, 17, 21)",
+          "disabled": false
+        },
+        {
+          "aria": "Clone: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        },
+        {
+          "aria": "Bind directory: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        },
+        {
+          "aria": "Edit resource: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        },
+        {
+          "aria": "Remove resource: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        }
+      ],
+      "narrow": {
+        "pageOverflow": false,
+        "footerOverflow": false,
+        "withinViewport": true,
+        "visible": true
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "cloneLabel": "Clone: Clone action-backend",
+      "tooltipTrigger": "focus",
+      "windowFocused": true,
+      "row": [
+        {
+          "aria": "Resource details: Clone action-backend",
+          "text": "Details",
+          "action": false,
+          "width": 56,
+          "height": 28,
+          "radius": "14px",
+          "color": "rgb(249, 250, 251)",
+          "disabled": false
+        },
+        {
+          "aria": "Clone: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        },
+        {
+          "aria": "Bind directory: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        },
+        {
+          "aria": "Edit resource: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        },
+        {
+          "aria": "Remove resource: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        }
+      ],
+      "narrow": {
+        "pageOverflow": false,
+        "footerOverflow": false,
+        "withinViewport": true,
+        "visible": true
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "cloneLabel": "克隆: Clone action-backend",
+      "tooltipTrigger": "focus",
+      "windowFocused": true,
+      "row": [
+        {
+          "aria": "资源详情: Clone action-backend",
+          "text": "详情",
+          "action": false,
+          "width": 44,
+          "height": 28,
+          "radius": "14px",
+          "color": "rgb(15, 17, 21)",
+          "disabled": false
+        },
+        {
+          "aria": "克隆: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        },
+        {
+          "aria": "绑定目录: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        },
+        {
+          "aria": "编辑资源: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        },
+        {
+          "aria": "移除资源: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(129, 133, 140)",
+          "disabled": false
+        }
+      ],
+      "narrow": {
+        "pageOverflow": false,
+        "footerOverflow": false,
+        "withinViewport": true,
+        "visible": true
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "cloneLabel": "克隆: Clone action-backend",
+      "tooltipTrigger": "focus",
+      "windowFocused": true,
+      "row": [
+        {
+          "aria": "资源详情: Clone action-backend",
+          "text": "详情",
+          "action": false,
+          "width": 44,
+          "height": 28,
+          "radius": "14px",
+          "color": "rgb(249, 250, 251)",
+          "disabled": false
+        },
+        {
+          "aria": "克隆: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        },
+        {
+          "aria": "绑定目录: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        },
+        {
+          "aria": "编辑资源: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        },
+        {
+          "aria": "移除资源: Clone action-backend",
+          "text": "",
+          "action": true,
+          "width": 28,
+          "height": 28,
+          "radius": "7px",
+          "color": "rgb(173, 178, 184)",
+          "disabled": false
+        }
+      ],
+      "narrow": {
+        "pageOverflow": false,
+        "footerOverflow": false,
+        "withinViewport": true,
+        "visible": true
+      }
+    }
+  ],
+  "windowFocused": true
+}
