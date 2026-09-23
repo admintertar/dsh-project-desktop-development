@@ -1,0 +1,31 @@
+Guide frame evidence: /Volumes/DATA/work-space2/com.github.public/dsh-project-desktop-development/resources/dsh-project-desktop/.runtime/guide-frame-giHCya
+Guide loading placement, real phases, stable geometry, picker cancellation and failure recovery passed.
+Welcome folder opening, ambiguity copy and repository import passed.
+[45998:0923/160211.852421:ERROR:base/process/process_mac.cc:98] task_policy_set TASK_SUPPRESSION_POLICY: (os/kern) invalid argument (4)
+Guide frame geometry, native chrome, resizing and persistence passed.
+{
+  "ok": true,
+  "platform": "darwin",
+  "arch": "arm64",
+  "evidence": "/Volumes/DATA/work-space2/com.github.public/dsh-project-desktop-development/resources/dsh-project-desktop/.runtime/guide-frame-giHCya",
+  "checks": [
+    "compact-default-windows",
+    "official-native-chrome-and-glass",
+    "sidebar-pointer-and-keyboard-resize",
+    "separate-persisted-widths-and-migration",
+    "transparent-divider-hover-and-drag",
+    "compact-navigation-and-form-scroll",
+    "equal-content-insets-and-spaced-scrollbar-gutter",
+    "compact-footers-and-zero-bottom-padding",
+    "compact-create-title-hidden",
+    "consistent-resource-and-browse-buttons",
+    "stable-scrollbar-layout",
+    "scrollbar-show-on-scroll-and-idle-fade",
+    "loading-at-action-location-and-real-creation-phases",
+    "loading-stable-layout-picker-cancellation-and-failure-recovery",
+    "guide-creation-and-retry",
+    "resource-menus-modals-and-authentication",
+    "english-chinese-light-dark",
+    "open-folder-and-repository-import"
+  ]
+}
