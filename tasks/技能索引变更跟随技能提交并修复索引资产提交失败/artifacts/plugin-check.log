@@ -1,0 +1,18 @@
+# resources/dsh-plugin-project — yarn check (typecheck + test + build)
+# tests 308
+# suites 0
+# pass 308
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 44793.068958
+
+# Skill index regression tests
+ok 129 - committing one Skill keeps the other Skills at the committed state
+ok 130 - a switch change belongs to the Skill it names, not to the index file
+ok 131 - a new Skill keeps its own status while the shared index rides along
+ok 132 - an index change that names no Skill stays visible as its own asset
+ok 133 - a shared-file asset stages its other paths in the same commit
+ok 134 - an unattributable index change is committed as the file it is, not as a Skill
+ok 192 - project skills invalidate the DSH catalog on enable changes and retain the last valid index
