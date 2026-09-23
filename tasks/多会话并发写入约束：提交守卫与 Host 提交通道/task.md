@@ -6,7 +6,7 @@ title: 多会话并发写入约束：提交守卫与 Host 提交通道
 objective: 把「多会话共享工作树」的写入冲突做进产品约束：产出设计文档，定义 C1–C8 约束与其机械强制点，设计 P0 提交守卫、P1 Host 模型提交通道、P2 可见性提示与 P3 代码仓库可选 worktree（含项目资产仓库永久排除的理由与宿主改造点）。
 status: active
 createdAt: 2026-09-23T08:41:10.805Z
-updatedAt: 2026-09-23T09:06:44.828Z
+updatedAt: 2026-09-23T09:40:16.670Z
 artifacts:
   - type: file
     path: artifacts/hook-deny-probe.mts
@@ -14,6 +14,9 @@ artifacts:
   - type: file
     path: artifacts/hook-deny-probe.log
     description: 探针输出：guard 拒绝时工具体未执行（body ran 不变）；ask 无审批服务时降级为拒绝；disposer 释放后恢复
+  - type: file
+    path: artifacts/dsh-second-pass-research.md
+    description: DSH 第二轮调研：官方 0.1.5-rc.2/rc.3/0.1.7-alpha.2 与主分支、官方文件 CAS/沙箱边界、社区插件复核，以及 linked worktree 形态 A/B 的真实 Seatbelt 探针
   - type: commit
     repository: https://github.com/admintertar/dsh-plugin-project.git
     commit: c353f52dc7839b102b759aeb66f7b47b1970912c
@@ -21,12 +24,13 @@ artifacts:
 archived: false
 phase: design
 brief:
-  currentBehavior: 多个 Agent 会话共享同一物理工作树，且都能执行任意 git 命令。Host 侧已有仓库级串行锁（lockRepository，按 git-common-dir）、预暂存拒绝（git-index-dirty）、revision 校验与 task 写锁，但这些只在面板/API 通道生效；Agent 用裸 git 提交时全部绕过，导致 A 提交范围污染、B 他人未提交改动被覆盖、C 同分支提交交错。同时模型没有任何提交通道（task/memory 有工具，资源与项目资产提交只有 HTTP 路由与 UI）。
-  scope: 沉淀 docs/session-concurrency.md：产品约束 C1–C8、四层机制（P0 提交守卫、P1 Host 提交通道、P2 可见性、P3 代码仓库可选 worktree）、接口草案与分阶段验收；为后续实现提供拍板基础。
+  currentBehavior: 多个 Agent 会话共享同一物理工作树，且都能执行任意 git 命令。Host 侧已有仓库级串行锁（lockRepository，按 git-common-dir）、预暂存拒绝（git-index-dirty）、revision 校验与 task 写锁，但这些只在面板/API 通道生效；Agent 用裸 git 提交时全部绕过，导致 A 提交范围污染、B 他人未提交改动被覆盖、C 同分支提交交错。第二轮官方源码与真实沙箱调研进一步确认：包装式提交守卫不是安全边界（tools/pre-execute 看不到脚本/子进程效果），且形态 A 下 linked worktree 的 common-dir 在沙箱根外、Agent 无法写 Git metadata，形态 B 下裸 git add 仍可成功。
+  scope: 沉淀 docs/session-concurrency.md：产品约束 C1–C8、机制分层（P0 可信提交执行器 + 真正的进程/沙箱强制边界、P1 Host 提交通道、P2 可见性、P3 隔离模式）、接口草案与分阶段验收；并纳入第二轮官方源码/沙箱调研结论（文件 CAS 可复用、裸 Git 需进程边界、形态 A/B 的真实 Seatbelt 探针差异）。
   constraints:
     - 仅出设计文档，本轮不实现代码
     - 不改官方源码快照；插件文档留在 dsh-plugin-project，壳侧改动点只做描述
     - 约束必须可机械检查，不接受仅靠 Agent 自觉的条款
+    - 必须区分「可信提交执行器」与「不可绕过的安全边界」，不得用可被 --no-verify 或裸 git 绕过的包装命令冒充后者
   outOfScope:
     - 本轮不做代码实现（P0–P3 均未开始）
     - 不设计每会话 clone 方案
@@ -35,28 +39,27 @@ brief:
     - id: d1
       text: 设计文档覆盖：三类冲突定性（提交范围污染 / 他人改动被覆盖 / 提交交错）、现有机制盘点（带代码定位）、产品约束条目（每条含强制点与违反行为）、P0–P3 机制设计、接口草案、分阶段验收标准与风险。
       required: true
-      version: 1
+      version: 2
     - id: d2
-      text: worktree 方案给出明确取舍：项目资产仓库（tasks/skills/memory/mcp/index.yaml）永久排除；代码仓库若采用需同时给出归并责任、工装成本与宿主改造点（壳 fork Host 的 cwd、插件 session-capabilities 的 cwd 校验）。
+      text: worktree 方案给出明确取舍：项目资产仓库（tasks/skills/memory/mcp/index.yaml）永久排除；代码仓库须给出归并责任、工装成本与宿主改造点，并基于真实沙箱探针给出形态 A（会话 cwd = linked worktree）与形态 B（不切 cwd）的适用边界。
       required: true
-      version: 1
+      version: 2
     - id: d3
-      text: 每条约束都指定了机械强制点（提交守卫 / Host 通道 / UI 可见性），不依赖 Agent 自觉；守卫被设计为唯一提交入口而不是可被 --no-verify 绕过的 hook。
+      text: 每条约束的机械强制点必须落在进程/沙箱边界（Agent 进程不能写 Git metadata、Host 在沙箱外提交），而不是提示词或可被绕过的包装命令；文档须区分「可信提交执行器」与「不可绕过的唯一入口」，并给出 protected-path 沙箱与形态 A 二选一的落地方案。
       required: true
-      version: 1
+      version: 2
     - id: d4
-      text: 列出实现前必须拍板的未决问题（提交 trailer、锁粒度、Windows 锁语义、项目资产提交语义）。
+      text: 列出实现前必须拍板的未决问题（提交 trailer、锁粒度、Windows 锁语义、项目资产提交语义，以及 protected-path 沙箱与强制 fork 的取舍）。
       required: true
-      version: 1
+      version: 2
+questions:
+  - d3 已升为 v2：现有证据 e8（拒绝链路探针）与 e13（A/B 沙箱探针）均针对 v1 提交，实现前需针对 v2 的「进程/沙箱边界」补新证据
+  - protected-path 沙箱（macOS Seatbelt / Linux bwrap-Landlock / Windows ACL）与强制 fork 到形态 A 二选一，需用户拍板；两者工作量都不在原 4–5 人日估算内
+  - 本轮文档与产物尚未提交：插件仓库 docs/session-concurrency.md 已修改（M），任务新增 artifacts/dsh-second-pass-research.md 与 task.md 变更均未提交
 handoff:
   nextSteps:
-    - taskworktree
+    - research
     - doc
-  readBefore:
-    - doc
-    - hazards
-  verifyBefore:
-    - guard
 references:
   - id: doc
     label: 设计文档：多会话并发写入约束
@@ -102,6 +105,10 @@ references:
     label: Conductor：Git worktrees 概念
     type: url
     url: https://www.conductor.build/docs/concepts/git-worktrees
+  - id: research
+    label: DSH 第二轮调研与 Seatbelt A/B 探针记录
+    type: file
+    path: tasks/多会话并发写入约束：提交守卫与 Host 提交通道/artifacts/dsh-second-pass-research.md
 entries:
   - id: e1
     kind: decision
@@ -164,6 +171,38 @@ entries:
     content: 设计文档已提交到插件仓库：c353f52dc7839b102b759aeb66f7b47b1970912c（docs/session-concurrency.md，292 行，1 file changed，未 push）。提交前 index 干净、只 add 该路径、提交后 status 干净。
     basis: observation
     createdAt: 2026-09-23T09:06:44.828Z
+  - id: e12
+    kind: decision
+    content: 第二轮官方源码调研修正 P0：commit-guard 只能定位为可信提交执行器，不能仅凭包装命令宣称唯一入口；tools/pre-execute 只能检查外层工具参数，无法证明任意脚本/子进程的最终文件效果。真正的强制边界必须是 Agent 进程不能写 Git metadata，Host 在沙箱外持有提交通道；命令规则只做纵深防御。
+    basis: observation
+    createdAt: 2026-09-23T09:29:36.000Z
+  - id: e13
+    kind: verification
+    content: 真实 DSH 0.1.5-rc.2 LocalSandboxProvider/macOS Seatbelt 探针：形态 A（session cwd=linked worktree）中源码写成功，但 git add/commit 因 common-dir index.lock 在沙箱根外而 Operation not permitted；形态 B（session cwd=项目根、绝对路径操作 worktree）中 git add 成功。A 下 worktree 根内 .git 指针仍可改写。结论：机械隔离应默认 A，并补 protected .git；B 只能作为路径纪律兼容模式。
+    basis: observation
+    verification:
+      criterionId: d3
+      criterionVersion: 1
+      method: 真实 LocalSandboxProvider + 临时主仓库/linked worktree A/B 对照探针
+      result: passed
+      coverage: 覆盖 macOS Seatbelt enforcement=full 下源码写入与 Git metadata 写入差异；未覆盖 Linux bwrap/Landlock 与 Windows partial ACL。
+    createdAt: 2026-09-23T09:29:36.000Z
+  - id: e14
+    kind: scope
+    content: 修正验收标准 d3/d4（Host 已升版为 v2）：d3 从「守卫是唯一提交入口」改为「机械强制点必须落在进程/沙箱边界，文档须区分可信执行器与不可绕过入口，并给出 protected-path 沙箱与形态 A 二选一」；d4 补入 protected-path 与强制 fork 的取舍。触发原因：第二轮源码调研（e12）与真实 Seatbelt 探针（e13）否定了包装命令作为安全边界。
+    basis: agent-proposal
+    reason: 原 d3 文本与设计结论矛盾，若不修正会导致后续实现按错误标准验收
+    createdAt: 2026-09-23T09:38:03.913Z
+  - id: e15
+    kind: decision
+    content: 任务记录 invalid 的根因与修复：e13 的 verification 块缺 criterionId/criterionVersion，而插件 src/task-contract.ts:40 的 verificationSchema 里这两项均必填（zod 非 optional）——经 Host 工具不可能写出该记录。叠加 e12/e13 与 operations 的时间戳为整秒 09:29:36.000Z、而 Host 写入均为毫秒精度（.805Z/.923Z/.882Z/.263Z/.828Z），判定 e13 极可能是绕过 Host 工具直接编辑 task.md 写入的（次要可能：另一个校验更松的 Host 实例）。手工补齐两字段后记录恢复可读（project_task_list diagnostics 清空）。教训：任务记录本身也需要唯一写入通道 + 写入后校验，绕过通道会静默破坏整份记录的可读性。
+    basis: observation
+    createdAt: 2026-09-23T09:38:25.516Z
+  - id: e16
+    kind: progress
+    content: "文档整理（两处瑕疵）：① §0 原第 4 条与第 6 条重复的「P0 不能宣称不可绕过」合并为一条，条目重编为连续的 1–7；② §2.5 把「第二轮官方源码结论」与「linked worktree A/B 探针」归到同一个 ### 第二轮调研 标题下（各自降为 ####），§2.5 现为三个平级子节（拒绝链路探针 / 第二轮调研 / 复用评估）。grep 标题层级验证：## 0–8、### 4.1–4.4 与 §2.5/§7 子节均连续，无孤立标题。文档仍未提交（工作树 M）。"
+    basis: observation
+    createdAt: 2026-09-23T09:40:16.670Z
 operations:
   e7bbed9a116c44b0122a51d067bb115b43671f151ce73d1a502a8b3187425535:
     fingerprint: 039f3394cfffbcb9cbe7bb93b7f64ca3165264bd329f3c739509e1685eb66cad
@@ -201,11 +240,36 @@ operations:
     at: 2026-09-23T09:06:44.828Z
     entryIds:
       - e11
+  44e05be91787aa77176003ad3e72f4594cfc5a02072ecd894d3e9aed04be09e4:
+    fingerprint: dbea3a9bbfbfce22c9420ac7b5bdf9a98ea5df1d9293789741a27014a0a03ce4
+    kind: update
+    at: 2026-09-23T09:29:36.000Z
+    entryIds:
+      - e12
+      - e13
+  99155405f1a25ae377f14e28b922079dbaf58222df0b81987a82813cc7bd9323:
+    fingerprint: d9425f80add64b2539174f9428dd8a7bb1a1307cdb73bf1dedd9b8ee2f113356
+    kind: update
+    at: 2026-09-23T09:38:03.913Z
+    entryIds:
+      - e14
+  8a39b30662c3721124d7a5fb7144eddb778667b9aed3b54b1e77d60ad7ce2a85:
+    fingerprint: 2ab91a5c919b8424db10375b3c2ea2173e7fad1e807a60e32dca052e5b50a543
+    kind: update
+    at: 2026-09-23T09:38:25.516Z
+    entryIds:
+      - e15
+  9b53e2036bd6a0ee7aa0e36b26c739427993357437b3073b67c47ac0ce20b8df:
+    fingerprint: 95a876a83339823c076a9e19e5f30c0b3685dd5963b5e733edecfaa5f89b84e1
+    kind: update
+    at: 2026-09-23T09:40:16.670Z
+    entryIds:
+      - e16
 criterionVersions:
-  d1: 1
-  d2: 1
-  d3: 1
-  d4: 1
+  d1: 2
+  d2: 2
+  d3: 2
+  d4: 2
 ---
 
 
