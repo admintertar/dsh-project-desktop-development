@@ -6,7 +6,7 @@ title: 资源卡片「本地领先 n 个提交」悬停显示领先的具体提�
 objective: 资源页面（资源卡片）与项目资产面板的同步标签在状态为「本地领先 n 个提交」时，鼠标悬停要能看到领先的是哪些提交：Host 在检查时读取领先提交（hash + 标题），客户端悬停文本按「标签 + 每行一个提交」显示，超过上限时用「另有 n 个本地提交」收尾；含契约、Host、Client、中英文案、单元测试与原生界面验收。
 status: completed
 createdAt: 2026-09-23T06:42:40.407Z
-updatedAt: 2026-09-23T06:49:30.050Z
+updatedAt: 2026-09-23T07:12:24.458Z
 artifacts:
   - type: file
     path: artifacts/report.md
@@ -23,11 +23,15 @@ artifacts:
   - type: commit
     repository: https://github.com/admintertar/dsh-plugin-project
     commit: e28b0edeb502e5a94f050d011cf43bfc9cef6229
-    description: 插件：Host 读取领先提交并随快照下发，资源卡片与项目资产面板悬停显示提交列表（8 文件，含单测；已提交，未 push）
+    description: 插件：Host 读取领先提交并随快照下发，资源卡片与项目资产面板悬停显示提交列表（8 文件，含单测；已 push）
   - type: commit
     repository: https://github.com/admintertar/dsh-project-desktop
     commit: 544c721d6eea52379a0726f91b117350d06fd9e5
-    description: 壳：资源状态原⽣冒烟新增资源卡片领先标签的中英双语悬停断言与截图（已提交，未 push）
+    description: 壳：资源状态原生冒烟新增资源卡片领先标签的中英双语悬停断言与截图（已 push；其 CI 运行因 pin 落后而失败）
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop
+    commit: d7d787f6a820463778dc42d0b4d3f933a505c1fa
+    description: 壳：修复 CI — 把插件 pin 提到 e28b0ed 并重导快照，悬停验收改为重试以消除窗口 show 后列表重建的竞态（已提交，未 push）
 archived: false
 phase: validation
 brief:
@@ -137,6 +141,40 @@ entries:
     content: "已提交：插件 e28b0ed（feat: 资源卡片悬停显示领先的本地提交）、壳 544c721（feat: 原生验收资源卡片悬停显示领先提交）；两仓库工作树干净，均未 push。upstream.lock.json 的插件 pin 未 bump（日常开发不需要，发布时再改）。"
     basis: observation
     createdAt: 2026-09-23T06:49:30.050Z
+  - id: ci-root-cause
+    kind: progress
+    content: GitHub Actions「Verify Resources on Windows」在壳 544c721 上失败（run 35828799420）。读回日志（api.github.com + git credential token）后确认不是 Windows 特有问题：断言等待的 tooltip 文本不匹配，body.innerText 里 tooltip 是旧格式「1 local commits · Checks once after the project opens…」。根因是 upstream.lock.json 的插件 pin 仍为 dd85e1a，CI 用的是「壳 + 旧插件」，而壳的新断言要求新插件的多行提交列表。
+    basis: observation
+    createdAt: 2026-09-23T07:12:24.458Z
+  - id: ci-fix
+    kind: progress
+    content: 修复：把 upstream.lock.json 的 project.commit/tree 指到已 push 的 e28b0ed / 5aaa2c1b，重导 .upstream/project 快照（verify:upstream 通过）；同时把悬停验收改成重试循环（窗口 show/focus 后列表可能重建，单次取坐标会在 null 上调用 getBoundingClientRect，本地 pin 组合就是这样失败的），每轮先离开标签再悬停，超时错误带上页面文本。壳提交 d7d787f（仅含 lock 与冒烟脚本，不涉其他并行工作的文件）。
+    basis: observation
+    createdAt: 2026-09-23T07:12:24.458Z
+  - id: verify-pin-combination
+    kind: verification
+    content: "不带 DSH_PROJECT_PLUGIN_SOURCE 的 pin 组合（即 CI 将运行的组合）：smoke:resources 连续两次 ok: true（EXIT=0），壳 yarn check（verify:upstream + build + test + recovery + safe-mode + project files + smoke:host）EXIT=0。"
+    basis: observation
+    verification:
+      criterionId: native-acceptance
+      criterionVersion: 1
+      method: corepack yarn smoke:resources 与 corepack yarn check（resources/dsh-project-desktop，无本地插件覆盖）
+      result: passed
+      coverage: local macOS pin组合（插件 e28b0ed）；Windows 上的最终确认依赖 push 后 CI 重跑
+    createdAt: 2026-09-23T07:12:24.458Z
+  - id: done-ci
+    kind: completion
+    content: 全部必选验收标准已通过，并在 pin 组合下复验；唯一未完成的是 push 后由 CI 复核 Windows。
+    basis: observation
+    supersedes: done
+    verificationEntryIds:
+      - verify-host
+      - verify-client
+      - verify-i18n
+      - verify-automated
+      - verify-native
+      - verify-pin-combination
+    createdAt: 2026-09-23T07:12:24.458Z
 operations:
   fd389a4b7383a2329fffc8f945ac97db7d8c1210420ab803b72417a4a931c155:
     fingerprint: d3ecec0e6cc7d07f185951a4364f438b6fa4288319036d667909cf9e71be99ba
@@ -161,6 +199,15 @@ operations:
     at: 2026-09-23T06:49:30.050Z
     entryIds:
       - commits
+  e81c0df9aa7cad25b3c1cd0cbdf1d4443d2b77483655033b7df03d4ee1999595:
+    fingerprint: 781885e24884856945696fe5f7fdbba4938c7e3107ae38133f363f0b15a26f01
+    kind: update
+    at: 2026-09-23T07:12:24.458Z
+    entryIds:
+      - ci-root-cause
+      - ci-fix
+      - verify-pin-combination
+      - done-ci
 criterionVersions:
   host-ahead-commits: 1
   client-hover: 1
@@ -169,4 +216,4 @@ criterionVersions:
   native-acceptance: 1
 ---
 
-已实现、验收并提交：Host 在检查到 ahead 时读取领先提交（新→旧，最多 20 条，hash + 标题）随快照下发；资源卡片与项目资产面板的同步标签悬停改为多行提示（标签行 + 每行一个提交，超出以中英「另有 n 个本地提交」收尾），其他状态保持原「标签 · 说明」。插件 yarn check 通过（303 单测），原生 smoke:resources 通过并新增资源卡片中英双语悬停断言，壳 yarn check 通过。提交：插件 e28b0ed、壳 544c721（均未 push，pin 未 bump）。限制：截图为 1180×820 宽窗口，未做像素级人工阅图（由实时 DOM 文本与气泡高度断言替代），项目资产面板标签未单独做原生悬停用例。
+已实现、验收并提交：Host 在检查到 ahead 时读取领先提交（新→旧，最多 20 条，hash + 标题）随快照下发；资源卡片与项目资产面板的同步标签悬停改为多行提示，超出上限以中英「另有 n 个本地提交」收尾。插件 e28b0ed 与壳 544c721 已 push；壳 544c721 的「Verify Resources on Windows」因 upstream.lock.json 的插件 pin 仍是 dd85e1a（CI 跑的是壳+旧插件）而失败，已用壳 d7d787f 修复：bump pin 到 e28b0ed 并重导快照，同时把悬停验收改成重试循环以消除窗口 show 后列表重建的竞态。pin 组合（CI 将运行的组合）在本机 macOS 上 smoke:resources 连续两次通过、壳 yarn check 通过；Windows 的最终确认需 push d7d787f 后看 CI。限制：截图为 1180×820 宽窗口，未做像素级人工阅图；项目资产面板标签未单独做原生悬停用例。壳工作树还有其他并行改动的文件，本次提交未涉及。
