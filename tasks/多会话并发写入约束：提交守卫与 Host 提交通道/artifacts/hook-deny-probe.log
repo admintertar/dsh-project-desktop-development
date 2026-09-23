@@ -1,0 +1,4 @@
+baseline  : {"isError":false,"content":[{"type":"text","text":"{\"wrote\":\"a.ts\"}"}],"value":{"wrote":"a.ts"}} | body ran = 1
+guarded   : {"isError":true,"error":{"message":"denied: create a worktree first"},"content":[{"type":"text","text":"Error: denied: create a worktree first"}]} | body ran = 1
+released  : {"isError":false,"content":[{"type":"text","text":"{\"wrote\":\"a.ts\"}"}],"value":{"wrote":"a.ts"}} | body ran = 2
+ask       : {"isError":true,"error":{"message":"run in a worktree?"},"content":[{"type":"text","text":"Error: run in a worktree?"}]} | body ran = 2
