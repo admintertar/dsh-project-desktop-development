@@ -1,0 +1,128 @@
+{
+  "userData": "/Volumes/DATA/work-space2/com.github.public/dsh-project-desktop-development/resources/dsh-project-desktop/.runtime/scrollbar-probe-fuECeA",
+  "checked": [
+    {
+      "selector": ".project-session-list",
+      "label": "sidebar session list",
+      "status": "not-overflowing"
+    },
+    {
+      "selector": ".project-tasks .project-capability-list",
+      "label": "task roster",
+      "markedWhileScrolling": 1,
+      "visibleThumb": "color(srgb 0.898039 0.898039 0.898039)",
+      "status": "passed",
+      "geometry": {
+        "gutter": 8,
+        "clientWidth": 245,
+        "boxLeft": 328
+      }
+    },
+    {
+      "selector": ".project-tasks .project-task-detail",
+      "label": "task detail",
+      "markedWhileScrolling": 1,
+      "visibleThumb": "color(srgb 0.898039 0.898039 0.898039)",
+      "status": "passed",
+      "geometry": {
+        "gutter": 9,
+        "clientWidth": 624,
+        "boxLeft": 599.140625
+      }
+    },
+    {
+      "selector": ".project-panel",
+      "label": "resources page",
+      "status": "not-overflowing"
+    },
+    {
+      "selector": ".project-settings-dialog-content>div:last-child",
+      "label": "settings dialog body",
+      "markedWhileScrolling": 1,
+      "visibleThumb": "color(srgb 0.898039 0.898039 0.898039)",
+      "status": "passed",
+      "geometry": {
+        "gutter": 8,
+        "clientWidth": 652,
+        "boxLeft": 310
+      }
+    },
+    {
+      "selector": ".project-panel",
+      "label": "tools page",
+      "status": "not-overflowing"
+    },
+    {
+      "selector": ".project-panel",
+      "label": "memory page",
+      "markedWhileScrolling": 1,
+      "visibleThumb": "color(srgb 0.831373 0.831373 0.831373)",
+      "status": "passed",
+      "geometry": {
+        "gutter": 8,
+        "clientWidth": 992,
+        "boxLeft": 280
+      }
+    },
+    {
+      "selector": ".project-tasks .project-capability-list",
+      "label": "task roster (dark theme)",
+      "markedWhileScrolling": 1,
+      "visibleThumb": "color(srgb 0.235294 0.235294 0.239216)",
+      "status": "passed",
+      "geometry": {
+        "gutter": 8,
+        "clientWidth": 245,
+        "boxLeft": 328
+      }
+    },
+    {
+      "selector": ".project-tasks .project-capability-list",
+      "label": "task roster (narrow)",
+      "markedWhileScrolling": 2,
+      "visibleThumb": "color(srgb 0.235294 0.235294 0.239216)",
+      "status": "passed",
+      "geometry": {
+        "gutter": 8,
+        "clientWidth": 198,
+        "boxLeft": 126
+      }
+    },
+    {
+      "selector": ".project-tasks .project-task-detail",
+      "label": "task detail (narrow)",
+      "markedWhileScrolling": 1,
+      "visibleThumb": "color(srgb 0.235294 0.235294 0.239216)",
+      "status": "passed",
+      "geometry": {
+        "gutter": 9,
+        "clientWidth": 505,
+        "boxLeft": 349.7109375
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "selector": ".project-session-list",
+      "label": "sidebar session list",
+      "reason": "not-overflowing"
+    },
+    {
+      "selector": ".project-panel",
+      "label": "resources page",
+      "reason": "not-overflowing"
+    },
+    {
+      "selector": ".project-panel",
+      "label": "tools page",
+      "reason": "not-overflowing"
+    }
+  ],
+  "failures": [],
+  "notes": [],
+  "officialScrollingMarks": 0,
+  "reducedMotion": {
+    "transitionDuration": "0s"
+  },
+  "result": "passed"
+}
