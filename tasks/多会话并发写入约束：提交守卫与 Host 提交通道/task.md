@@ -6,7 +6,7 @@ title: 多会话并发写入约束：提交守卫与 Host 提交通道
 objective: 把「多会话共享工作树」的写入冲突做进产品约束：产出设计文档，定义 C1–C8 约束与其机械强制点，设计 P0 提交守卫、P1 Host 模型提交通道、P2 可见性提示与 P3 代码仓库可选 worktree（含项目资产仓库永久排除的理由与宿主改造点）。
 status: active
 createdAt: 2026-09-23T08:41:10.805Z
-updatedAt: 2026-09-23T09:40:16.670Z
+updatedAt: 2026-09-23T09:53:08.220Z
 artifacts:
   - type: file
     path: artifacts/hook-deny-probe.mts
@@ -20,7 +20,15 @@ artifacts:
   - type: commit
     repository: https://github.com/admintertar/dsh-plugin-project.git
     commit: c353f52dc7839b102b759aeb66f7b47b1970912c
-    description: 设计文档提交：resources/dsh-plugin-project docs/session-concurrency.md（292 行，含实测结论与复用评估）
+    description: 设计文档首版提交：docs/session-concurrency.md（292 行）
+  - type: commit
+    repository: https://github.com/admintertar/dsh-plugin-project.git
+    commit: 5193e8135fa0b27fc43d0a71a0072f3304a02090
+    description: 设计文档第二轮修订提交：纳入文件 CAS/沙箱边界、A/B 探针与 P0 定位修正，并完成 §0/§2.5 结构整理
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop-development.git
+    commit: 0f937b0970dc27594104aafa8397608d954c1bcc
+    description: 项目根提交：task.md（第二轮调研记录、记录修复、验收标准 v2）与 artifacts/dsh-second-pass-research.md
 archived: false
 phase: design
 brief:
@@ -53,9 +61,9 @@ brief:
       required: true
       version: 2
 questions:
-  - d3 已升为 v2：现有证据 e8（拒绝链路探针）与 e13（A/B 沙箱探针）均针对 v1 提交，实现前需针对 v2 的「进程/沙箱边界」补新证据
-  - protected-path 沙箱（macOS Seatbelt / Linux bwrap-Landlock / Windows ACL）与强制 fork 到形态 A 二选一，需用户拍板；两者工作量都不在原 4–5 人日估算内
-  - 本轮文档与产物尚未提交：插件仓库 docs/session-concurrency.md 已修改（M），任务新增 artifacts/dsh-second-pass-research.md 与 task.md 变更均未提交
+  - d3 已升为 v2：现有证据 e8（拒绝链路探针）与 e13（A/B 沙箱探针）均为 v1 时代提交，实现前需针对 v2 的「进程/沙箱边界」补新证据
+  - 需拍板：走 protected-path 沙箱扩展（macOS Seatbelt / Linux bwrap-Landlock / Windows ACL）还是强制 fork 到形态 A；两者工作量都超出原 4–5 人日估算
+  - 文档在插件仓库内用 tasks/... 相对路径引用项目根 artifact，读者需知道基准是项目根；如需可改为项目根相对说明或绝对引用
 handoff:
   nextSteps:
     - research
@@ -203,6 +211,11 @@ entries:
     content: "文档整理（两处瑕疵）：① §0 原第 4 条与第 6 条重复的「P0 不能宣称不可绕过」合并为一条，条目重编为连续的 1–7；② §2.5 把「第二轮官方源码结论」与「linked worktree A/B 探针」归到同一个 ### 第二轮调研 标题下（各自降为 ####），§2.5 现为三个平级子节（拒绝链路探针 / 第二轮调研 / 复用评估）。grep 标题层级验证：## 0–8、### 4.1–4.4 与 §2.5/§7 子节均连续，无孤立标题。文档仍未提交（工作树 M）。"
     basis: observation
     createdAt: 2026-09-23T09:40:16.670Z
+  - id: e17
+    kind: progress
+    content: 本轮产物已提交（均未 push）：插件仓库 5193e8135fa0b27fc43d0a71a0072f3304a02090（docs/session-concurrency.md，+95/−13，含第二轮调研修订与结构整理）；项目根 0f937b0970dc27594104aafa8397608d954c1bcc（task.md + artifacts/dsh-second-pass-research.md，2 文件 +209/−20）。两次提交前均确认 index 干净、只 add 自己的路径、提交后项目根里他人未提交改动（资源卡片 task.md 的 M、技能索引任务目录的 ??）原样保留。
+    basis: observation
+    createdAt: 2026-09-23T09:53:02.235Z
 operations:
   e7bbed9a116c44b0122a51d067bb115b43671f151ce73d1a502a8b3187425535:
     fingerprint: 039f3394cfffbcb9cbe7bb93b7f64ca3165264bd329f3c739509e1685eb66cad
@@ -265,6 +278,17 @@ operations:
     at: 2026-09-23T09:40:16.670Z
     entryIds:
       - e16
+  f05871118ae430a1fed5120434a5df338a6da2dcd3d49385635fb82f9cc51a79:
+    fingerprint: d0d3331f9bc6df5bf783fdc0e8f2d64c46e6270189653e14135e331082d8bacc
+    kind: update
+    at: 2026-09-23T09:53:02.235Z
+    entryIds:
+      - e17
+  98fedbf9f25f7069fcf0a904ceac2a1d6a1f47530c575cac72ed981d47c5861a:
+    fingerprint: 4d72252b250d1926c5f3093e9f6d47b0eec36c1c22ecba9eeb06a999523e3b00
+    kind: update
+    at: 2026-09-23T09:53:08.220Z
+    entryIds: []
 criterionVersions:
   d1: 2
   d2: 2
