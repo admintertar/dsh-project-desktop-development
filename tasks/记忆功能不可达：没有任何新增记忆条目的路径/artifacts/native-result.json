@@ -1,0 +1,99 @@
+{
+  "ok": true,
+  "userData": "/var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-memory-native-2X4gWA",
+  "root": "/private/var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-memory-native-2X4gWA/Memory acceptance",
+  "evidence": [
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 1180,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "width": 420,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "light",
+      "deleted": true
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 1180,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "width": 420,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "en",
+      "theme": "dark",
+      "deleted": true
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 1180,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "width": 420,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "light",
+      "deleted": true
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 1180,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "width": 420,
+      "layout": {
+        "bodyOverflow": false,
+        "panelOverflow": false
+      }
+    },
+    {
+      "locale": "zh",
+      "theme": "dark",
+      "deleted": true
+    }
+  ]
+}
