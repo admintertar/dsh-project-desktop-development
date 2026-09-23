@@ -4,12 +4,12 @@ directory: Windows「在文件资源管理器中显示」无反应：revealNativ
 id: task-87d332c9-408f-4a98-8122-228a5feececa
 title: Windows「在文件资源管理器中显示」无反应：reveal 经 execFile(windowsHide:true) 启动 explorer 导致窗口被隐藏
 objective: 定位并记录「Windows 上交付文件的『在文件资源管理器中显示』点击无反应」的根因：命令级证据表明根因是 native 命令统一使用 execFile(windowsHide:true)，而 explorer.exe 是唯一“被启动进程本身即窗口进程”的场景，导致新窗口被隐藏；同时核查官方新版本是否修复（结论：0.1.5-rc.2 至最新 master/0.1.7-rc.1 均未修），给出影响面与最小修复方向。
-status: active
+status: completed
 createdAt: 2026-09-23T15:05:26.670Z
-updatedAt: 2026-09-23T15:14:41.680Z
+updatedAt: 2026-09-23T15:28:27.518Z
 artifacts: []
 archived: false
-phase: investigation
+phase: validation
 brief:
   currentBehavior: Windows 上交付文件（present 的文件）右键菜单「在文件资源管理器中显示」点击后无任何可见效果；同一菜单的「用默认应用打开」正常。客户端仍显示成功文案（已请求在文件资源管理器中显示），因此用户看到的是“点了没反应”而非错误提示。
   scope: 定位交付文件在 Windows 上“在文件资源管理器中显示”无反应的根因，给出证据链、影响面与最小修复方向，供上游修复或后续适配。
@@ -32,6 +32,12 @@ brief:
       text: 给出最小修复方案与影响面（哪些功能受影响、哪些正常）
       required: true
       version: 2
+handoff:
+  nextSteps:
+    - reevaluate-reveal-adapter-after-pin-upgrade
+  verifyBefore:
+    - yarn-check
+    - probe-reveal-adapter
 references: []
 entries:
   - id: r1
@@ -109,6 +115,42 @@ entries:
       result: passed
       coverage: 适配逻辑、接线生效、构建与冒烟均通过
     createdAt: 2026-09-23T15:14:41.680Z
+  - id: r13
+    kind: verification
+    content: R1（命令级根因，criterionVersion 2）：@deepseek-ai/dsh-native-command 的 runNativeCommand 对所有 native 命令用 `execFile(command, args, {encoding:'utf8', signal, windowsHide:true})`（源码 packages/util/native-command/src/runner.ts），而 reveal 是唯一“被启动进程本身即窗口进程（explorer.exe）”的场景；客户端仍显示“已请求在文件资源管理器中显示”，故用户看到无任何反馈。代码位置：api-session-controller/lib/index.js:2890 调 revealPath，默认实现 native-command/lib/index.js:208。
+    basis: observation
+    verification:
+      criterionId: R1
+      criterionVersion: 2
+      method: 阅读调用链源码 + 捕获实际命令 + 与官方 runner 选项对照
+      result: passed
+      coverage: 命令级根因已定位到具体函数与选项，并解释了无反馈的静默路径
+    createdAt: 2026-09-23T15:28:27.518Z
+  - id: r14
+    kind: verification
+    content: R2（对照证据，criterionVersion 2）：R2 的原始措辞（“file:// URL 不开窗、真实路径开窗”）已被 r6 推翻——4 组正交实验（同一 Node execFile 调用方式、各自独立新目录、COM 枚举 + Win32 IsWindowVisible）结果为 uri+hide→可见 0、path+hide→可见 0、uri+show→可见 1、path+show→可见 1，可见性只跟随 windowsHide，与 URL/路径无关；基线里累积的 5 个 visible=False 窗口即为每次点击留下的隐藏窗口。
+    basis: observation
+    verification:
+      criterionId: R2
+      criterionVersion: 2
+      method: 4 组正交实验 + Shell COM 枚举 + Win32 IsWindowVisible
+      result: passed
+      coverage: 用正交实验替代原单一 A/B，排除了实验装置本身的干扰
+    createdAt: 2026-09-23T15:28:27.518Z
+  - id: r15
+    kind: progress
+    content: 修复已进入仓库：worktree 提交 64f7dd5 → 主树 cherry-pick c9b3222（已 push），随 0.1.9 覆盖重发构建（Package Desktop run 35880579416）。后续：pin 升级到含上游修复的 Harness 后，需复查 windows-reveal 适配可否移除（上游至 master 仍未修）。
+    basis: observation
+    createdAt: 2026-09-23T15:28:27.518Z
+  - id: r16
+    kind: completion
+    content: 闭环：根因已定位并更正过一次误判，修复已实现、验证（单测 6/6 + 真实 Host 探针 + yarn check）并推送，随 0.1.9 覆盖重发发布。
+    basis: agent-proposal
+    verificationEntryIds:
+      - r13
+      - r14
+      - r12
+    createdAt: 2026-09-23T15:28:27.518Z
 operations:
   9bc2cbc24152d5b02c3c46bf8ebfd7c7eb1f47bdd204d17e545a538dc11cba96:
     fingerprint: 23cb490cefe792c605875a310451a00116ee91856b617031936c20318ab7f1c9
@@ -142,10 +184,19 @@ operations:
     entryIds:
       - r11
       - r12
+  c3ee5c53dd95a8178f05c3b2361a3568b904c7a313ffbd5c5442416181f92360:
+    fingerprint: a0fe6a5fcf3df8fab5649ca54be63267515a2bc5b496d5d9b1bcb5034e006434
+    kind: update
+    at: 2026-09-23T15:28:27.518Z
+    entryIds:
+      - r13
+      - r14
+      - r15
+      - r16
 criterionVersions:
   R1: 2
   R2: 2
   R3: 2
 ---
 
-
+根因（已更正过一次）：不是 file:// URL，而是官方 runner 对所有 native 命令统一用 execFile(..., {windowsHide:true})，而 reveal 是唯一“被启动进程本身就是窗口进程（explorer.exe）”的场景，新窗口被隐藏（exit code 1 又被容忍，失败完全静默）。官方从 pin 的 0.1.5-rc.2 到最新 master/0.1.7-rc.1 均未修。修复：在自有 Host 插件里覆盖 sessionController.revealPath，改用 windowsHide:false（保留官方 URI 目标与逗号转义、exit 1 容忍；非 Windows 不动）。提交 c9b3222 已推送，随 0.1.9 覆盖重发发布；验证：单测 6/6、真实 Host 探针 PASS、yarn check EXIT=0。
