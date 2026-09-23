@@ -8,3 +8,6 @@ tasks/.write-lock.recovery
 /resources/dsh-project-desktop/
 /resources/dsh-plugin-project/
 .local
+# Smoke/probe/development-shell runtime state (isolated userData, logs, fixtures);
+# the project conventions require it to stay out of the asset tree.
+/.runtime/
