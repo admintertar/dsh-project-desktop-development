@@ -51,6 +51,23 @@ export * from '../../../src/desktop-adapter/stable/shell-host.mjs';
 - 不受影响的：由 `repository` 直接加载的（`src/app/main.mjs`、`scripts/*`）——`node scripts/smoke-native.mjs` 用的是 worktree 的 `repository`，验证有效。
 - 结论：**改 Host 侧插件就在主树验证**（提交后跑探针），或在 worktree 用独立 `.cache`（拷贝代价高，通常不值得）。
 
+## 二·补、worktree 不要建在项目资产仓库内部
+
+项目资产仓库的根就是 `D:\dsh-project-desktop-development`。若把验证用 worktree 建在它下面（例如
+`wt-reveal-fix/`），这些目录会出现在**项目资产仓库**的 `git status` 里且未被忽略 ——
+另一个会话一条 `git add -A` 就会把整个源码树（含 `node_modules` 等 junction）吞进提交。
+
+- 建到仓库外（如 `D:\wt-<topic>`），或先加进 `.gitignore`。
+- 清理时**先删 junction 再删目录**：对含 junction 的目录直接 `Remove-Item -Recurse -Force`
+  有跟随链接、删掉主树内容的真实风险：
+  ```powershell
+  Get-ChildItem <wt> -Force | Where-Object { $_.Attributes -band [System.IO.FileAttributes]::ReparsePoint } |
+    ForEach-Object { cmd /c rmdir "$($_.FullName)" }      # rmdir 只删链接
+  Remove-Item <wt> -Recurse -Force                        # 此时已无链接
+  ```
+- `git worktree remove <path>` 只摘注册：目录里有未跟踪产物（`dist/`、`.runtime/`）时它可能留下目录，
+  要按上面两步自行清干净，并用 `git worktree list` 与 `git status` 双向确认。
+
 ## 三、空 worktree 必须先 build
 
 未构建的 worktree 起 Electron 会抛
