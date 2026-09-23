@@ -6,7 +6,7 @@ title: 项目工具菜单「打开项目终端」点击无反应（自绘顶栏�
 objective: 定位并修复「项目工具 → 打开项目终端」点击无任何反馈的缺陷：把 Shell 自有的 terminal runtime 调用补齐官方 DesktopTerminalOptions 契约（spawn/onLaunchError），让失败可见，并为菜单动作补上机械护栏（契约测试 + 原生菜单冒烟）。
 status: completed
 createdAt: 2026-09-23T12:30:58.645Z
-updatedAt: 2026-09-23T12:46:23.157Z
+updatedAt: 2026-09-23T12:50:39.019Z
 artifacts:
   - type: file
     path: artifacts/report.md
@@ -32,6 +32,14 @@ artifacts:
   - type: file
     path: artifacts/edit-menu-zh.json
     description: 「编辑」菜单项与快捷键文本（DOM 读取）
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop.git
+    commit: 74a82e623232c6d694f4a95a459904befbeadfd1
+    description: 壳修复提交：terminal 契约、自绘菜单 i18n 与快捷键、冒烟/契约测试（8 文件）
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop-development.git
+    commit: b646fcf0025a6bb3239cad7434ed7ebe8c8db88f
+    description: 项目资产：本任务记录与结论级证据（含 shell-before-menu.png 的清理提交）
 archived: false
 phase: implementation
 brief:
@@ -206,6 +214,11 @@ entries:
       - v5
       - v6
     createdAt: 2026-09-23T12:46:23.157Z
+  - id: e11
+    kind: progress
+    content: 已提交（未 push）。壳仓库 74a82e6：fix(shell) 修复「打开项目终端」点击无反应 + 自绘菜单 i18n/快捷键 + 烟难与契约测试，8 文件 464+/65−。项目资产仓库 79485ee + b646fcf：本任务记录与结论级证据，并删掉第二次验收重新生成的过程截图 shell-before-menu.png。提交时发现壳仓库 HEAD 已被并发会话推进到 ee21ec2（改的是 native-guide-checks.mjs 的另一处 hunk，与本次改动不冲突），因此只按精确路径暂存自己的 8 个文件，提交后 git status 干净。
+    basis: agent-proposal
+    createdAt: 2026-09-23T12:50:39.019Z
 operations:
   2baef8020fab752b23bdec3c0155dac700c63682b449c876d6ec6d89ccf11f49:
     fingerprint: 2327e3e6fcb4a1ac36a67019e7d92c5a100ba525f9c55a815c02caafe9e05d18
@@ -244,6 +257,12 @@ operations:
       - v5
       - v6
       - c1
+  9806d24a232152b692d53291564759c15b90d2a8ee56384799e472a340133154:
+    fingerprint: 65ccb8d33c8f3b1fa9f201f6f01d329d901792d4122ec8bca63b52a4c29875bd
+    kind: update
+    at: 2026-09-23T12:50:39.019Z
+    entryIds:
+      - e11
 criterionVersions:
   C1: 1
   C2: 1
