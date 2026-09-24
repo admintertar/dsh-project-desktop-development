@@ -1,0 +1,79 @@
+DSH Project Desktop 0.1.9 — 启动与打开项目日志 / startup and project-open log
+Exported / 导出时间: 2026-09-24T02:23:36.073Z
+Platform / 平台: darwin arm64
+Sources / 数据来源:
+  - launch trace /var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-merge-Amc6aD/userData/boot.log
+  - user data /var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-merge-Amc6aD/userData
+  - /private/var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-merge-Amc6aD/FixtureProject/FixtureProject.agent-project — open session unknown, recovery events 0
+
+--- 启动与打开项目日志（旧 → 新） / startup and project-open trace (oldest → newest) ---
+2026-09-24T02:23:30.694Z === boot pid 51153 ===
+2026-09-24T02:23:30.694Z boot environment shell=0.1.9 desktop=2.0.11 harness=0.1.5-rc.2 platform=darwin packaged=false userData=/var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-merge-Amc6aD/userData
+2026-09-24T02:23:30.699Z +      5ms      5ms early electron main, before run
+2026-09-24T02:23:30.699Z +      5ms      0ms cleanup guide clones
+2026-09-24T02:23:30.699Z +      5ms      0ms theme and recent-projects state — storedTheme=undefined recent=0
+2026-09-24T02:23:30.782Z +     88ms     83ms app.whenReady
+2026-09-24T02:23:30.784Z +     90ms      2ms about panel and app locale
+2026-09-24T02:23:30.792Z +     98ms      8ms updates service
+2026-09-24T02:23:30.792Z +     98ms      0ms disposable project state cleanup — projects=0
+2026-09-24T02:23:30.874Z +    180ms     82ms tray, accelerators, menus
+2026-09-24T02:23:30.875Z +    181ms      1ms workspace restore (session projects) — projects=0 failures=0
+2026-09-24T02:23:30.875Z === project/open pid 51153 ===
+2026-09-24T02:23:30.875Z +      0ms      0ms open requested — /var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-merge-Amc6aD/FixtureProject/FixtureProject.agent-project
+2026-09-24T02:23:30.875Z +      0ms      0ms project file resolved — /private/var/folders/ps/1cbscwv566j2yh_7v86jzj340000gn/T/dsh-merge-Amc6aD/FixtureProject/FixtureProject.agent-project
+2026-09-24T02:23:30.884Z === project/open:FixtureProject pid 51153 ===
+2026-09-24T02:23:30.884Z project/open:FixtureProject environment safeMode=false
+2026-09-24T02:23:30.885Z +      1ms      1ms safe mode state prepared
+2026-09-24T02:23:30.885Z +      1ms      0ms window options requested
+2026-09-24T02:23:30.904Z +     20ms     19ms official modules loaded
+2026-09-24T02:23:30.906Z +     22ms      2ms host start requested
+2026-09-24T02:23:30.906Z +     22ms      0ms host supervisor started
+2026-09-24T02:23:30.937Z +     53ms     31ms runtime dependencies verified
+2026-09-24T02:23:30.944Z +     60ms      7ms profile selected — profile=desktop
+2026-09-24T02:23:30.945Z +     61ms      1ms official rpc modules loaded
+2026-09-24T02:23:31.011Z +    127ms     66ms system proxy resolved — http://127.0.0.1:7890
+2026-09-24T02:23:31.012Z +    128ms      1ms host process forked
+2026-09-24T02:23:31.225Z +    341ms    213ms host entry reported ready
+2026-09-24T02:23:31.225Z +    341ms      0ms host boot rpc requested — budget=120000ms
+2026-09-24T02:23:31.226Z === project/open:FixtureProject pid 51156 ===
+2026-09-24T02:23:31.226Z project/open:FixtureProject environment via=host-entry pid=51156
+2026-09-24T02:23:31.227Z +      1ms      1ms host boot requested
+2026-09-24T02:23:31.227Z +      1ms      0ms profile manager loaded
+2026-09-24T02:23:31.270Z +     44ms     43ms official profile api loaded — fresh=false
+2026-09-24T02:23:31.790Z +    564ms    520ms profile prepare: pnpm dependencies ok — 333 ms
+2026-09-24T02:23:31.815Z +    589ms     25ms profile prepared
+2026-09-24T02:23:31.815Z +    589ms      0ms profile prepared — profile=desktop market=dsh-market
+2026-09-24T02:23:31.816Z +    590ms      1ms official host boot requested
+2026-09-24T02:23:34.677Z === project/open:FixtureProject pid 51156 ===
+2026-09-24T02:23:34.677Z project/open:FixtureProject environment via=shell-host pid=51156
+2026-09-24T02:23:34.677Z +      0ms      0ms windows reveal adapter — not applicable on this platform
+2026-09-24T02:23:34.678Z +   3452ms   2862ms official host booted — plugin tree and loopback renderer server in place  [SLOW >1000ms]
+2026-09-24T02:23:34.679Z +   3453ms      1ms renderer registered
+2026-09-24T02:23:34.691Z --- project/open:FixtureProject total 3465 ms --- slowest: official host booted 2862 ms
+2026-09-24T02:23:34.691Z +   3807ms   3466ms host boot rpc returned  [SLOW >1000ms]
+2026-09-24T02:23:34.704Z +   3820ms     13ms renderer url authenticated
+2026-09-24T02:23:34.704Z +   3820ms      0ms host ready — renderer=http://127.0.0.1:64254/?dsh-desktop-mode=advanced&dsh-desktop-platform=darwin&dsh-desktop-version=0.1.9&dsh-desktop-material=transparent profile=desktop
+2026-09-24T02:23:34.749Z +   3865ms     45ms browser window created — material=transparent
+2026-09-24T02:23:34.782Z +   3898ms     33ms renderer session authenticated
+2026-09-24T02:23:34.786Z +   3902ms      4ms theme connected
+2026-09-24T02:23:35.289Z +   4405ms    503ms renderer page loaded and healthy
+2026-09-24T02:23:35.357Z +   4473ms     68ms startup checkpoint captured
+2026-09-24T02:23:35.362Z +   4478ms      5ms window focused and shown
+2026-09-24T02:23:35.363Z +   4479ms      1ms project remembered, state saved
+2026-09-24T02:23:35.363Z +   4479ms      0ms resource restore started (not awaited)
+2026-09-24T02:23:35.364Z --- project/open:FixtureProject total 4480 ms --- slowest: host boot rpc returned 3466 ms
+2026-09-24T02:23:35.366Z +   4491ms   4491ms workspace open returned  [SLOW >1000ms]
+2026-09-24T02:23:35.366Z --- project/open total 4491 ms --- slowest: workspace open returned 4491 ms
+2026-09-24T02:23:35.366Z +   4672ms   4491ms startup files opened — files=1  [SLOW >1000ms]
+2026-09-24T02:23:35.366Z --- boot total 4672 ms --- slowest: startup files opened 4491 ms
+
+
+--- 说明 / Notes ---
+每个 === name === 是一次追踪：boot 是本次启动，project/open:<项目> 是打开一个项目。
+Each === name === line is one trace: boot is this launch, project/open:<project> is one open.
+每行的 +xms 是相对该次追踪开始的偏移，其后的数字是该阶段自身的耗时。
+In each line, +xms is the offset from that trace start and the number after it is the stage cost.
+标有 [SLOW >1000ms] 的阶段是延迟来源；Host 进程的阶段同样写进同一段追踪。
+Stages marked [SLOW >1000ms] are where the time went; Host-process stages land in the same trace.
+同目录的 dsh-diagnostics-*.zip 是项目自己的官方诊断包。
+The dsh-diagnostics-*.zip beside this report is the project official diagnostics archive.

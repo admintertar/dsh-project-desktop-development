@@ -1,0 +1,33 @@
+{
+  "task": "task-3ee98604-d1e5-423e-b4e8-d421519c84dc",
+  "verifiedAt": "2026-09-24",
+  "platform": "darwin arm64 (macOS)",
+  "shell": "0.1.9 + fixes ada96bc, 4ca44a6 (working tree, unpublished)",
+  "note": "The 0.1.9 release-time evidence was collected on Windows x64; this pass re-verifies the same code paths on macOS arm64. It does not claim Windows acceptance.",
+  "criteria": {
+    "C1": {"result": "passed", "method": "yarn probe:startup-trace: real Electron launch, 7/7 trace checks (boot section present)"},
+    "C2": {"result": "passed", "method": "boot.log carries project/open:<project> with Host-process stages via=host-entry / via=shell-host"},
+    "C3": {"result": "passed", "method": "real log shows [SLOW >1000ms] on >=1000 ms stages plus per-trace total and slowest stage"},
+    "C4": {"result": "passed", "method": "tests/boot-log.test.mjs 12/12 (retention truncation, silent write failure, redirect/disable)"},
+    "C5": {"result": "passed", "method": "real Electron end-to-end: real Project Tools menu click -> report + official dsh-diagnostics-*.zip in one folder. Only the macOS native save panel is substituted (an automated session cannot drive it); the picker's return value matches the real dialog shape."},
+    "C6": {"result": "passed", "method": "yarn check EXIT=0 in each isolated worktree and again on the main tree after each commit"}
+  },
+  "endToEnd": {
+    "menuEntries": ["打开 DSH 终端", "打开项目终端", "导出日志与诊断…", "Profile…", "", "重启当前项目", "在安全模式中打开", "项目恢复…"],
+    "checks": "11/11",
+    "mergedMenuEntry": "report 6867 B + dsh-diagnostics zip 477 B",
+    "officialRendererAction": "window.dshDesktopActions.invoke(\"diagnostics\") -> report 7408 B + zip 478 B (the restored official contract)",
+    "exportTrace": "each export leaves its own `export` section: environment line + `logs exported` event (destination/bytes/diagnostics) + `--- export total N ms --- slowest: ...`"
+  },
+  "findings": [
+    {"id": "regression-exportDiagnostics", "severity": "high", "status": "fixed", "summary": "0.1.9 renamed the project runtime's official exportDiagnostics method to exportLogs. The pinned Host dispatches native:exportDiagnostics by name through bindNativeRuntime, so the official 'Export Diagnostics…' menu entry failed with TypeError: Cannot read properties of undefined (reading 'apply'), and it sat beside the Shell's own entry as a second export path.", "fixedBy": "ada96bc", "verification": "tests/desktop-runtime-contract.test.mjs (5/5, and it fails when the old name is restored) + real end-to-end run: the menu has one export entry, and both the Shell entry and the official renderer action produce report + archive"},
+    {"id": "upstream-snapshot-drift", "severity": "medium", "status": "fixed", "summary": ".upstream/project held an older export missing the d45b54f changes, so yarn check stopped in verify:upstream ('Expected f8fe0b42...; found dcd0f0e8...'). Re-exported from the pinned commit; tree now f8fe0b42 and verify:upstream passes.", "fixedBy": "re-export (no commit; the snapshot is gitignored)"},
+    {"id": "probe-macos-exit1", "severity": "low", "status": "fixed", "summary": "scripts/native-smoke-case.mjs dereferenced readTitlebarLocale(), which returns null on darwin, so probe:startup-trace always exited 1 on macOS even though its 7 trace checks passed.", "fixedBy": "4ca44a6", "verification": "the locale check moved into native-titlebar-checks.mjs checkTitlebarLocale() behind the DARWIN_SKIP guard; probe:startup-trace now reports 7/7 and native smoke case exit code 0 (probe EXIT=0)"},
+    {"id": "export-event-after-trace-end", "severity": "low", "status": "fixed", "summary": "exportStartupLog's trace.event('logs exported') was dropped because the boot trace had already ended, so boot.log never recorded the export itself.", "fixedBy": "4ca44a6", "verification": "each export now opens its own `export` section; the end-to-end run shows two sections, each with its own total and slowest stage"}
+  ],
+  "commits": [
+    {"commit": "ada96bcc60dec3eaefdcd4a5155a5b0c7aafaf19", "summary": "restore the official exportDiagnostics contract and merge the duplicate export entry"},
+    {"commit": "4ca44a6b61b9962ed14d99d96f77ecc4a39c4154", "summary": "record each export in its own trace section; stop the macOS smoke probe from failing on the titlebar locale check"}
+  ],
+  "artifacts": {"c5ReportSample": "c5-export-report-sample.log"}
+}
