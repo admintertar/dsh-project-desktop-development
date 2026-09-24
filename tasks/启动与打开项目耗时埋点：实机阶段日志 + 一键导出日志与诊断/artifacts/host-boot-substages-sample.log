@@ -1,0 +1,53 @@
+# official host boot 子阶段实测（2026-09-24，macOS arm64）
+
+提交 86dbf2e 把官方 `boot()` 内部的等待切成子阶段，并由 `stable/plugin-load-trace.mjs` 给出最慢插件。
+下面是两次真实 Electron 启动 + 真实打开项目导出的相关行：一次在独立 worktree（提交前）、一次在主工作树（提交后）。
+
+## 独立 worktree：`yarn probe:startup-trace wt-boot-trace`，trace 8/8，冒烟退出码 0
+
+```
++    591ms      1ms official host boot requested
++    595ms      4ms official host modules resolved — app-boot, cmdline, launch-environment, log and actions modules
++    596ms      1ms official host log sink ready
++    603ms      7ms official loader mounted — plugin tree not mounted yet
++    603ms      0ms official runtime services provided
++    603ms      0ms official actions service mounted
++    604ms      1ms official cmdline provided
++   3577ms   2973ms official host booted — plugin tree and loopback renderer server in place  [SLOW >1000ms]
++   3577ms      0ms official plugin tree settled — loaded=180 slowest=cordis:include 2957 ms
++   3577ms      0ms official plugin loads over 1000ms — cordis:include 2957ms, @deepseek-ai/dsh-settings-file 2421ms, @deepseek-ai/dsh-credentials-local 2072ms, dsh-plugin-desktop/webserver 2056ms, @deepseek-ai/dsh-workspace 1405ms
+--- project/open:Alpha total 3590 ms --- slowest: official host booted 2973 ms
+```
+
+## 主工作树（提交后）：`yarn probe:startup-trace main-boot-trace-2`，trace 8/8，冒烟退出码 0
+
+```
+2026-09-24T06:54:57.092Z +    697ms      1ms official host boot requested
+2026-09-24T06:54:57.096Z +    701ms      4ms official host modules resolved — app-boot, cmdline, launch-environment, log and actions modules
+2026-09-24T06:54:57.097Z +    702ms      1ms official host log sink ready
+2026-09-24T06:54:57.104Z +    709ms      7ms official loader mounted — plugin tree not mounted yet
+2026-09-24T06:54:57.105Z +    710ms      1ms official runtime services provided
+2026-09-24T06:54:57.105Z +    710ms      0ms official actions service mounted
+2026-09-24T06:54:57.105Z +    710ms      0ms official cmdline provided
+2026-09-24T06:55:00.388Z +   3993ms   3283ms official host booted — plugin tree and loopback renderer server in place  [SLOW >1000ms]
+2026-09-24T06:55:00.388Z +   3993ms      0ms official plugin tree settled — loaded=180 slowest=cordis:include 3263 ms
+2026-09-24T06:55:00.388Z +   3993ms      0ms official plugin loads over 1000ms — cordis:include 3263ms, @deepseek-ai/dsh-settings-file 2640ms, @deepseek-ai/dsh-credentials-local 2293ms, dsh-plugin-desktop/webserver 2267ms, @deepseek-ai/dsh-workspace 1458ms
+```
+
+## 结论
+
+- 之前只有一个数字的等待段现在被拆成 6 段（模块解析、日志 sink、Loader 装载、运行期服务、actions 服务、cmdline），本机实测每段 0–7 ms。
+- 全部等待仍落在 `official host booted`（约 3.0–3.3 s）：官方插件树的装载与它启动的 loopback 渲染服务器。
+- 插件级汇总给出 180 个入口，最慢 `cordis:include` 3263 ms（引导 include，覆盖整棵子树），其后是
+  `@deepseek-ai/dsh-settings-file` 2640 ms、`@deepseek-ai/dsh-credentials-local` 2293 ms、
+  `dsh-plugin-desktop/webserver` 2267 ms（渲染服务器所在插件）、`@deepseek-ai/dsh-workspace` 1458 ms；
+  并行装载，条目耗时之和大于该段总时长，因此只把它们当作相对排序。
+- **Windows 实机的 28 s 尚未复测**：需要在那一台机器上用含本提交的版本再导出一次日志，看 28 s 落在
+  `official loader mounted` 之后（插件树 / 渲染服务器）还是之前的模块段。
+
+## 一次偶发失败（与本改动无关，供对照）
+
+主树首次运行的同一探针在 native-smoke 的 guide 检查处失败：
+`scripts/native-guide-checks.mjs:47` `AssertionError: 'Draft2' !== 'Draft'`（原生冒烟退出码 1）。
+该检查在打开项目之前，所以那次 boot.log 只有 boot 段，8 项 trace 检查里 7 项 FAIL。
+紧随其后的同一命令重跑 8/8 通过，worktree 那次也 8/8。埋点本身在两次运行中行为一致。

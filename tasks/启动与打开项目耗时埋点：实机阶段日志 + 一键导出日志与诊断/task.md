@@ -6,7 +6,7 @@ title: 启动与打开项目耗时埋点：实机阶段日志 + 一键导出日�
 objective: 让“Windows 启动卡二三十秒”“打开项目有时也慢”这类实机延迟可以被定位到具体阶段：在主进程启动链路、打开项目链路与 Host 进程内部加入常开的分阶段时间戳追踪并落到 userData/boot.log；把恢复模式原因并入同一份证据；在项目工具菜单提供一个导出入口，产出可直接发送的“日志 + 官方诊断包”分析材料。
 status: active
 createdAt: 2026-09-23T13:44:07.489Z
-updatedAt: 2026-09-24T02:35:06.292Z
+updatedAt: 2026-09-24T06:57:20.759Z
 artifacts:
   - type: file
     path: artifacts/c5-export-report-sample.log
@@ -22,6 +22,13 @@ artifacts:
     repository: https://github.com/admintertar/dsh-project-desktop.git
     commit: 4ca44a6b61b9962ed14d99d96f77ecc4a39c4154
     description: 导出动作自记一段 export 追踪；macOS 冒烟不再因标题栏语言检查失败
+  - type: file
+    path: artifacts/host-boot-substages-sample.log
+    description: 86dbf2e 的 official host boot 子阶段与插件级汇总：worktree 与主树两次 probe 的实测日志行、结论与一次偶发 guide 检查失败的对照
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop.git
+    commit: 86dbf2e95851d59eec7a7809ebf87b5b0bdf4811
+    description: 官方 host boot 拆成子阶段，并给出最慢的插件入口
 archived: false
 phase: validation
 brief:
@@ -66,15 +73,17 @@ questions:
   - 修复提交 ada96bc 与 4ca44a6 尚未进入发布：是否需要按发布手册出 0.1.10 补丁版（版本号、双语发布说明、pin/lock 校验、推 tag）？
 handoff:
   nextSteps:
-    - 如需让两个修复到达用户：按发布手册 bump 到 0.1.10（版本号、双语发布说明、pin/lock 检查、推 tag）——目前只在 master（ada96bc、4ca44a6）
+    - Windows 实机复测：在那台机器上用含 86dbf2e 的版本再导一次启动日志，确认 28 s 落在 official loader mounted 之后（插件树 / loopback 渲染服务器）还是之前的模块段——这是当前唯一未回答的归因问题
+    - 如需让三个修复（ada96bc、4ca44a6、86dbf2e）到达用户：按发布手册 bump 到 0.1.10（版本号、双语发布说明、pin/lock 检查、推 tag）——目前只在 master
   readBefore:
     - boot-log
+    - plugin-load-trace
     - native-adapter
     - official-tray
     - contract-test
   verifyBefore:
-    - cd resources/dsh-project-desktop && yarn check（EXIT=0；含新增 5 项契约测试）
-    - yarn probe:startup-trace <label>（macOS 上 trace 7/7 且冒烟退出码 0）
+    - cd resources/dsh-project-desktop && yarn check（EXIT=0；含新增 tests/plugin-load-trace.test.mjs 7 项与 5 项契约测试）
+    - yarn probe:startup-trace <label>（macOS 上 trace 8/8 且冒烟退出码 0；host boot sub-stages 一项要求 official loader mounted 与 official plugin tree settled 同时出现）
     - 真实端到端：打开项目 → 项目工具菜单应只有「导出日志与诊断…」一个导出入口，点击后同目录得到报告与 dsh-diagnostics-*.zip，boot.log 多出一段 export 追踪
 references:
   - id: boot-log
@@ -93,6 +102,10 @@ references:
     label: tests/desktop-runtime-contract.test.mjs（官方契约方法防回归）
     type: file
     path: resources/dsh-project-desktop/tests/desktop-runtime-contract.test.mjs
+  - id: plugin-load-trace
+    label: src/desktop-adapter/stable/plugin-load-trace.mjs（插件装载计时与汇总）
+    type: file
+    path: resources/dsh-project-desktop/src/desktop-adapter/stable/plugin-load-trace.mjs
 entries:
   - id: e1
     kind: progress
@@ -217,6 +230,22 @@ entries:
     content: 两个小瑕疵已修（提交 4ca44a6）：(1) exportStartupLog 不再往已 end 的 boot 段写事件，而是另开 `export` 段（environment 记 userData，event 记 destination/bytes/diagnostics，结束写 written/failed 与 total），报告的说明段同步补上 export；(2) 标题栏语言检查收进 native-titlebar-checks.mjs 的 checkTitlebarLocale() 并按 DARWIN_SKIP 跳过，native-smoke-case 只留一行调用——此前它直接对 darwin 上返回 null 的 readTitlebarLocale() 取 .menus。验证：worktree yarn check EXIT=0；probe:startup-trace 在 macOS 上 trace 7/7 且冒烟退出码 0（修复前必然 exit 1）；真实 Electron 端到端 11/11，两次导出各留一段 export 追踪；提交后主树 yarn check 再次 EXIT=0。
     basis: observation
     createdAt: 2026-09-24T02:35:06.292Z
+  - id: e17
+    kind: progress
+    content: 把官方 boot() 内部从「一个数字」切成子阶段并给出最慢插件（提交 86dbf2e）：project-bootstrap 在 boot() 前后补 official host modules resolved / official host log sink ready / official loader mounted / official runtime services provided / official actions service mounted / official cmdline provided；新增 stable/plugin-load-trace.mjs 监听 Loader 的 internal/status（FiberState 在 vendor 里是 const enum、运行时无导出，故把读取的 LOADING/ACTIVE/FAILED 固定为常量，未知状态一律忽略），在 official host booted 之后写 official plugin tree settled 与 official plugin loads over 1000ms——汇总写在 booted 之后，是为了不改动那一阶段一直报告的等待量；probe:startup-trace 增加 host boot sub-stages 检查；architecture/development 文档同步；新增 tests/plugin-load-trace.test.mjs 7 项。Windows 那台机器的 28 s 尚未复测。
+    basis: observation
+    createdAt: 2026-09-24T06:57:20.759Z
+  - id: e18
+    kind: verification
+    content: C2 增强覆盖：真实 Electron 启动 + 真实打开项目，probe:startup-trace 在独立 worktree 与主工作树各 8/8（含新增 host boot sub-stages），冒烟退出码 0；boot.log 中 official host booted（2973/3283 ms）被拆成 6 段子阶段（每段 0–7 ms），official plugin tree settled 给出 loaded=180，最慢 cordis:include 3263 ms、dsh-plugin-desktop/webserver 2267 ms、@deepseek-ai/dsh-settings-file 2640 ms。证据：artifacts/host-boot-substages-sample.log。同一探针在主树首次运行因 native-smoke 的 guide 检查（scripts/native-guide-checks.mjs:47 'Draft2' !== 'Draft'）提前失败、boot.log 只有 boot 段，紧随其后的重跑即 8/8，与本改动无关，已记入证据文件。
+    basis: observation
+    verification:
+      criterionId: C2
+      criterionVersion: 1
+      method: yarn probe:startup-trace（真实 Electron 启动 + 真实打开项目）+ 读取 boot.log
+      result: passed
+      coverage: worktree 与主树各一次，覆盖子阶段行、插件级汇总与 [SLOW >1000ms] 标记；单测 tests/plugin-load-trace.test.mjs 7/7 覆盖计时与汇总语义
+    createdAt: 2026-09-24T06:57:20.759Z
 operations:
   77c44e0f10e7de935c6d2d8b92c9fa2cc2ab55e3dfab9f05a5244ca3fc0ec452:
     fingerprint: 1847f9a04e6a1e00968de879be9af8a6ca73339fae71a255b68a024f3de43dc4
@@ -259,6 +288,13 @@ operations:
     at: 2026-09-24T02:35:06.292Z
     entryIds:
       - e16
+  86748787f2235113c0b01c84beedce5cd64deba3c397fe72ecf94d4500985102:
+    fingerprint: 095f60c90f258fd78e0864272c7b704a8c9d04f9999a5abd3ed5844853e122a7
+    kind: update
+    at: 2026-09-24T06:57:20.759Z
+    entryIds:
+      - e17
+      - e18
 criterionVersions:
   C1: 1
   C2: 1
@@ -268,4 +304,4 @@ criterionVersions:
   C6: 1
 ---
 
-实现与实机验证全部完成（含 C5），两轮验证期发现的问题也都已修复：src/app/boot-log.mjs 提供显式 trace 对象并写 <userData>/boot.log（常开、≥256 KiB 半量截断、单阶段 ≥1000 ms 标 [SLOW >1000ms]、段落结束给 total 与最慢阶段）；启动/打开项目链路与 Host 进程阶段均已埋点，恢复模式原因并入同段追踪；项目工具菜单的「导出日志与诊断…」一次导出报告 + 官方诊断 zip，每次导出另留一段 export 追踪。本轮复核（2026-09-24，macOS arm64；不声称 Windows 验收）：probe:startup-trace trace 7/7 且冒烟退出码 0、tests/boot-log.test.mjs 12/12、真实 Electron 端到端 11/11、yarn check EXIT=0（两个 worktree 与提交后主树各一次）。修复内容：ada96bc 恢复官方 exportDiagnostics 契约并把菜单合并为唯一导出入口（0.1.9 的改名让官方入口以 undefined.apply 失败）；4ca44a6 让导出自记 export 段，并修掉 macOS 上 probe:startup-trace 必然 exit 1 的标题栏空指针。两个修复都未发布。
+实现、实机验证与后续增强均已完成：src/app/boot-log.mjs 提供显式 trace 对象并写 <userData>/boot.log（常开、≥256 KiB 半量截断、单阶段 ≥1000 ms 标 [SLOW >1000ms]、段落结束给 total 与最慢阶段）；启动/打开项目链路与 Host 进程阶段均已埋点，恢复模式原因并入同段追踪；项目工具菜单的「导出日志与诊断…」一次导出报告 + 官方诊断 zip，每次导出另留一段 export 追踪。本轮（2026-09-24）把「打开项目慢」唯一剩下的黑盒——官方 boot() 内部的 Loader 装载、整棵插件树与 loopback 渲染服务器——切成 6 个子阶段，并新增插件级最慢入口汇总（提交 86dbf2e）。实测（macOS arm64，独立 worktree 与主树各一次；不声称 Windows 验收）：probe:startup-trace 各 8/8 且冒烟退出码 0，official host booted 2973/3283 ms 之外每段子阶段 0–7 ms，loaded=180、最慢 cordis:include 3263 ms 与 dsh-plugin-desktop/webserver 2267 ms；yarn check 在 worktree 与提交后主树各 EXIT=0。Windows 实机的 28 s 仍需在那台机器上复测，才能确定它落在插件树/server 还是模块段。历史修复：ada96bc 恢复官方 exportDiagnostics 契约并把菜单合并为唯一导出入口；4ca44a6 让导出自记 export 段并修掉 macOS 上 probe:startup-trace 必然 exit 1 的标题栏空指针。三个提交都未发布。
