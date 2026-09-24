@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "platform": "win32",
+  "passed": [
+    "unique-entry folder opens directly; the picker degrades to openFile+openDirectory",
+    "folder without a project reports 不是 agent-project 项目 in the window locale",
+    "empty import form reports its own validation error; destination starts at the window default",
+    "repository URL derives the folder name imported-project and previews the target path with the host separator",
+    "clone progress reports the plugin job phase (接收对象, 42%)",
+    "a finished import installs <name>.agent-project under the chosen parent and opens it",
+    "a new dialog starts at the previous import destination",
+    "browsing a directory remembers it before any clone starts; Escape closes without importing",
+    "English copy, dark theme, Escape and a 420px window keep the dialog inside the viewport"
+  ]
+}

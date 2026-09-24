@@ -1,0 +1,11 @@
+﻿cmd	15116	
+cmd	19756	
+cmd	21340	
+conhost	3484	
+conhost	3632	
+conhost	14972	
+conhost	19720	
+conhost	19772	
+conhost	21920	
+WindowsTerminal	19904	DSH Desktop
+WindowsTerminal	21608	管理员:  C:\WINDOWS\system32\cmd.exe 

@@ -1,0 +1,26 @@
+[
+  {
+    "label": "撤销",
+    "shortcut": "Ctrl+Z"
+  },
+  {
+    "label": "重做",
+    "shortcut": "Ctrl+Y"
+  },
+  {
+    "label": "剪切",
+    "shortcut": "Ctrl+X"
+  },
+  {
+    "label": "复制",
+    "shortcut": "Ctrl+C"
+  },
+  {
+    "label": "粘贴",
+    "shortcut": "Ctrl+V"
+  },
+  {
+    "label": "全选",
+    "shortcut": "Ctrl+A"
+  }
+]

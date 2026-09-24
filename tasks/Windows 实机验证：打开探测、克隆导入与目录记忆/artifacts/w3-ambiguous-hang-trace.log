@@ -1,0 +1,39 @@
+2026-09-23T12:14:51.048Z +97ms launch(zh) enter
+2026-09-23T12:14:51.429Z +478ms launch(zh) returned 1
+2026-09-23T12:14:51.575Z +624ms phase1 done opened=["C:\\Users\\PING\\AppData\\Local\\Temp\\diag-phase-f7c5ad\\import-fixtures\\Folder Project"] options=["openFile","openDirectory"]
+2026-09-23T12:14:51.576Z +624ms launch(zh) enter
+2026-09-23T12:14:51.972Z +1021ms launch(zh) returned 2
+2026-09-23T12:14:52.042Z +1091ms phase2 error rendered
+2026-09-23T12:14:52.047Z +1095ms phase2 destroyed destroyed=true
+2026-09-23T12:14:52.047Z +1096ms launch(en) enter
+2026-09-23T12:14:52.397Z +1446ms launch(en) returned 3
+2026-09-23T12:14:52.448Z +1497ms phase3 actions rendered
+2026-09-23T12:14:56.053Z +5102ms heartbeat windows=0
+2026-09-23T12:15:01.063Z +10112ms heartbeat windows=0
+2026-09-23T12:15:06.073Z +15122ms heartbeat windows=0
+2026-09-23T12:15:11.086Z +20135ms heartbeat windows=0
+2026-09-23T12:15:16.096Z +25145ms heartbeat windows=0
+2026-09-23T12:15:21.107Z +30155ms heartbeat windows=0
+2026-09-23T12:15:26.114Z +35163ms heartbeat windows=0
+2026-09-23T12:15:31.124Z +40173ms heartbeat windows=0
+2026-09-23T12:15:36.126Z +45175ms heartbeat windows=0
+2026-09-23T12:15:41.138Z +50187ms heartbeat windows=0
+2026-09-23T12:15:46.153Z +55202ms heartbeat windows=0
+2026-09-23T12:15:51.168Z +60217ms heartbeat windows=0
+2026-09-23T12:15:56.172Z +65221ms heartbeat windows=0
+2026-09-23T12:16:01.176Z +70225ms heartbeat windows=0
+2026-09-23T12:16:06.187Z +75236ms heartbeat windows=0
+2026-09-23T12:16:11.198Z +80246ms heartbeat windows=0
+2026-09-23T12:16:16.201Z +85249ms heartbeat windows=0
+2026-09-23T12:16:21.210Z +90259ms heartbeat windows=0
+2026-09-23T12:16:26.213Z +95262ms heartbeat windows=0
+2026-09-23T12:16:31.221Z +100270ms heartbeat windows=0
+2026-09-23T12:16:36.230Z +105278ms heartbeat windows=0
+2026-09-23T12:16:41.233Z +110282ms heartbeat windows=0
+2026-09-23T12:16:46.240Z +115289ms heartbeat windows=0
+2026-09-23T12:16:51.246Z +120294ms heartbeat windows=0
+2026-09-23T12:16:56.257Z +125306ms heartbeat windows=0
+2026-09-23T12:17:01.263Z +130312ms heartbeat windows=0
+2026-09-23T12:17:06.277Z +135325ms heartbeat windows=0
+2026-09-23T12:17:11.290Z +140338ms heartbeat windows=0
+2026-09-23T12:17:16.299Z +145347ms heartbeat windows=0

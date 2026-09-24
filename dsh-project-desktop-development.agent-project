@@ -1,6 +1,7 @@
 schemaVersion: 1
 id: dsh-project-desktop-development-c8b73fdc
 name: dsh-project-desktop-development
+description: ""
 resources:
   - id: root
     name: dsh-project-desktop-development
@@ -20,3 +21,6 @@ memory:
   - id: working-agreements
     name: 项目工作约定与验证流程
     path: memory/working-agreements.md
+  - id: worktree-for-product-code
+    name: 改产品代码走独立 worktree
+    path: memory/worktree-for-product-code.md
