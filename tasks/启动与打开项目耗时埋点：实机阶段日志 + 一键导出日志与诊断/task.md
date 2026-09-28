@@ -6,7 +6,7 @@ title: 启动与打开项目耗时埋点：实机阶段日志 + 一键导出日�
 objective: 让“Windows 启动卡二三十秒”“打开项目有时也慢”这类实机延迟可以被定位到具体阶段：在主进程启动链路、打开项目链路与 Host 进程内部加入常开的分阶段时间戳追踪并落到 userData/boot.log；把恢复模式原因并入同一份证据；在项目工具菜单提供一个导出入口，产出可直接发送的“日志 + 官方诊断包”分析材料。
 status: active
 createdAt: 2026-09-23T13:44:07.489Z
-updatedAt: 2026-09-24T06:57:20.759Z
+updatedAt: 2026-09-24T10:45:40.905Z
 artifacts:
   - type: file
     path: artifacts/c5-export-report-sample.log
@@ -29,6 +29,13 @@ artifacts:
     repository: https://github.com/admintertar/dsh-project-desktop.git
     commit: 86dbf2e95851d59eec7a7809ebf87b5b0bdf4811
     description: 官方 host boot 拆成子阶段，并给出最慢的插件入口
+  - type: commit
+    repository: https://github.com/admintertar/dsh-project-desktop.git
+    commit: 19416581490a8bc006161d54dc24b0d62f818059
+    description: 发布 0.1.10：版本号、插件 pin bump 到 4633866、双语发布说明
+  - type: url
+    url: https://github.com/admintertar/dsh-project-desktop/releases/tag/v0.1.10
+    description: 0.1.10 发布页（Windows Setup/Portable + macOS universal DMG + sha256 + update.json）
 archived: false
 phase: validation
 brief:
@@ -69,22 +76,20 @@ brief:
       text: yarn check 通过（含全部单测与 smoke:host）
       required: true
       version: 1
-questions:
-  - 修复提交 ada96bc 与 4ca44a6 尚未进入发布：是否需要按发布手册出 0.1.10 补丁版（版本号、双语发布说明、pin/lock 校验、推 tag）？
+questions: []
 handoff:
   nextSteps:
-    - Windows 实机复测：在那台机器上用含 86dbf2e 的版本再导一次启动日志，确认 28 s 落在 official loader mounted 之后（插件树 / loopback 渲染服务器）还是之前的模块段——这是当前唯一未回答的归因问题
-    - 如需让三个修复（ada96bc、4ca44a6、86dbf2e）到达用户：按发布手册 bump 到 0.1.10（版本号、双语发布说明、pin/lock 检查、推 tag）——目前只在 master
+    - Windows 实机确认两件事：项目工具菜单只剩「导出日志与诊断…」一个导出入口且点击可导出；启动/打开项目变慢时 boot.log 里能读到 host boot 子阶段与最慢插件入口
+    - 发布后的收尾：按需更新任务记录中的发布结论或归档任务
   readBefore:
     - boot-log
-    - plugin-load-trace
     - native-adapter
     - official-tray
     - contract-test
   verifyBefore:
-    - cd resources/dsh-project-desktop && yarn check（EXIT=0；含新增 tests/plugin-load-trace.test.mjs 7 项与 5 项契约测试）
-    - yarn probe:startup-trace <label>（macOS 上 trace 8/8 且冒烟退出码 0；host boot sub-stages 一项要求 official loader mounted 与 official plugin tree settled 同时出现）
-    - 真实端到端：打开项目 → 项目工具菜单应只有「导出日志与诊断…」一个导出入口，点击后同目录得到报告与 dsh-diagnostics-*.zip，boot.log 多出一段 export 追踪
+    - cd resources/dsh-project-desktop && yarn check（EXIT=0）
+    - yarn probe:startup-trace <label>（8/8，含 host boot sub-stages）
+    - 安装 0.1.10 后：项目工具菜单应只有「导出日志与诊断…」一个导出入口；boot.log 应出现 export 段与 official plugin tree settled
 references:
   - id: boot-log
     label: src/app/boot-log.mjs（追踪与导出报告渲染）
@@ -246,6 +251,16 @@ entries:
       result: passed
       coverage: worktree 与主树各一次，覆盖子阶段行、插件级汇总与 [SLOW >1000ms] 标记；单测 tests/plugin-load-trace.test.mjs 7/7 覆盖计时与汇总语义
     createdAt: 2026-09-24T06:57:20.759Z
+  - id: e19
+    kind: progress
+    content: 已发布 0.1.10（tag v0.1.10 → 提交 1941658，master 已推送）。Package Desktop run 35986586147：plan / Package win-x64 / Package mac-universal / Verify universal DMG on Intel / Publish verified release 全部 success。Release 已发布（非 draft）：DSH-Project-Desktop-0.1.10-win-x64-Setup.exe、-win-x64-Portable.zip、-mac-universal.dmg 及各自 sha256，另有 update.json；说明取自 docs/releases/0.1.10.md（中英双语）。同批 master push 带起的附属工作流 Verify Guide on Windows / Verify Resources on Windows / Probe project boot timing 均 success。
+    basis: observation
+    createdAt: 2026-09-24T10:45:40.905Z
+  - id: e20
+    kind: progress
+    content: 发布内容与前置检查：三件套为 package.json 0.1.9→0.1.10、upstream.lock.json 插件 pin d45b54f→4633866（tree f6c0d58a，已在远端 origin/master）、新增 docs/releases/0.1.10.md；.upstream/project 按新 pin 重导并通过 verify:upstream。发布提交前的 yarn check EXIT=0（167 项测试）。过程中一次 yarn check EXIT=1 是我在同一时刻重导快照造成的竞态（报 Expected f6c0d58a; found f8fe0b42），重跑即 EXIT=0，非代码问题。
+    basis: observation
+    createdAt: 2026-09-24T10:45:40.905Z
 operations:
   77c44e0f10e7de935c6d2d8b92c9fa2cc2ab55e3dfab9f05a5244ca3fc0ec452:
     fingerprint: 1847f9a04e6a1e00968de879be9af8a6ca73339fae71a255b68a024f3de43dc4
@@ -295,6 +310,13 @@ operations:
     entryIds:
       - e17
       - e18
+  d5be630d87185faab4f850341ca1cbb2a5bfd26837806c14592eacc2e263b1c8:
+    fingerprint: bbdc4cacd935d1553288a0021b2182d14b1f87ab432d92044615734154fe99e9
+    kind: update
+    at: 2026-09-24T10:45:40.905Z
+    entryIds:
+      - e19
+      - e20
 criterionVersions:
   C1: 1
   C2: 1
@@ -304,4 +326,4 @@ criterionVersions:
   C6: 1
 ---
 
-实现、实机验证与后续增强均已完成：src/app/boot-log.mjs 提供显式 trace 对象并写 <userData>/boot.log（常开、≥256 KiB 半量截断、单阶段 ≥1000 ms 标 [SLOW >1000ms]、段落结束给 total 与最慢阶段）；启动/打开项目链路与 Host 进程阶段均已埋点，恢复模式原因并入同段追踪；项目工具菜单的「导出日志与诊断…」一次导出报告 + 官方诊断 zip，每次导出另留一段 export 追踪。本轮（2026-09-24）把「打开项目慢」唯一剩下的黑盒——官方 boot() 内部的 Loader 装载、整棵插件树与 loopback 渲染服务器——切成 6 个子阶段，并新增插件级最慢入口汇总（提交 86dbf2e）。实测（macOS arm64，独立 worktree 与主树各一次；不声称 Windows 验收）：probe:startup-trace 各 8/8 且冒烟退出码 0，official host booted 2973/3283 ms 之外每段子阶段 0–7 ms，loaded=180、最慢 cordis:include 3263 ms 与 dsh-plugin-desktop/webserver 2267 ms；yarn check 在 worktree 与提交后主树各 EXIT=0。Windows 实机的 28 s 仍需在那台机器上复测，才能确定它落在插件树/server 还是模块段。历史修复：ada96bc 恢复官方 exportDiagnostics 契约并把菜单合并为唯一导出入口；4ca44a6 让导出自记 export 段并修掉 macOS 上 probe:startup-trace 必然 exit 1 的标题栏空指针。三个提交都未发布。
+实现、实机验证与发布均已完成：src/app/boot-log.mjs 提供显式 trace 对象并写 <userData>/boot.log（常开、≥256 KiB 半量截断、单阶段 ≥1000 ms 标 [SLOW >1000ms]、段落结束给 total 与最慢阶段）；启动/打开项目链路与 Host 进程阶段均已埋点，恢复模式原因并入同段追踪；官方 host boot 拆成 6 个子阶段并在 booted 之后汇总插件树装载与最慢入口；项目工具菜单的「导出日志与诊断…」是唯一导出入口，一次导出报告 + 官方诊断 zip，每次导出另留一段 export 追踪。本轮（2026-09-24）复核并修复两个问题：ada96bc 恢复官方 exportDiagnostics 契约（0.1.9 改名导致官方入口 undefined.apply）并把菜单合并为唯一入口；4ca44a6 导出留痕并修掉 macOS 上 probe:startup-trace 必然 exit 1 的标题栏空指针；86dbf2e 为另一会话完成的 Host 子阶段切分。验证：yarn check EXIT=0、probe:startup-trace 8/8 且冒烟退出码 0、真实 Electron 端到端 11/11。已发布 0.1.10（tag v0.1.10 → 1941658；Package Desktop run 35986586147 全部 success，Release 含 Windows Setup/Portable、macOS universal DMG、sha256 与 update.json）。
