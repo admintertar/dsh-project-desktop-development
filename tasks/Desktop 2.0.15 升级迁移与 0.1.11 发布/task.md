@@ -6,8 +6,11 @@ title: Desktop 2.0.15 升级迁移与 0.1.11 发布
 objective: 将 0.1.10 使用的 Desktop 2.0.11 / Harness 0.1.5-rc.2 迁移到固定的 Desktop 2.0.15 / Harness 0.1.7-rc.2，升级 Project 插件并修复壳的窗口、设置与安装包兼容问题；完成源码、原生界面、Windows/macOS 安装包及 Intel 验收，发布 0.1.11，并记录合并状态。
 status: completed
 createdAt: 2026-09-28T10:03:30.000Z
-updatedAt: 2026-09-28T10:05:56.000Z
+updatedAt: 2026-09-28T10:39:40.000Z
 artifacts:
+  - type: file
+    path: artifacts/desktop-2.0.15-upgrade-plan.md
+    description: 从壳仓库 docs/plans 迁入的 Desktop 2.0.15 升级实施计划原文
   - type: commit
     repository: https://github.com/admintertar/dsh-plugin-project.git
     commit: 454e6bc0a27a897cc3415784932e74a29791d22e
@@ -77,8 +80,8 @@ handoff:
 references:
   - id: upgrade-plan
     label: Desktop 2.0.15 升级计划
-    type: url
-    url: https://github.com/admintertar/dsh-project-desktop/blob/master/docs/plans/2026-09-27-desktop-2.0.15-upgrade.md
+    type: file
+    path: tasks/Desktop 2.0.15 升级迁移与 0.1.11 发布/artifacts/desktop-2.0.15-upgrade-plan.md
   - id: release-notes
     label: 0.1.11 中英双语发布说明
     type: url

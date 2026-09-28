@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-28T10:36:37.000Z
+updatedAt: 2026-09-28T10:39:40.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -114,6 +114,15 @@ entries:
       - issues
       - completed-upgrade
     createdAt: 2026-09-28T10:36:37.000Z
+  - id: historical-plan-relocated
+    kind: progress
+    content: 壳仓库 docs/plans 中最后一份 Desktop 2.0.15 升级计划已按用户要求迁到对应的已完成任务产物；本任务的两份官方 Desktop 迁移文档继续保存在本任务产物中。
+    basis: user-request
+    referenceIds:
+      - completed-upgrade
+      - design
+      - issues
+    createdAt: 2026-09-28T10:39:40.000Z
 operations: {}
 criterionVersions:
   official-source: 1
