@@ -1,0 +1,69 @@
+# 直接接入官方 Desktop 的迁移方案（草案）
+
+日期：2026-09-28。状态：供评审；尚未开始应用实现。问题清单见 [迁移问题点](issues.md)。
+
+## 目标与边界
+
+下一版直接替换现有 `dsh-project-desktop` Stable 安装，继续使用原应用身份、用户数据目录、项目文件和发布入口。截至本方案形成时，**已发布基线是壳 `0.1.11`、社区 Desktop `2.0.15`、官方 Harness `0.1.7-rc.2`**（见 [已完成的升级任务](../../Desktop%202.0.15%20升级迁移与%200.1.11%20发布/task.md)）；本地 `resources/dsh-project-desktop` 检出仍停在旧版，不能以该工作树的锁文件代表已发布基线。运行、构建、测试、打包及 CI 的 Desktop/Harness 来源统一为 `deepseek-ai/deepseek-harness` 的一个完整提交，其中 Desktop 源码取自 `apps/desktop`。配套 `dsh-plugin-project` 也不得再从 Anywhere Labs 的 `dsh-desktop` 获取源码、依赖缓存或兼容信息。
+
+“直接依赖官方”在这里指固定官方 Git 提交、校验源码树、构建官方模块与官方发布包。官方 `apps/desktop/package.json` 标记为 `private: true`，不能把 `@deepseek-ai/dsh-desktop` 当成公开 npm 库直接安装。当前候选基线为官方 `21638c56315ae6a2b552d6091945d3144c9af32e`（`0.1.7-rc.2`）；实施时先固定它的源码树、依赖锁和构建结果，若验证不通过再选一个明确提交，不跟随浮动 `master`。
+
+保留现有独立壳，不复制官方 `main.ts` 后长期维护分叉。现有 [开发约束](../../../resources/dsh-project-desktop/AGENTS.md)要求单一 Electron 主进程管理项目级窗口、Host、DSH Home、Profile 和 Chromium 分区；此约束继续成立。项目内 Tasks、Resources、Memory、skills、MCP 由配套 Project 插件负责。
+
+## 方案选择
+
+| 路径 | 结果 | 判断 |
+| --- | --- | --- |
+| 以官方 `apps/desktop` 应用源码为基础直接改成多项目版 | 需要持续合并官方 `main.ts` 的应用级改动 | 不符合独立壳约束，维护面过大 |
+| 改接 Anywhere Labs Next 再叠加项目功能 | 能借用现成适配，但运行/构建仍依赖社区 Desktop | 不符合本次目标 |
+| 保留我们的应用层，固定并复用官方 Desktop 源码和官方 DSH 包 | 官方升级影响集中在适配层，项目所有权继续由壳控制 | **采用** |
+
+## 目标结构
+
+```text
+现有项目欢迎页 / 项目文件 / ProjectWorkspace / 更新入口
+                         │
+             我们的项目级 Electron 控制器
+                ├─ 项目 A：窗口 + Session + Host + DSH Home + Profile
+                └─ 项目 B：窗口 + Session + Host + DSH Home + Profile
+                         │
+         官方 apps/desktop 的可复用源码与安全契约
+                         │
+       官方 Web 前端 + 官方 Harness runProfile/WebServer
+                         │
+                  dsh-plugin-project
+```
+
+主进程仍由我们拥有，沿用 [`ProjectWorkspace`](../../../resources/dsh-project-desktop/src/app/project-workspace.mjs) 对每个项目的开关、重启和恢复进行串行协调。每个项目创建自己的 Host、随机 loopback 端口、认证凭据、持久化分区与 `dsh-app://app` 协议处理器；仅该项目的主 Frame 可获得对应 Host 的原生能力。具体可复用的官方模块以源码核查与原生实验为准，优先考察 `host-process.ts`、`backend-controller.ts`、`web-document.ts`、preload、平台能力和官方 Web 前端。官方 `main.ts` 目前围绕一个 `mainWindow` 和一个 `profiles/desktop`，不能直接作为多项目主进程。
+
+Host 使用官方 `@deepseek-ai/dsh/profile-boot` 的 `runProfile` 和真实 WebServer。已发布 Project 插件的 peer 版本是官方 `0.1.7-rc.2`；仍须在脱离社区 Desktop 的安装、构建和运行环境中重新验证，而不能把版本相同视作兼容完成。欢迎页继续管理项目列表和创建；项目窗口显示官方 Web 前端。Profile、恢复、设置、终端、诊断和更新逐项核查官方已有入口，再提供项目级上下文，不保留社区 Desktop 的私有模块调用。现有用户可见功能以正式版等价为门槛；若官方没有对应的项目级界面，壳需使用官方 UI 组件实现该项目级界面并做真实窗口验收，不能静默删除功能。
+
+## 数据与发行策略
+
+这是**原位替换**：正式版沿用现有 app ID、产品名、单实例身份、`dsh-project-desktop` 用户数据根目录及 `.agent-project` 项目格式。开发和候选版只能在数据副本中验证；正式首次启动在打开任何项目 Host 前执行预检与迁移。
+
+迁移器先锁定项目状态，记录源版本和可恢复日志，备份该项目的 `dsh` Home、Profile/选择状态与壳设置，在副本中完成官方新格式的 Profile/插件调整和校验，成功后再切换。失败时保持旧数据可恢复，停止该项目启动并显示具体原因；其他项目继续可用。项目根目录、Memory 和 Resources 不参与自动重写。先用真实旧版项目副本证明登录状态、会话、设置、第三方插件及 Project 插件数据的行为，再决定哪些状态需要显式迁移。回退需要旧安装包与迁移前备份配对验证，不能假设旧版能读新格式。
+
+候选版内部可称 Next，但现有更新清单只接受 `stable` 通道和 `x.y.z` 版本。正式替换版应在全部验收通过后以新的稳定版本发布，并由现有 Stable 更新入口发现；预发布构建不进入自动更新清单。发布前保持旧 Stable 安装包及数据恢复方案可用。
+
+## 实施阶段与关口
+
+1. **官方依赖可行性实验。** 固定官方提交及源码树；在 macOS/Windows CI 使用官方仓库自己的依赖锁安装并构建 `apps/desktop` 和 Web 前端。证明一个临时项目可用官方 Host、协议、前端完整启动，且构建闭包中没有社区 Desktop。此关口失败时先解决构建来源，不迁移业务代码。
+2. **项目级运行骨架。** 替换 [`src/desktop-adapter/stable/`](../../../resources/dsh-project-desktop/src/desktop-adapter/stable/) 的 Host/窗口入口，保留应用级 ProjectWorkspace；同时打开两个项目，分别完成认证、聊天、重启、崩溃恢复及关闭。证明协议请求、Cookie、IPC、分区和日志没有跨项目串线。
+3. **Project 插件兼容。** 在配套仓库删除社区 Desktop 的开发依赖路径，核对现有 `0.1.7-rc.2` peer 与新官方构建闭包；若官方提交改变包契约则精确适配。验证 Tasks、Resources、Memory、skills、MCP、项目市场、模型设置、第三方插件装卸与 Profile 切换。任何功能只在完整行为验收后标为完成。
+4. **旧数据原位迁移。** 制作旧版真实项目样本与迁移矩阵；实现备份、迁移日志、失败恢复和回退演练。逐项验证默认及额外 Profile、设置、会话、插件、项目资源，确认项目根目录不被意外修改。
+5. **打包与正式替换。** 重写 setup/源码校验/构建/打包/CI，使之仅拉取官方仓库与配套插件；保留应用身份与更新清单契约。完成 macOS Universal、Windows x64 安装和真实图形验收，再开放 Stable 更新清单。
+
+每一阶段以可复现命令、固定提交、测试结果和问题清单状态收口。实施时更新 `AGENTS.md`、架构、开发、打包及第三方来源说明，使“只支持旧 Stable 锁”的旧约束与新基线一致。
+
+## 最终验收
+
+- 源码锁、构建输入、依赖图、安装包和 CI 均可追溯到同一个官方 Harness/Desktop 提交与配套 Project 插件提交；不再引用 Anywhere Labs Desktop 仓库或其包/缓存。
+- 旧版用户通过现有安装与更新路径升级；项目列表和项目文件保持；迁移失败时旧数据可恢复。
+- 两个项目同时运行且各自拥有 Host、Profile、浏览器分区、认证及恢复生命周期；一个项目的故障不影响另一个。
+- 官方聊天/设置基础界面，以及现有 Profile 选择、恢复、终端、诊断、更新、项目市场和 Project 插件功能，在真实 Electron 窗口验收；macOS 与 Windows 安装包各自验收。
+- 文档、许可证及第三方来源信息与实际产物一致。历史发布说明可保留历史事实，但不能成为构建或运行依赖。
+
+## 本轮范围
+
+本轮只形成方案和问题清单，没有改应用、插件、构建脚本、锁文件或发布配置。下一步先执行阶段 1 的可行性实验，再把后续阶段拆成精确文件与验证命令。
