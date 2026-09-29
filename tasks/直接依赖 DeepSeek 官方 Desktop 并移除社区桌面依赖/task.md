@@ -6,19 +6,22 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-28T10:39:40.000Z
+updatedAt: 2026-09-29T09:49:02.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
     description: 官方 Desktop 原位替换方案；包含架构选择、数据与发行策略、实施阶段和最终验收。
   - type: file
     path: artifacts/issues.md
-    description: 迁移问题清单；包含 12 个问题、待证实的官方契约和社区模块到官方基线的初步映射。
+    description: 迁移问题清单；包含 13 个问题、待证实的官方契约和社区模块到官方基线的初步映射。
+  - type: file
+    path: artifacts/phase1-feasibility.md
+    description: 官方 0.2.0-rc.1 来源 pin、构建、真实 Host 和双 Host 隔离实验结果与未完成项。
 archived: false
-phase: design
+phase: investigation
 brief:
   currentBehavior: 已发布壳 0.1.11 仍固定 Anywhere Labs Desktop 2.0.15 和官方 Harness 0.1.7-rc.2。壳运行时大量调用社区 Desktop 私有模块；Project 插件的开发 setup 和来源锁也仍指向社区仓库。之前的 2.0.15 升级与 0.1.11 发布已完成，本任务是移除社区 Desktop 这一中间层。
-  scope: 从固定的 DeepSeek 官方 Git 提交构建 apps/desktop 与官方 DSH 包，改造两个公开仓库的 Host、窗口、Profile、恢复、插件、setup、打包和 CI；对现有安装与项目数据做原位迁移并完成 macOS/Windows/Intel 验收。方案与问题清单先作为本任务产物，本轮不启动代码实施。
+  scope: 从固定的 DeepSeek 官方 Git 提交构建 apps/desktop 与官方 DSH 包，改造两个公开仓库的 Host、窗口、Profile、恢复、插件、setup、打包和 CI；对现有安装与项目数据做原位迁移并完成 macOS/Windows/Intel 验收。已开始阶段 1 可行性验证，最终替换须满足全部验收条件。
   constraints:
     - Desktop/Harness 的运行、构建、测试、CI 和安装包来源只允许固定的 deepseek-ai/deepseek-harness 提交；不得依赖 Anywhere Labs 的 Desktop 包、源码快照或缓存。
     - 保持独立 Shell，不维护官方 Desktop fork；单一主进程下每个项目的窗口、Host、DSH Home、Profile 和 Chromium 分区仍需隔离。
@@ -28,7 +31,7 @@ brief:
   outOfScope:
     - 将 Anywhere Labs Next 作为运行或构建依赖。
     - 新建与 Stable 并行安装的另一套应用身份或共享数据目录。
-    - 本轮直接发布新版本或实施应用代码；先完成任务化与方案评审。
+    - 在迁移、跨平台验收与回退演练完成前发布替换版。
   acceptanceCriteria:
     - id: official-source
       text: 两仓库的来源锁、安装与构建闭包、CI checkout、运行时导入和安装包均可追溯到同一固定官方 Harness/Desktop 提交及配套 Project 插件提交；无 Anywhere Labs Desktop 依赖，从干净工作目录可复现。
@@ -60,9 +63,9 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 先审阅方案和 12 个问题点，确认官方源码复用边界与正式版功能等价门槛。
-    - 执行方案第 1 阶段：固定官方提交，验证官方 apps/desktop 构建及单项目 Host/前端启动，审计无社区 Desktop 构建输入。
-    - 可行性关口通过后再拆分双项目运行、插件兼容、旧数据迁移和打包发行工作。
+    - 完成阶段 1 剩余验证：把官方构建产物接入壳的临时 Electron 项目窗口，审计完整构建闭包，确认无社区 Desktop 输入。
+    - 更新 Project 插件到官方 0.2.0-rc.1 依赖与开发 setup，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP。
+    - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
     - design
     - issues
@@ -79,6 +82,10 @@ references:
     label: 迁移问题点与验证清单
     type: file
     path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/issues.md
+  - id: phase1
+    label: 官方 0.2.0-rc.1 可行性实验
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/phase1-feasibility.md
   - id: completed-upgrade
     label: 已完成的 Desktop 2.0.15 与 0.1.11 升级任务
     type: task
@@ -87,6 +94,10 @@ references:
     label: DeepSeek 官方 Desktop 源码
     type: url
     url: https://github.com/deepseek-ai/deepseek-harness/tree/master/apps/desktop
+  - id: official-release
+    label: DeepSeek Harness 0.2.0-rc.1 官方发布
+    type: url
+    url: https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.0-rc.1
 entries:
   - id: target
     kind: decision
@@ -123,6 +134,30 @@ entries:
       - design
       - issues
     createdAt: 2026-09-28T10:39:40.000Z
+  - id: official-020-candidate
+    kind: decision
+    content: 用户指出官方 DSH 已更新到 0.2；核实最新公开 tag 为 dsh-v0.2.0-rc.1，固定 commit 4878cdabd87d4041bdaff61d04c966883b9fd07a 用于迁移实验，不跟随 master 浮动。
+    basis: user-request
+    referenceIds:
+      - official-release
+      - phase1
+    createdAt: 2026-09-29T09:32:10.000Z
+  - id: phase1-source-and-host
+    kind: progress
+    content: 在 codex/direct-official-desktop 分支增加候选来源 pin 和校验脚本；官方锁文件安装与 build:official 通过，官方真实 Host 验收通过。独立探针确认两个 Host 可同时启动、端口不同、跨项目 Cookie 不得访问、单个 Host 停止不影响另一个。壳 Electron 窗口、插件、现有数据、CI 和安装包尚未迁移，现行 Stable 锁仍指社区 Desktop。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-29T09:32:10.000Z
+  - id: plugin-020-candidate
+    kind: progress
+    content: Project 插件候选分支把 Harness peer 与开发依赖更新为 0.2.0-rc.1，锁定同一官方提交并增加仅用官方工作区源码包的开发准备脚本；在该组合上 yarn run check 通过（类型检查、308 个测试和构建）。默认 setup、upstream.json、壳运行链与打包链仍依赖社区 Desktop，原生插件行为尚未验收。壳旧缓存使本地 yarn run check 在来源校验处停止，见阶段 1 记录。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-29T09:49:02.000Z
 operations: {}
 criterionVersions:
   official-source: 1

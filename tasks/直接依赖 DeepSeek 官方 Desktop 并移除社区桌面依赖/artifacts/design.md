@@ -1,12 +1,12 @@
 # 直接接入官方 Desktop 的迁移方案（草案）
 
-日期：2026-09-28。状态：供评审；尚未开始应用实现。问题清单见 [迁移问题点](issues.md)。
+日期：2026-09-28；2026-09-29 更新官方候选基线。状态：阶段 1 可行性验证中，尚未修改应用实现。问题清单见 [迁移问题点](issues.md)。
 
 ## 目标与边界
 
 下一版直接替换现有 `dsh-project-desktop` Stable 安装，继续使用原应用身份、用户数据目录、项目文件和发布入口。截至本方案形成时，**已发布基线是壳 `0.1.11`、社区 Desktop `2.0.15`、官方 Harness `0.1.7-rc.2`**（见 [已完成的升级任务](../../Desktop%202.0.15%20升级迁移与%200.1.11%20发布/task.md)）；本地 `resources/dsh-project-desktop` 检出仍停在旧版，不能以该工作树的锁文件代表已发布基线。运行、构建、测试、打包及 CI 的 Desktop/Harness 来源统一为 `deepseek-ai/deepseek-harness` 的一个完整提交，其中 Desktop 源码取自 `apps/desktop`。配套 `dsh-plugin-project` 也不得再从 Anywhere Labs 的 `dsh-desktop` 获取源码、依赖缓存或兼容信息。
 
-“直接依赖官方”在这里指固定官方 Git 提交、校验源码树、构建官方模块与官方发布包。官方 `apps/desktop/package.json` 标记为 `private: true`，不能把 `@deepseek-ai/dsh-desktop` 当成公开 npm 库直接安装。当前候选基线为官方 `21638c56315ae6a2b552d6091945d3144c9af32e`（`0.1.7-rc.2`）；实施时先固定它的源码树、依赖锁和构建结果，若验证不通过再选一个明确提交，不跟随浮动 `master`。
+“直接依赖官方”在这里指固定官方 Git 提交、校验源码树、构建官方模块与官方发布包。官方 `apps/desktop/package.json` 标记为 `private: true`，不能把 `@deepseek-ai/dsh-desktop` 当成公开 npm 库直接安装。2026-09-29 核实官方最新公开版是 [`dsh-v0.2.0-rc.1`](https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.0-rc.1)，固定提交 `4878cdabd87d4041bdaff61d04c966883b9fd07a`；根包与 `apps/desktop` 均为 `0.2.0-rc.1`。候选 `apps/desktop` tree 是 `7d069c01368b0df933e3c1d07b95a80d5dd80bd7`，仓库锁文件 blob 是 `14a4b5454671dd5e0807f24fe79b2cbd94d063fc`。该版仍是 RC，先做官方构建、插件兼容和数据迁移验证，不跟随浮动 `master`。
 
 保留现有独立壳，不复制官方 `main.ts` 后长期维护分叉。现有 [开发约束](../../../resources/dsh-project-desktop/AGENTS.md)要求单一 Electron 主进程管理项目级窗口、Host、DSH Home、Profile 和 Chromium 分区；此约束继续成立。项目内 Tasks、Resources、Memory、skills、MCP 由配套 Project 插件负责。
 
@@ -36,7 +36,7 @@
 
 主进程仍由我们拥有，沿用 [`ProjectWorkspace`](../../../resources/dsh-project-desktop/src/app/project-workspace.mjs) 对每个项目的开关、重启和恢复进行串行协调。每个项目创建自己的 Host、随机 loopback 端口、认证凭据、持久化分区与 `dsh-app://app` 协议处理器；仅该项目的主 Frame 可获得对应 Host 的原生能力。具体可复用的官方模块以源码核查与原生实验为准，优先考察 `host-process.ts`、`backend-controller.ts`、`web-document.ts`、preload、平台能力和官方 Web 前端。官方 `main.ts` 目前围绕一个 `mainWindow` 和一个 `profiles/desktop`，不能直接作为多项目主进程。
 
-Host 使用官方 `@deepseek-ai/dsh/profile-boot` 的 `runProfile` 和真实 WebServer。已发布 Project 插件的 peer 版本是官方 `0.1.7-rc.2`；仍须在脱离社区 Desktop 的安装、构建和运行环境中重新验证，而不能把版本相同视作兼容完成。欢迎页继续管理项目列表和创建；项目窗口显示官方 Web 前端。Profile、恢复、设置、终端、诊断和更新逐项核查官方已有入口，再提供项目级上下文，不保留社区 Desktop 的私有模块调用。现有用户可见功能以正式版等价为门槛；若官方没有对应的项目级界面，壳需使用官方 UI 组件实现该项目级界面并做真实窗口验收，不能静默删除功能。
+Host 使用官方 `@deepseek-ai/dsh/profile-boot` 的 `runProfile` 和真实 WebServer。已发布 Project 插件的 peer 版本是官方 `0.1.7-rc.2`；候选官方运行时已升至 `0.2.0-rc.1`，需要更新插件依赖并在脱离社区 Desktop 的安装、构建和运行环境中重新验证。欢迎页继续管理项目列表和创建；项目窗口显示官方 Web 前端。Profile、恢复、设置、终端、诊断和更新逐项核查官方已有入口，再提供项目级上下文，不保留社区 Desktop 的私有模块调用。现有用户可见功能以正式版等价为门槛；若官方没有对应的项目级界面，壳需使用官方 UI 组件实现该项目级界面并做真实窗口验收，不能静默删除功能。
 
 ## 数据与发行策略
 
