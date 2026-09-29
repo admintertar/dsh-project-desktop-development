@@ -1,6 +1,6 @@
 # 官方 Desktop 0.2.0-rc.2 可行性实验
 
-日期：2026-09-29。状态：官方源码构建、真实 Host、双 Host 隔离、临时双 Electron 窗口和 Project 插件兼容实验通过；壳的完整接入、原位数据迁移和安装包仍未验收。
+日期：2026-09-29。状态：官方源码构建、真实 Host、双 Host 隔离、临时双 Electron 窗口和 Project 插件基础界面实验通过；壳的完整接入、原位数据迁移和安装包仍未验收。
 
 ## 当前官方版本
 
@@ -77,10 +77,14 @@ Project 插件候选分支现已：
 
 执行 `yarn run typecheck`、`yarn run test`、`yarn run build` 的结果：类型检查通过、308 个测试通过、构建通过。首次安装因 Yarn 24 小时新包隔离拒绝 `rc.2`，实验只用一次性 `YARN_NPM_MINIMAL_AGE_GATE=0 yarn install` 解锁精确版本；仓库配置没有放宽该策略。
 
+随后把插件接入上述临时官方 Profile，运行 `scripts/probe-official-electron-window.mjs ../deepseek-harness-official-021 --two --plugin ../dsh-plugin-project`。首次真实窗口发现 macOS 官方 `0.2.0-rc.2` 的 SidebarRoot 在品牌行前增加窗口拖动栏，并把品牌按钮改为普通 `span`；插件原先的 DOM 假设抛错，Project 页面停在加载态。插件提交 `4920ac46c47a4b95090cef11151171b234db9081` 改为按官方 workspaces 席位定位侧栏根节点，只拦截确实存在的品牌按钮，保留 macOS 拖动行为。修复后以固定官方 Host/Web 和两个临时 `.agent-project`，两个窗口分别显示 Probe A、Probe B 的项目概览与 Tasks/Resources/Memory/skills/MCP 入口；A 强制销毁后 B 继续运行，渲染器无 error 日志。插件 `yarn run check` 为类型检查、309 个测试和构建全部通过。结果与截图见 [Project 窗口 A](official-project-plugin-probe/window-A.png)、[Project 窗口 B](official-project-plugin-probe/window-B.png)、[机器结果](official-project-plugin-probe/result.json)。
+
+这只验证空项目的基础页面和入口可加载。Tasks、Resources、Memory、skills、MCP 的写入/调用，聊天会话、插件安装、Profile 切换、快捷键、设置及跨平台交互仍需分别验收；探针直接链接本地插件构建，不是正式安装包或干净目录构建闭包。
+
 ## 尚未完成的接入边界
 
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。
-- Shell 的 `src/desktop-adapter/stable/` 仍调用社区私有模块，必须逐批替换为官方 `apps/desktop`/`apps/desktop-host` 入口或壳自己的适配层。
+- Shell 的 `src/desktop-adapter/stable/` 仍调用社区私有模块，必须逐批替换为官方 `apps/desktop`/`apps/desktop-host` 入口或壳自己的适配层；临时 Project 插件窗口不改变这一状态。
 - 官方 Desktop 仍以应用级窗口和 `profiles/desktop` 为中心；项目壳必须继续负责逐项目 Profile 目录、Host 进程、端口、认证 Cookie、Electron Session 和窗口生命周期。
 - 仍需完成官方功能与 Project Tasks/Resources/Memory/skills/MCP 的行为对照、旧数据迁移及回退、macOS Universal/Windows x64 打包、Intel 启动和安装升级验收。
 - 旧 Stable 缓存与现行社区锁不一致时，`yarn run check` 会在 `verify:upstream` 停止；这不能作为官方 `rc.2` 迁移失败的证据。后续应在移除旧校验链后从干净目录验证。

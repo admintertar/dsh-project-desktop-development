@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-29T11:13:22.000Z
+updatedAt: 2026-09-29T11:35:04.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -26,6 +26,15 @@ artifacts:
   - type: file
     path: artifacts/official-window-probe/window-B.png
     description: 官方 Web 在临时项目窗口 B 中的真实截图。
+  - type: file
+    path: artifacts/official-project-plugin-probe/result.json
+    description: 官方 Host/Web 加载两个独立 Project 插件空项目的临时窗口结果。
+  - type: file
+    path: artifacts/official-project-plugin-probe/window-A.png
+    description: 官方 Web 中 Project 插件临时窗口 A 的真实截图。
+  - type: file
+    path: artifacts/official-project-plugin-probe/window-B.png
+    description: 官方 Web 中 Project 插件临时窗口 B 的真实截图。
 archived: false
 phase: investigation
 brief:
@@ -73,7 +82,7 @@ questions:
 handoff:
   nextSteps:
     - 已通过临时双 Electron 窗口探针；下一步把官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，审计完整构建闭包，确认无社区 Desktop 输入。
-    - 更新 Project 插件到官方 0.2.0-rc.2 依赖与开发 setup，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP。
+    - Project 插件的官方 0.2.0-rc.2 基础界面已在临时双窗口加载；接着替换默认 setup 与 upstream.json，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
     - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
     - design
@@ -175,6 +184,14 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-29T11:13:22.000Z
+  - id: official-project-plugin-windows
+    kind: progress
+    content: 将候选 Project 插件链接到固定官方 0.2.0-rc.2 的两个临时 Profile，真实窗口首次暴露 macOS SidebarRoot 结构变化导致 Project 页面报错；插件已修复并以 309 项测试和构建验证。再次运行两个真实窗口时分别显示 Probe A/B 项目概览和能力入口，A 强制销毁后 B 存活且渲染器无 error。此结果不覆盖写入行为、正式 Shell、默认 setup、打包或旧数据迁移。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-29T11:35:04.000Z
 operations: {}
 criterionVersions:
   official-source: 1

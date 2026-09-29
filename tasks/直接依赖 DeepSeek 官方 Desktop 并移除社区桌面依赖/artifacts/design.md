@@ -66,4 +66,4 @@ Host 使用官方 `@deepseek-ai/dsh/profile-boot` 的 `runProfile` 和真实 Web
 
 ## 当前进度
 
-阶段 1 已固定官方来源并通过源码构建、真实 Host、双 Host 隔离及临时双 Electron 窗口实验；Project 插件候选已通过官方 `0.2.0-rc.2` 的类型检查、测试和构建。可复现命令、截图与限制见 [可行性实验](phase1-feasibility.md)。现行 Stable 的运行、setup、打包和 CI 仍依赖社区 Desktop，不能据此宣称替换完成。下一步把探针中已验证的 Host、Session、`dsh-app` 协议与主 Frame IPC 归属逐项接入 Shell，再验证正式双项目窗口和 Project 插件；旧数据及发布验收按上列关口继续。
+阶段 1 已固定官方来源并通过源码构建、真实 Host、双 Host 隔离及临时双 Electron 窗口实验；Project 插件候选已通过官方 `0.2.0-rc.2` 的类型检查、309 项测试和构建，并在临时双窗口显示两个独立空项目的基础界面。可复现命令、截图与限制见 [可行性实验](phase1-feasibility.md)。现行 Stable 的运行、setup、打包和 CI 仍依赖社区 Desktop，不能据此宣称替换完成。下一步把探针中已验证的 Host、Session、`dsh-app` 协议与主 Frame IPC 归属逐项接入 Shell，再验证正式双项目窗口和 Project 插件行为；旧数据及发布验收按上列关口继续。
