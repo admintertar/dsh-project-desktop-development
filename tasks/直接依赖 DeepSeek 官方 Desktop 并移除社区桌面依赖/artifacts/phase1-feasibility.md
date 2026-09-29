@@ -93,6 +93,10 @@ Project 插件的 `upstream.json` 现直接固定 DeepSeek 官方 `dsh-v0.2.0-rc
 
 2026-09-29 增量：临时探针中已验证的 `dsh-app` 静态资源/HTTP 转发与 WebSocket 凭据限制，已提取到 Shell 的 `src/desktop-adapter/official/web-session.mjs`；另有可复用的主 Frame 所属关系校验模块和单测。新增 3 项适配器测试，覆盖不同项目 Cookie/Host/Session、错误 WebContents、错误 Host、错误 Origin 和 preload IPC 文档；真实官方 `rc.2` 双 Host、双 Electron 窗口加 Project 插件探针重新通过，A 强制销毁后 B 存活。`yarn run check` 仍在旧社区快照树与旧锁不一致处停止，尚未触及此模块。正式 `src/app/main.mjs` 还没有调用新模块，不能将本次探针算作正式 Shell 接入。
 
+同日核对 Shell 构建输入发现，官方 `apps/desktop` 是私有包 `@deepseek-ai/dsh-desktop`，主入口在 `lib/main.js`，Host 是独立的 `@deepseek-ai/dsh-desktop-host`；现行 Shell 却要求 `dsh-plugin-desktop/package.json`、`vendor/dsh-runtime/<version>/manifest.json`、社区 `src` 目录和旧模块树。两套布局不兼容，直接改锁会在来源校验或构建阶段失败。下一关必须先实现官方源码/Host/Web dist 到 Shell 构建闭包的映射，再接正式主进程；目前不能把正式 Shell `yarn run check` 的失败归因于官方 Host 本身。
+
+Shell 中用于官方探针的来源锁和校验入口已从 `official-candidate.*` 统一命名为 `official-source.*`，并复测固定官方 `rc.2` 工作树校验通过。旧 `upstream.lock.json` 仍记录已发布 Stable 的社区来源；只有正式构建与运行链完成映射后才能切换该锁。
+
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。
 - Shell 的 `src/desktop-adapter/stable/` 仍调用社区私有模块，必须逐批替换为官方 `apps/desktop`/`apps/desktop-host` 入口或壳自己的适配层；临时 Project 插件窗口不改变这一状态。
 - 官方 Desktop 仍以应用级窗口和 `profiles/desktop` 为中心；项目壳必须继续负责逐项目 Profile 目录、Host 进程、端口、认证 Cookie、Electron Session 和窗口生命周期。

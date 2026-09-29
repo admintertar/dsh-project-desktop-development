@@ -17,6 +17,7 @@
 | O11 | 中 | 当前欢迎页和模型页仍从社区 Desktop 与官方 Harness 源码构建组件，官方 Web 前端的扩展入口和首次引导机制不同。要保留完整官方界面和项目插件入口，不能只用 CSS 隐藏不适用功能。 | 真实窗口 UI 验收 |
 | O12 | 中 | 社区来源仍写在 README、`AGENTS.md`、架构文档、`THIRD_PARTY_NOTICES.md` 和插件开发说明。实施后须按实际依赖更新说明，同时保留必要历史归属。 | 文档/许可审计 |
 | O13 | 高 | 官方 `dsh-v0.2.0-rc.2` 相对现有 `0.1.7-rc.2` 将自动化任务移到可选插件包。需核对 Project 插件的任务界面、任务记录和定时能力在新组合中的入口与安装默认值，防止原位升级后功能消失。 | 插件兼容与旧数据验收 |
+| O14 | 阻断 | Shell 当前构建脚本把 `.upstream/desktop/dsh-plugin-desktop`、`vendor/dsh-runtime` 清单和 `dsh-plugin-desktop` 私有模块当作输入；官方 `apps/desktop` 的包名为 `@deepseek-ai/dsh-desktop`，版本 `0.2.0-rc.2`，入口、Host、Electron 依赖和打包布局均不同。仅替换 `upstream.lock.json` 会让 `verify-upstream`/`build.mjs` 在包名或文件树处失败，不能称为官方切换。 | 官方源码到 Shell 构建输入映射 |
 
 ## 需先证实的官方契约
 

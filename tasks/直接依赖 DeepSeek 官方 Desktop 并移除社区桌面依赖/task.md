@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-29T12:28:00.000Z
+updatedAt: 2026-09-29T12:39:00.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -208,6 +208,21 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-29T12:28:00.000Z
+  - id: shell-build-layout-blocker
+    kind: finding
+    content: 核对正式 Shell 构建输入确认官方 apps/desktop 私有包 @deepseek-ai/dsh-desktop、独立 desktop-host、lib/main.js 和 Web dist 与当前社区 dsh-plugin-desktop/vendor runtime/manifest 构建闭包不兼容；直接改 upstream.lock.json 会在 verify-upstream 或 build.mjs 失败。下一步需先完成官方源码/Host/Web dist 到 Shell 构建输入映射，再接正式 main.mjs。
+    basis: observation
+    referenceIds:
+      - issues
+      - phase1
+    createdAt: 2026-09-29T12:34:00.000Z
+  - id: official-source-lock-name
+    kind: progress
+    content: Shell 的官方探针来源锁与校验脚本统一命名为 official-source.lock.json、verify-official-source.mjs；固定官方 0.2.0-rc.2 工作树校验复测通过。已发布 Stable 的 upstream.lock.json 仍保留社区来源，等待正式构建输入映射完成后切换。
+    basis: observation
+    referenceIds:
+      - phase1
+    createdAt: 2026-09-29T12:39:00.000Z
 operations: {}
 criterionVersions:
   official-source: 1
