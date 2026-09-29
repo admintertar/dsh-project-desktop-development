@@ -36,7 +36,7 @@ artifacts:
     path: artifacts/official-project-plugin-probe/window-B.png
     description: 官方 Web 中 Project 插件临时窗口 B 的真实截图。
 archived: false
-phase: investigation
+phase: implementation
 brief:
   currentBehavior: 已发布壳 0.1.11 仍固定 Anywhere Labs Desktop 2.0.15 和官方 Harness 0.1.7-rc.2。壳运行时大量调用社区 Desktop 私有模块；Project 插件的开发 setup 和来源锁也仍指向社区仓库。之前的 2.0.15 升级与 0.1.11 发布已完成，本任务是移除社区 Desktop 这一中间层。
   scope: 从固定的 DeepSeek 官方 Git 提交构建 apps/desktop 与官方 DSH 包，改造两个公开仓库的 Host、窗口、Profile、恢复、插件、setup、打包和 CI；对现有安装与项目数据做原位迁移并完成 macOS/Windows/Intel 验收。已开始阶段 1 可行性验证，最终替换须满足全部验收条件。
@@ -81,7 +81,7 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 已通过临时双 Electron 窗口探针；下一步把官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，审计完整构建闭包，确认无社区 Desktop 输入。
+    - 已完成插件官方来源切换和临时窗口 Session 适配器；下一步把官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，先解决官方源码/Host/Web dist 与现有 Shell 构建闭包的布局差异，再审计无社区 Desktop 输入。
     - Project 插件默认 setup 与 upstream.json 已切换到固定官方 0.2.0-rc.2；接着清理历史社区 Electron 适配材料，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
     - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
