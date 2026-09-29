@@ -81,6 +81,14 @@ Project 插件候选分支现已：
 
 这只验证空项目的基础页面和入口可加载。Tasks、Resources、Memory、skills、MCP 的写入/调用，聊天会话、插件安装、Profile 切换、快捷键、设置及跨平台交互仍需分别验收；探针直接链接本地插件构建，不是正式安装包或干净目录构建闭包。
 
+## 2026-09-29：Project 插件默认开发来源切换
+
+Project 插件的 `upstream.json` 现直接固定 DeepSeek 官方 `dsh-v0.2.0-rc.2`、提交 `639ed015397290b3745d163aafe02ffee4aa3f84`、Desktop tree 和 `pnpm-lock.yaml` blob；默认 `yarn run setup -- --desktop <官方源码>` 校验 HEAD、tag、树、锁、版本、构建输出以及跟踪文件无修改，再把开发包链接到官方 pnpm 工作区。旧社区源码和现行 Shell 社区锁均被拒绝。插件中英 README 与开发说明已改为官方构建命令；候选专用来源锁和 setup 入口已移除。
+
+在本机固定官方工作树上真实运行默认 setup 成功。插件 `yarn run check` 通过：类型检查、307 项测试、构建；新增来源校验测试覆盖错误 pin、污染工作树和 HEAD 偏离。旧 Shell `test:compatibility --desktop-only` 按预期因来源锁不符停止。此次只改变插件的默认开发来源与防混用门槛；插件的历史 Electron 回归材料仍含社区接口，Shell 正式运行、CI、打包和原位数据迁移尚未完成。开发链接依赖本机官方工作区，不等于干净目录发行闭包。
+
+首次运行 `yarn start` 时，旧 `.dev/projects/<project-key>/` Profile 的 `@deepseek-ai` 链接仍指向 `rc.1`，官方 Host 拒绝加载不兼容的 Session 插件。现将**开发 Profile** 放在 `.dev/projects/<official-commit>/<project-key>/`，保留旧目录不改写。新 Profile 启动无错误，6.5 秒后的 loopback HTTP 请求返回预期的未认证 `401`，证明 Web Host 已监听；未测试登录后的完整 Web 操作。此隔离只针对插件本地开发目录，不能代替正式 Stable 用户数据迁移。
+
 ## 尚未完成的接入边界
 
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。

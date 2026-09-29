@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-29T11:35:04.000Z
+updatedAt: 2026-09-29T12:10:43.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -82,7 +82,7 @@ questions:
 handoff:
   nextSteps:
     - 已通过临时双 Electron 窗口探针；下一步把官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，审计完整构建闭包，确认无社区 Desktop 输入。
-    - Project 插件的官方 0.2.0-rc.2 基础界面已在临时双窗口加载；接着替换默认 setup 与 upstream.json，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
+    - Project 插件默认 setup 与 upstream.json 已切换到固定官方 0.2.0-rc.2；接着清理历史社区 Electron 适配材料，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
     - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
     - design
@@ -192,6 +192,14 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-29T11:35:04.000Z
+  - id: plugin-default-official-source
+    kind: progress
+    content: Project 插件默认 upstream.json、setup、开发包链接和中英开发说明已切换到固定 DeepSeek 官方 0.2.0-rc.2；校验 HEAD、tag、Desktop tree、pnpm 锁和干净工作树，拒绝旧社区源码及旧 Shell 锁。固定官方工作树 setup 成功，yarn run check 通过（类型检查、307 项测试、构建）。历史 Electron 回归材料和 Shell 正式运行、CI、打包、数据迁移仍未切换；不宣称零社区依赖验收完成。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-29T12:10:43.000Z
 operations: {}
 criterionVersions:
   official-source: 1
