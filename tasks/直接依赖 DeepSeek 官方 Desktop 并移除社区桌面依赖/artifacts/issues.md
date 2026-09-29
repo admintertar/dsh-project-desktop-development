@@ -4,10 +4,10 @@
 
 | ID | 级别 | 问题与现有证据 | 首个解决关口 |
 | --- | --- | --- | --- |
-| O01 | 阻断 | 官方 `apps/desktop` 包为 `private: true`；已发布 `0.1.11` 的来源锁仍固定社区 `dsh-plugin-desktop@2.0.15`。已从固定官方 `0.2.0-rc.1` 提交完成源码构建与 Host 实验；壳安装包和完整构建闭包仍待证明。 | 官方依赖可行性实验 |
+| O01 | 阻断 | 官方 `apps/desktop` 包为 `private: true`；已发布 `0.1.11` 的来源锁仍固定社区 `dsh-plugin-desktop@2.0.15`。已从固定官方 `0.2.0-rc.2` 提交完成源码构建、Host 与双 Host 隔离实验；壳安装包和完整构建闭包仍待证明。 | 官方依赖可行性实验 |
 | O02 | 阻断 | 官方当前 `main.ts` 只有应用级 `mainWindow`，`paths.ts` 固定一个 `profiles/desktop`；我们必须维持每项目一个 Host/窗口/分区，不能直接启动官方应用替代壳。 | 双项目运行骨架 |
 | O03 | 阻断 | 当前 [`src/desktop-adapter/native.mjs`](../../../resources/dsh-project-desktop/src/desktop-adapter/native.mjs) 和 `stable/` 的约 30 个适配文件大量调用社区私有模块，涉及窗口、Host RPC、Profile、恢复、设置、终端、更新和客户端。需逐项映射官方实现、保留项目级副作用，不能批量改导入路径。 | 接口映射与分批替换 |
-| O04 | 阻断 | `dsh-plugin-project` 已发布版的 peerDependencies 固定官方 `0.1.7-rc.2`；候选分支已把 peer 和开发依赖改为 `0.2.0-rc.1`，以固定官方源码包通过类型检查、308 个测试和构建。但 `desktop-runtime.ts`、`official-runtime-development.ts`、`project-shell-development.ts` 和 `upstream.json` 仍以 Anywhere Labs 为默认开发基线，原生功能与打包兼容尚未证明。 | 插件兼容实验 |
+| O04 | 阻断 | `dsh-plugin-project` 已发布版的 peerDependencies 固定官方 `0.1.7-rc.2`；候选分支已把 peer 和开发依赖改为 `0.2.0-rc.2`，并适配 Sidebar 注入契约变化；以固定官方源码包通过类型检查、308 个测试和构建。但 `desktop-runtime.ts`、`official-runtime-development.ts`、`project-shell-development.ts` 和 `upstream.json` 仍以 Anywhere Labs 为默认开发基线，原生功能与打包兼容尚未证明。 | 插件兼容实验 |
 | O05 | 阻断 | 旧项目 DSH Home 在 `userData/projects/<hash>/dsh`。已发布版虽使用官方 Harness `0.1.7-rc.2`，Profile、设置与插件组合仍由社区 Desktop `2.0.15` 管理；切到官方 `apps/desktop` 的启动和安装逻辑时，没有针对项目级 Home 的现成迁移保证。 | 旧项目副本迁移/回退实验 |
 | O06 | 高 | `dsh-app://app` 在所有项目窗口使用同一 Origin。需验证按项目 Session 注册协议、仅向所属 Frame 转发凭据/原生能力，且 WebSocket、重定向、外链和恢复窗口均不能串线。 | 双项目安全与崩溃测试 |
 | O07 | 高 | 官方 `apps/desktop` 的 Profile/恢复/设置流程以单一应用身份组织；当前 `apps/desktop/src` 没有社区版的 `profile-selection-window`、`profile-create-window`、`startup-recovery-window`。需要用官方 UI 组件和逻辑补齐项目级窗口，并保持旧版行为。 | 原生 UI 行为对照 |
@@ -16,7 +16,7 @@
 | O10 | 高 | 新旧版本使用同一应用数据根；迁移失败、断电或用户重装旧包时可能读到半迁移数据。需要备份、迁移日志、原子切换或等价恢复机制，并实测回退。 | 破坏性故障注入 |
 | O11 | 中 | 当前欢迎页和模型页仍从社区 Desktop 与官方 Harness 源码构建组件，官方 Web 前端的扩展入口和首次引导机制不同。要保留完整官方界面和项目插件入口，不能只用 CSS 隐藏不适用功能。 | 真实窗口 UI 验收 |
 | O12 | 中 | 社区来源仍写在 README、`AGENTS.md`、架构文档、`THIRD_PARTY_NOTICES.md` 和插件开发说明。实施后须按实际依赖更新说明，同时保留必要历史归属。 | 文档/许可审计 |
-| O13 | 高 | 官方 `dsh-v0.2.0-rc.1` 相对现有 `0.1.7-rc.2` 将自动化任务移到可选插件包。需核对 Project 插件的任务界面、任务记录和定时能力在新组合中的入口与安装默认值，防止原位升级后功能消失。 | 插件兼容与旧数据验收 |
+| O13 | 高 | 官方 `dsh-v0.2.0-rc.2` 相对现有 `0.1.7-rc.2` 将自动化任务移到可选插件包。需核对 Project 插件的任务界面、任务记录和定时能力在新组合中的入口与安装默认值，防止原位升级后功能消失。 | 插件兼容与旧数据验收 |
 
 ## 需先证实的官方契约
 
