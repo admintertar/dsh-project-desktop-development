@@ -91,7 +91,7 @@ Project 插件的 `upstream.json` 现直接固定 DeepSeek 官方 `dsh-v0.2.0-rc
 
 ## 尚未完成的接入边界
 
-2026-09-29 增量：临时探针中已验证的 `dsh-app` 静态资源/HTTP 转发与 WebSocket 凭据限制，已提取到 Shell 的 `src/desktop-adapter/official/web-session.mjs`。新增 2 项适配器测试，覆盖不同项目 Cookie/Host/Session、错误 WebContents、错误 Host 与错误 Origin；真实官方 `rc.2` 双 Host、双 Electron 窗口加 Project 插件探针重新通过，A 强制销毁后 B 存活。`yarn run check` 仍在旧社区快照树与旧锁不一致处停止，尚未触及此模块。正式 `src/app/main.mjs` 还没有调用新模块，不能将本次探针算作正式 Shell 接入。
+2026-09-29 增量：临时探针中已验证的 `dsh-app` 静态资源/HTTP 转发与 WebSocket 凭据限制，已提取到 Shell 的 `src/desktop-adapter/official/web-session.mjs`；另有可复用的主 Frame 所属关系校验模块和单测。新增 3 项适配器测试，覆盖不同项目 Cookie/Host/Session、错误 WebContents、错误 Host、错误 Origin 和 preload IPC 文档；真实官方 `rc.2` 双 Host、双 Electron 窗口加 Project 插件探针重新通过，A 强制销毁后 B 存活。`yarn run check` 仍在旧社区快照树与旧锁不一致处停止，尚未触及此模块。正式 `src/app/main.mjs` 还没有调用新模块，不能将本次探针算作正式 Shell 接入。
 
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。
 - Shell 的 `src/desktop-adapter/stable/` 仍调用社区私有模块，必须逐批替换为官方 `apps/desktop`/`apps/desktop-host` 入口或壳自己的适配层；临时 Project 插件窗口不改变这一状态。

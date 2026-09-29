@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-29T12:19:00.000Z
+updatedAt: 2026-09-29T12:28:00.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -202,12 +202,12 @@ entries:
     createdAt: 2026-09-29T12:10:43.000Z
   - id: official-session-adapter
     kind: progress
-    content: 从临时探针提取官方 dsh-app 的逐项目 Electron Session/HTTP/WebSocket 适配器到 Shell，2 项隔离测试通过；用固定官方 0.2.0-rc.2 的双 Host、双窗口与 Project 插件探针复验通过，A 强制销毁后 B 存活。正式 main.mjs 尚未接入，Shell check 仍被旧社区快照与锁树不一致阻断，不能计作正式迁移完成。
+    content: 从临时探针提取官方 dsh-app 的逐项目 Electron Session/HTTP/WebSocket 适配器到 Shell，并保留可复用的主 Frame IPC 所属关系校验；3 项隔离测试通过。用固定官方 0.2.0-rc.2 的双 Host、双窗口与 Project 插件探针复验通过，A 强制销毁后 B 存活。正式 main.mjs 尚未接入，Shell check 仍被旧社区快照与锁树不一致阻断，不能计作正式迁移完成。
     basis: observation
     referenceIds:
       - phase1
       - issues
-    createdAt: 2026-09-29T12:19:00.000Z
+    createdAt: 2026-09-29T12:28:00.000Z
 operations: {}
 criterionVersions:
   official-source: 1
