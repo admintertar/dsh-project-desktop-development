@@ -4,12 +4,12 @@
 
 | ID | 级别 | 问题与现有证据 | 首个解决关口 |
 | --- | --- | --- | --- |
-| O01 | 阻断 | 官方 `apps/desktop` 包为 `private: true`；已发布 `0.1.11` 的来源锁仍固定社区 `dsh-plugin-desktop@2.0.15`。已从固定官方 `0.2.0-rc.2` 提交完成源码构建、Host 与双 Host 隔离实验；壳安装包和完整构建闭包仍待证明。 | 官方依赖可行性实验 |
-| O02 | 阻断 | 官方当前 `main.ts` 只有应用级 `mainWindow`，`paths.ts` 固定一个 `profiles/desktop`；我们必须维持每项目一个 Host/窗口/分区，不能直接启动官方应用替代壳。 | 双项目运行骨架 |
+| O01 | 阻断 | 官方 `apps/desktop` 包为 `private: true`；已发布 `0.1.11` 的来源锁仍固定社区 `dsh-plugin-desktop@2.0.15`。已从固定官方 `0.2.0-rc.2` 提交完成源码构建、Host、双 Host 和临时双 Electron 窗口实验；壳安装包和完整构建闭包仍待证明。 | 官方依赖可行性实验 |
+| O02 | 阻断 | 官方当前 `main.ts` 只有应用级 `mainWindow`，`paths.ts` 固定一个 `profiles/desktop`。临时探针已让两个官方 Web 窗口各有 Host 与 Session，A 强制销毁后 B 存活；正式 Shell 的多项目生命周期仍未接入。 | 双项目运行骨架 |
 | O03 | 阻断 | 当前 [`src/desktop-adapter/native.mjs`](../../../resources/dsh-project-desktop/src/desktop-adapter/native.mjs) 和 `stable/` 的约 30 个适配文件大量调用社区私有模块，涉及窗口、Host RPC、Profile、恢复、设置、终端、更新和客户端。需逐项映射官方实现、保留项目级副作用，不能批量改导入路径。 | 接口映射与分批替换 |
 | O04 | 阻断 | `dsh-plugin-project` 已发布版的 peerDependencies 固定官方 `0.1.7-rc.2`；候选分支已把 peer 和开发依赖改为 `0.2.0-rc.2`，并适配 Sidebar 注入契约变化；以固定官方源码包通过类型检查、308 个测试和构建。但 `desktop-runtime.ts`、`official-runtime-development.ts`、`project-shell-development.ts` 和 `upstream.json` 仍以 Anywhere Labs 为默认开发基线，原生功能与打包兼容尚未证明。 | 插件兼容实验 |
 | O05 | 阻断 | 旧项目 DSH Home 在 `userData/projects/<hash>/dsh`。已发布版虽使用官方 Harness `0.1.7-rc.2`，Profile、设置与插件组合仍由社区 Desktop `2.0.15` 管理；切到官方 `apps/desktop` 的启动和安装逻辑时，没有针对项目级 Home 的现成迁移保证。 | 旧项目副本迁移/回退实验 |
-| O06 | 高 | `dsh-app://app` 在所有项目窗口使用同一 Origin。需验证按项目 Session 注册协议、仅向所属 Frame 转发凭据/原生能力，且 WebSocket、重定向、外链和恢复窗口均不能串线。 | 双项目安全与崩溃测试 |
+| O06 | 高 | `dsh-app://app` 在所有项目窗口使用同一 Origin；临时探针已按项目 Session 注册协议并核实不同 Host/分区及主 Frame IPC 归属。尚需在正式 Shell 验证跨项目凭据拒绝、WebSocket、重定向、外链和恢复窗口不能串线。`dsh://open` 仅是操作系统唤起入口。 | 双项目安全与崩溃测试 |
 | O07 | 高 | 官方 `apps/desktop` 的 Profile/恢复/设置流程以单一应用身份组织；当前 `apps/desktop/src` 没有社区版的 `profile-selection-window`、`profile-create-window`、`startup-recovery-window`。需要用官方 UI 组件和逻辑补齐项目级窗口，并保持旧版行为。 | 原生 UI 行为对照 |
 | O08 | 高 | [`scripts/setup.mjs`](../../../resources/dsh-project-desktop/scripts/setup.mjs)、[`scripts/verify-upstream.mjs`](../../../resources/dsh-project-desktop/scripts/verify-upstream.mjs)、[`scripts/build.mjs`](../../../resources/dsh-project-desktop/scripts/build.mjs)、打包脚本和多条 GitHub Actions 工作流仍从社区仓库导出源码、依赖缓存并校验其版本。删除运行时代码引用还不足以实现零社区依赖。 | 构建闭包与安装包审计 |
 | O09 | 高 | 当前更新清单只接受 `channel: stable` 和 `x.y.z`；直接替换时旧 Stable 客户端不会接受 `-next` 版本。需明确候选版测试方式和正式版版本号，并验证旧客户端发现及安装新包。 | 发布/更新演练 |
@@ -22,9 +22,9 @@
 
 1. 官方 `apps/desktop` 固定提交的 `tsdown` 产物是否暴露足够的模块；不足时只从同一固定源码编译选定文件，记录 tree hash 与许可证。
 2. 官方 Host 的启动参数、认证 Cookie、原生能力、WebServer 绑定和关闭协议能否一对一实例化并服务多个项目；社区 Next 的实现仅作调研参考，不进入依赖图。
-3. 官方 Web 前端能否在项目级 `dsh-app://app` Session 中完整加载插件、设置、模型、附件、终端与平台能力。
+3. 临时项目级 `dsh-app://app` Session 已显示官方基础界面；插件、设置、模型、附件、终端与平台能力仍需在正式 Shell 的真实窗口逐项验证。
 4. 官方 `DesktopProjectManager`、恢复和安装逻辑能否针对外部项目 Home 使用；若它们假定 `profiles/desktop`，仅复用底层算法，项目范围的编排由壳负责。
-5. 官方 `0.1.7-rc.2` 发布包、官方仓库依赖锁、native 模块及 Electron 版本在 macOS Universal 与 Windows x64 上能否形成完整可搬移安装包。
+5. 官方 `0.2.0-rc.2` 发布包、官方仓库依赖锁、native 模块及 Electron 版本在 macOS Universal 与 Windows x64 上能否形成完整可搬移安装包。
 
 ## 社区模块到官方基线的初步映射
 

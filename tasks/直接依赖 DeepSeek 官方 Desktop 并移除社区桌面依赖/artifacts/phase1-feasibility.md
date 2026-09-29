@@ -1,6 +1,6 @@
 # 官方 Desktop 0.2.0-rc.2 可行性实验
 
-日期：2026-09-29。状态：官方源码构建、真实 Host、双 Host 隔离和 Project 插件兼容实验通过；壳的完整接入、原位数据迁移、Electron 窗口和安装包仍未验收。
+日期：2026-09-29。状态：官方源码构建、真实 Host、双 Host 隔离、临时双 Electron 窗口和 Project 插件兼容实验通过；壳的完整接入、原位数据迁移和安装包仍未验收。
 
 ## 当前官方版本
 
@@ -46,7 +46,25 @@ pnpm exec vitest run --config vitest.e2e.config.ts apps/desktop/tests/welcome-fl
 - 停止 A 后 B 仍返回 HTTP 200；
 - 实验使用临时目录，退出后清理，没有接触现有用户数据。
 
-这证明官方 Host/WebServer 可重复实例化，但还没有证明两个 Electron 项目窗口、协议 Session、原位数据迁移或安装包。
+这一步证明官方 Host/WebServer 可重复实例化；Electron 项目窗口与协议 Session 随后按下节单独验证，原位数据迁移和安装包仍未验证。
+
+## 官方协议与临时 Electron 窗口实验
+
+官方有两个用途不同的协议。`apps/desktop/src/main.ts` 将 `dsh://open` 注册为操作系统唤起入口；真正的应用 Web 文档加载于 `dsh-app://app/`。`apps/desktop/src/web-document.ts` 提供本地静态文件，并将非静态请求连同主进程持有的 Cookie 转发给 Host；官方主进程还为 WebSocket 改写 Origin 和 Cookie。迁移壳时，`dsh://open` 仍只负责唤起，逐项目的 `dsh-app` 请求必须在各自 Electron Session 中注册和认证。
+
+壳的 `scripts/probe-official-electron-window.mjs` 和 `scripts/official-electron-window-main.ts` 以固定官方源码构建临时 Electron 主进程，不修改官方工作树或用户 Profile。探针先检查官方工作树的 HEAD、干净状态、Desktop tree 和锁文件 blob，再从官方 `DesktopHostProcess`、`web-document.ts`、`preload-app.cjs` 及 Web dist 启动窗口。验证命令（Node 22.19.0；官方源码先运行 `pnpm run build:official`）：
+
+```sh
+cd resources/dsh-project-desktop
+PATH=/Users/ping/.nvm/versions/node/v22.19.0/bin:$PATH \
+  /Users/ping/.nvm/versions/node/v22.19.0/bin/node \
+  --import ../deepseek-harness-official-021/node_modules/tsx/dist/loader.mjs \
+  scripts/probe-official-electron-window.mjs ../deepseek-harness-official-021 --two
+```
+
+结果：两个真实窗口均完成官方 Web boot 与 transport，显示完整基础界面；Host 分别监听不同的 loopback 端口，窗口使用不同 `persist:` 分区与 WebContents ID。强制销毁 A 后，B 的渲染器仍能执行并保持传输状态。截图及不含 Cookie 的机器结果分别在 [窗口 A](official-window-probe/window-A.png)、[窗口 B](official-window-probe/window-B.png)、[结果](official-window-probe/result.json)。这只证明临时骨架可行，尚未证明正式 Shell 的生命周期、用户主动关闭行为、Project 插件、跨项目 IPC 攻击拦截或旧数据恢复。临时探针的快捷键 IPC 返回禁用状态，正式适配必须逐项目接入官方 `keyboard.ts`。
+
+实现中遇到两点：默认 Node 20.19.0 无法运行官方 Host，须显式使用 Node 22.19.0；Electron ESM 主入口不能在顶层等待 `app.whenReady()`，否则 ready 不会到达。临时窗口首次用普通 `close()` 测试存活时被官方页面的关闭流程阻塞，改用 `destroy()` 验证强制故障隔离；正常关闭与确认流程仍是待验证项。
 
 ## Project 插件实验
 
@@ -66,3 +84,4 @@ Project 插件候选分支现已：
 - 官方 Desktop 仍以应用级窗口和 `profiles/desktop` 为中心；项目壳必须继续负责逐项目 Profile 目录、Host 进程、端口、认证 Cookie、Electron Session 和窗口生命周期。
 - 仍需完成官方功能与 Project Tasks/Resources/Memory/skills/MCP 的行为对照、旧数据迁移及回退、macOS Universal/Windows x64 打包、Intel 启动和安装升级验收。
 - 旧 Stable 缓存与现行社区锁不一致时，`yarn run check` 会在 `verify:upstream` 停止；这不能作为官方 `rc.2` 迁移失败的证据。后续应在移除旧校验链后从干净目录验证。
+- 本轮单独执行 Shell `yarn run test` 为 146 项中 144 通过、2 失败：旧社区缓存缺少 `project-update-download.js`，且旧 Windows material 测试期望的 URL 字段与当前缓存不符。两项都通过旧 `stable/modules.mjs` 读取缓存，与新增官方窗口探针无调用关系；不能把它们计作官方接入通过，正式切换后须重新跑完整检查。

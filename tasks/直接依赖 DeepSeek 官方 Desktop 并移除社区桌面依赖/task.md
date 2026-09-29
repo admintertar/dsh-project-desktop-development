@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-29T10:20:00.000Z
+updatedAt: 2026-09-29T11:13:22.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -16,7 +16,16 @@ artifacts:
     description: 迁移问题清单；包含 13 个问题、待证实的官方契约和社区模块到官方基线的初步映射。
   - type: file
     path: artifacts/phase1-feasibility.md
-    description: 官方 0.2.0-rc.2 来源 pin、构建、真实 Host、双 Host 隔离和 Project 插件兼容实验结果与未完成项。
+    description: 官方 0.2.0-rc.2 来源 pin、构建、真实 Host、双 Host 与临时双 Electron 窗口隔离、Project 插件兼容实验结果与未完成项。
+  - type: file
+    path: artifacts/official-window-probe/result.json
+    description: 临时双 Electron 窗口实验结果，不含认证 Cookie。
+  - type: file
+    path: artifacts/official-window-probe/window-A.png
+    description: 官方 Web 在临时项目窗口 A 中的真实截图。
+  - type: file
+    path: artifacts/official-window-probe/window-B.png
+    description: 官方 Web 在临时项目窗口 B 中的真实截图。
 archived: false
 phase: investigation
 brief:
@@ -63,7 +72,7 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 完成阶段 1 剩余验证：把官方构建产物接入壳的临时 Electron 项目窗口，审计完整构建闭包，确认无社区 Desktop 输入。
+    - 已通过临时双 Electron 窗口探针；下一步把官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，审计完整构建闭包，确认无社区 Desktop 输入。
     - 更新 Project 插件到官方 0.2.0-rc.2 依赖与开发 setup，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP。
     - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
@@ -158,6 +167,14 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-29T10:20:00.000Z
+  - id: official-two-electron-windows
+    kind: progress
+    content: 从固定官方 0.2.0-rc.2 构建启动两个临时 Electron 项目窗口，各自拥有 Host、认证 Cookie、dsh-app Session、分区和主 Frame IPC 映射；官方 Web 基础界面均完成 boot/transport，强制销毁 A 后 B 继续运行。截图和不含 Cookie 的结果已保存到任务 artifacts。尚未接入 Stable Shell、Project 插件或旧数据；用户正常关闭、恢复及跨项目安全场景仍待验证。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-29T11:13:22.000Z
 operations: {}
 criterionVersions:
   official-source: 1
