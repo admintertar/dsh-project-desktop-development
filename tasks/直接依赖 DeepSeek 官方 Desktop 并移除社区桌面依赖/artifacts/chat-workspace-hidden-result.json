@@ -1,0 +1,26 @@
+{
+  "platform": "darwin",
+  "arch": "arm64",
+  "variants": [
+    {
+      "locale": "zh-CN",
+      "dark": true,
+      "workspaceHidden": true,
+      "workspaceRect": 0,
+      "presetVisible": true,
+      "composerEditable": true,
+      "horizontalOverflow": false
+    },
+    {
+      "locale": "en",
+      "dark": false,
+      "workspaceHidden": true,
+      "workspaceRect": 0,
+      "presetVisible": true,
+      "composerEditable": true,
+      "horizontalOverflow": false
+    }
+  ],
+  "tabSkipsWorkspace": true,
+  "projectWorkspacePersisted": true
+}

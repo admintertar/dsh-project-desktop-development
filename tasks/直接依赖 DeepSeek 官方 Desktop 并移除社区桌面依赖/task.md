@@ -6,8 +6,17 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T08:08:17.880Z
+updatedAt: 2026-09-30T08:38:44.000Z
 artifacts:
+  - type: file
+    path: artifacts/chat-workspace-entry-hidden.md
+    description: 隐藏聊天页重复工作区入口、保留项目绑定及原生界面验证。
+  - type: file
+    path: artifacts/chat-workspace-hidden.png
+    description: 独立临时项目的英文浅色窄窗口聊天页，工作区入口已隐藏。
+  - type: file
+    path: artifacts/chat-workspace-hidden-result.json
+    description: 中英文、明暗主题、窄窗口、Tab 焦点和项目根工作区检查摘要。
   - type: file
     path: artifacts/official-native-integration-audit.md
     description: 官方原生接入查漏、登录/协议/环境/Windows/系统退出修复与剩余发行门禁。
@@ -159,6 +168,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: chat-workspace-entry
+    label: 聊天页工作区入口隐藏
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/chat-workspace-entry-hidden.md
   - id: native-integration
     label: 官方原生接入查漏与验证
     type: file
@@ -387,6 +400,13 @@ entries:
     referenceIds:
       - native-integration
     createdAt: 2026-09-30T08:08:17.880Z
+  - id: chat-workspace-entry-hidden
+    kind: progress
+    content: 按用户要求隐藏聊天页重复的工作区选择入口。插件通过官方 conversation.hero.workspace 插槽的 anchorRef 仅隐藏按钮，仍自动使用当前 Project 根工作区；保留标准模式、模型和权限。插件本地提交 90ea335，类型检查、308 项测试和构建通过；macOS arm64 中英文、明暗、窄窗口、原生 Tab 和根工作区检查通过，用户当前开发窗口已刷新验证。未推送、未修改发行 pin。
+    basis: observation
+    referenceIds:
+      - chat-workspace-entry
+    createdAt: 2026-09-30T08:38:44.000Z
 operations: {}
 criterionVersions:
   official-source: 1
