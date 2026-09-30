@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "shellVersion": "0.2.0",
+  "channel": "stable",
+  "officialVersion": "0.2.0-rc.2",
+  "sourceCommit": "806c54063d4df6ff492d176fa6826881f0b5bc2f",
+  "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+  "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+  "publication": "published",
+  "ciRun": 36713622201,
+  "ciAttempt": 2,
+  "ciUrl": "https://github.com/admintertar/dsh-project-desktop/actions/runs/36713622201",
+  "ciTargets": [
+    {
+      "platform": "darwin",
+      "arch": "arm64",
+      "target": "mac-arm64",
+      "electronVersion": "44.0.0",
+      "sourceCommit": "806c54063d4df6ff492d176fa6826881f0b5bc2f",
+      "sourceHasLocalChanges": false,
+      "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+      "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+      "bytes": 387337344,
+      "sha256": "40448241d2d94f4038e415de5cfd186d226bbfc28f4c6fc7bc84b9b7a438f3e6",
+      "signature": {
+        "kind": "ad-hoc",
+        "identity": "-",
+        "machOBinaries": 144,
+        "nestedBundles": 9
+      },
+      "validation": {
+        "ok": true,
+        "packaged": true,
+        "platform": "darwin",
+        "arch": "arm64",
+        "version": "0.2.0",
+        "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+        "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+        "welcome": true,
+        "twoProjects": true,
+        "closeIsolation": true,
+        "reopen": true,
+        "bundleIdentifier": "local.dsh.project.desktop",
+        "nativeExecutables": 6,
+        "signatureIntactAfterLaunch": true,
+        "artworkVerified": true,
+        "mountedDmgVerified": true
+      },
+      "notarized": false
+    },
+    {
+      "platform": "darwin",
+      "arch": "x64",
+      "target": "mac-x64",
+      "electronVersion": "44.0.0",
+      "sourceCommit": "806c54063d4df6ff492d176fa6826881f0b5bc2f",
+      "sourceHasLocalChanges": false,
+      "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+      "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+      "bytes": 400215827,
+      "sha256": "fdf721531c6ede62e80463024e877224b46892061cd5e5e1dab41ad7263192f8",
+      "signature": {
+        "kind": "ad-hoc",
+        "identity": "-",
+        "machOBinaries": 147,
+        "nestedBundles": 9
+      },
+      "validation": {
+        "ok": true,
+        "packaged": true,
+        "platform": "darwin",
+        "arch": "x64",
+        "version": "0.2.0",
+        "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+        "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+        "welcome": true,
+        "twoProjects": true,
+        "closeIsolation": true,
+        "reopen": true,
+        "bundleIdentifier": "local.dsh.project.desktop",
+        "nativeExecutables": 6,
+        "signatureIntactAfterLaunch": true,
+        "artworkVerified": true,
+        "mountedDmgVerified": true
+      },
+      "notarized": false
+    },
+    {
+      "platform": "win32",
+      "arch": "x64",
+      "target": "win-x64",
+      "electronVersion": "44.0.0",
+      "sourceCommit": "806c54063d4df6ff492d176fa6826881f0b5bc2f",
+      "sourceHasLocalChanges": false,
+      "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+      "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+      "signature": {
+        "kind": "unsigned"
+      },
+      "bytes": {
+        "installer": 243638012,
+        "portable": 394631133
+      },
+      "sha256": {
+        "installer": "99130b21b6ab2d8efb4ac820b9de65fafabda49ce7c60f16cb8f4434abeb82d7",
+        "portable": "b7320ada777a5c4f5511435accdb77cac3e85fd5d81f8be4086b444c8de86c94"
+      },
+      "validation": {
+        "ok": true,
+        "packaged": true,
+        "platform": "win32",
+        "arch": "x64",
+        "version": "0.2.0",
+        "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+        "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+        "welcome": true,
+        "twoProjects": true,
+        "closeIsolation": true,
+        "reopen": true,
+        "portableExtracted": true
+      }
+    }
+  ],
+  "localChecks": {
+    "shellTests": 143,
+    "pluginTests": 308,
+    "nativeLifecycle": true
+  },
+  "windowsNativeThemeProbe": {
+    "reproducedRun": 36713000793,
+    "fixedRun": 36713461113,
+    "fixedConclusion": "success",
+    "change": "Verify system theme while window remains alive, then cancel and close."
+  },
+  "previousLocalPackage": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "target": "mac-arm64",
+    "sourceCommit": "d2dcc984487448181256c0f9be2b62c843c6abfa",
+    "bytes": 387488067,
+    "sha256": "fc463c69e9b73e37d83e34846d332e09844598ccbc0c9c04227020787d93277b",
+    "notarized": false,
+    "validation": {
+      "ok": true,
+      "packaged": true,
+      "platform": "darwin",
+      "arch": "arm64",
+      "version": "0.2.0",
+      "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+      "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+      "welcome": true,
+      "twoProjects": true,
+      "closeIsolation": true,
+      "reopen": true,
+      "bundleIdentifier": "local.dsh.project.desktop",
+      "nativeExecutables": 6,
+      "signatureIntactAfterLaunch": true,
+      "artworkVerified": true,
+      "mountedDmgVerified": true
+    }
+  },
+  "previousCiAcceptance": {
+    "run": 36707256403,
+    "targets": [
+      {
+        "platform": "darwin",
+        "arch": "arm64",
+        "sourceCommit": "d2dcc984487448181256c0f9be2b62c843c6abfa",
+        "bytes": 387337200,
+        "sha256": "ea9283d0058735eb8ff8c5871c6a04b799c9058614553f52e7a4e4282d2de201",
+        "validation": {
+          "ok": true,
+          "packaged": true,
+          "platform": "darwin",
+          "arch": "arm64",
+          "version": "0.2.0",
+          "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+          "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+          "welcome": true,
+          "twoProjects": true,
+          "closeIsolation": true,
+          "reopen": true,
+          "bundleIdentifier": "local.dsh.project.desktop",
+          "nativeExecutables": 6,
+          "signatureIntactAfterLaunch": true,
+          "artworkVerified": true,
+          "mountedDmgVerified": true
+        }
+      },
+      {
+        "platform": "darwin",
+        "arch": "x64",
+        "sourceCommit": "d2dcc984487448181256c0f9be2b62c843c6abfa",
+        "bytes": 400217943,
+        "sha256": "333c5900e2dba27fb36893aea41d52228e0554566e9d8892760993b79ef097d1",
+        "validation": {
+          "ok": true,
+          "packaged": true,
+          "platform": "darwin",
+          "arch": "x64",
+          "version": "0.2.0",
+          "officialCommit": "639ed015397290b3745d163aafe02ffee4aa3f84",
+          "projectCommit": "44330c635f32eea4168741f2b72822d9ac9c45bb",
+          "welcome": true,
+          "twoProjects": true,
+          "closeIsolation": true,
+          "reopen": true,
+          "bundleIdentifier": "local.dsh.project.desktop",
+          "nativeExecutables": 6,
+          "signatureIntactAfterLaunch": true,
+          "artworkVerified": true,
+          "mountedDmgVerified": true
+        }
+      }
+    ],
+    "windows": "Historical Electron 0xffff7003 failure. Reproduced and fixed; final win-x64 acceptance is recorded in ciTargets."
+  },
+  "limitations": [
+    "Legacy community Home migration and rollback remain unverified; existing files are preserved and implicit adoption is rejected.",
+    "Upgrade from 0.1.x requires a manual installation.",
+    "macOS ad-hoc signing without notarization; Windows unsigned."
+  ],
+  "ciConclusion": "success",
+  "publishRun": 36717138776,
+  "publishConclusion": "success",
+  "release": {
+    "releaseId": 400040136,
+    "releaseUrl": "https://github.com/admintertar/dsh-project-desktop/releases/tag/v0.2.0",
+    "draft": false,
+    "prerelease": false,
+    "latest": true,
+    "publishedAt": "2026-09-30T12:49:41Z"
+  },
+  "publicUpdateVerification": {
+    "ok": true,
+    "version": "0.2.0",
+    "sourceCommit": "806c54063d4df6ff492d176fa6826881f0b5bc2f",
+    "authenticated": false,
+    "githubApiUsed": false,
+    "downloads": [
+      {
+        "name": "DSH-Project-Desktop-0.2.0-mac-arm64.dmg",
+        "status": 200,
+        "size": 387337344,
+        "sha256": "40448241d2d94f4038e415de5cfd186d226bbfc28f4c6fc7bc84b9b7a438f3e6"
+      },
+      {
+        "name": "DSH-Project-Desktop-0.2.0-win-x64-Setup.exe",
+        "status": 200,
+        "size": 243638012,
+        "sha256": "99130b21b6ab2d8efb4ac820b9de65fafabda49ce7c60f16cb8f4434abeb82d7"
+      },
+      {
+        "name": "DSH-Project-Desktop-0.2.0-win-x64-Portable.zip",
+        "status": 200,
+        "size": 394631133,
+        "sha256": "b7320ada777a5c4f5511435accdb77cac3e85fd5d81f8be4086b444c8de86c94"
+      },
+      {
+        "name": "DSH-Project-Desktop-0.2.0-mac-x64.dmg",
+        "status": 200,
+        "size": 400215827,
+        "sha256": "fdf721531c6ede62e80463024e877224b46892061cd5e5e1dab41ad7263192f8"
+      }
+    ]
+  }
+}

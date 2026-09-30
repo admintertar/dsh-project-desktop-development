@@ -6,8 +6,14 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T10:12:13.626Z
+updatedAt: 2026-09-30T12:52:07.676Z
 artifacts:
+  - type: file
+    path: artifacts/official-release-ci-plan.md
+    description: 用户确认 0.2.0 Stable、官方三平台 CI 与安装发布计划。
+  - type: file
+    path: artifacts/official-release-result.json
+    description: 本机检查、真实安装包验证与远端发行状态摘要。
   - type: file
     path: artifacts/project-close-menu.md
     description: 关闭页面与关闭当前项目的菜单分组、官方行为对照和原生验收。
@@ -146,8 +152,8 @@ artifacts:
 archived: false
 phase: implementation
 brief:
-  currentBehavior: 已发布壳 0.1.11 仍固定 Anywhere Labs Desktop 2.0.15 和官方 Harness 0.1.7-rc.2。当前开发分支的 Shell 主进程、setup/build/start/check 及 Project 插件默认来源已切换到 DeepSeek 官方 0.2.0-rc.2；双项目原生检查通过。历史社区适配与发行流程尚待清理，Project 仍使用校验后的开发链接，真实数据迁移与发布尚未完成。
-  scope: Shell 负责多窗口、欢迎页、创建/打开/切换项目与应用菜单；打开项目时加载固定 DeepSeek 官方主界面，Project 插件负责窗口内的项目页面和工作区替换。全部弃用 Anywhere Labs dsh-desktop 及其私有模块，切换运行、setup、构建、测试、打包与 CI 来源；正式原位替换前完成用户数据迁移回退及跨平台验收。
+  currentBehavior: 自有壳 0.2.0 Stable 已发布，Shell 提交 806c540、Project 插件提交 44330c6 已推送各自主分支。运行、setup、构建、CI 和发行包直接使用固定 DeepSeek 官方 0.2.0-rc.2；macOS arm64/x64 与 Windows x64 均完成源码、真实窗口和安装产物验收。Project 插件随包编译，发行不依赖开发链接。旧社区 Home 保留并拒绝接管，真实数据迁移和回退仍未完成。
+  scope: Shell 负责多窗口、欢迎页、创建/打开/切换项目与应用菜单；打开项目时加载固定 DeepSeek 官方主界面，Project 插件负责窗口内的项目页面和工作区替换。全部弃用 Anywhere Labs dsh-desktop 及其私有模块，切换运行、setup、构建、测试、打包与 CI 来源。用户已决定先发布 0.2.0 Stable，三平台安装包验收后替换同名应用；旧数据保留并拒绝隐式接管，迁移及回退继续单独验收。
   constraints:
     - Desktop/Harness 的运行、构建、测试、CI 和安装包来源只允许固定的 deepseek-ai/deepseek-harness 提交；不得依赖 Anywhere Labs 的 Desktop 包、源码快照或缓存。
     - 保持独立 Shell，不维护官方 Desktop fork；单一主进程下每个项目的窗口、Host、DSH Home、Profile 和 Chromium 分区仍需隔离。
@@ -158,7 +164,7 @@ brief:
     - 将 Anywhere Labs Next 作为运行或构建依赖。
     - 保留社区 Desktop 运行回退分支，或为迁移复刻其私有 RPC、Profile 选择/创建、恢复助手等独有实现。
     - 新建与 Stable 并行安装的另一套应用身份或共享数据目录。
-    - 在迁移、跨平台验收与回退演练完成前发布替换版。
+    - 隐式接管旧社区 Home，或在迁移与回退未验收时宣称旧数据兼容。
   acceptanceCriteria:
     - id: official-source
       text: 两仓库的来源锁、安装与构建闭包、CI checkout、运行时导入和安装包均可追溯到同一固定官方 Harness/Desktop 提交及配套 Project 插件提交；无 Anywhere Labs Desktop 依赖，从干净工作目录可复现。
@@ -177,24 +183,25 @@ brief:
       required: true
       version: 1
     - id: package-validation
-      text: Shell 与 Project 插件的源码检查通过，macOS Universal、Windows x64 安装包及 Intel 对同一 DMG 的启动验收通过；安装包内的官方依赖与许可证审计通过。
+      text: Shell 与 Project 插件源码检查通过；固定同一提交构建 macOS arm64、macOS x64 和 Windows x64，分别验证原生运行时、安装包搬移启动、双项目关闭隔离和重开；官方依赖与许可证随包交付。
       required: true
-      version: 1
+      version: 2
     - id: replacement-release
-      text: 正式替换版沿用既有 app ID、数据路径及 Stable 更新清单契约，旧版客户端能发现和安装；公开发布前保留旧版安装包与配对的数据恢复方案。
+      text: 按用户最新决定发布自有壳 0.2.0 Stable，沿用既有 app ID 和数据路径，公开 latest 与 v2 更新清单匹配已验收的同批产物。0.1.x 手动安装；说明旧 Home 迁移未实现、保留旧数据与旧安装包，不能宣称已完成数据恢复验收。
       required: true
-      version: 1
+      version: 2
 questions:
   - 官方 apps/desktop 的 private 包与构建产物中哪些模块可直接复用，哪些需从同一固定提交按源码构建？先做可行性实验，不预设接口稳定。
   - 官方桌面只有应用级 mainWindow 与 profiles/desktop；如何以最小适配把官方主界面及 Host 生命周期放入壳的逐项目窗口，并完全移除社区调用？
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 官方侧栏更新入口和弹窗已集成 a9fae5b，使用自有 update.json 与完整性校验；继续签名安装包与 Windows/Intel 的真实安装交接验收，不复用社区更新模块。
+    - 自有壳 0.2.0 Stable 已发布；三平台同提交构建 run 36713622201 通过，发布 run 36717138776 直接消费同批产物。macOS 分 arm64/x64 DMG，Windows 为 Setup/Portable；更新清单 v2，0.1.x 手动安装。完整来源及哈希见发行结果记录。
+    - 后续重点是已发布 0.1.11 的真实数据副本迁移、备份日志、故障恢复与旧包回退。当前拒绝接管旧 Home 并原样保留；发布不代表数据迁移完成，任务保持 active。
     - 共享账号已集成 4e9bd7e，现有双项目登录直接沿用；模型 API Key 与 Host 认证继续隔离。系统 dsh:// 关联按用户决定暂缓，本轮不继续修改。
     - 原生接入查漏已集成 e5318ca：补官方登录监听、dsh://open 分发、Host login shell 环境、Windows caption/菜单及系统退出。Shell 128 项检查和 macOS arm64 真实登录初始化/取消与双项目回归通过；继续真实账号授权/用量/充值、系统协议安装关联、Windows、快捷键完整交互与麦克风验收。
-    - 验证 Project 的 Tasks、自动化可选包、Resources、Memory、skills、MCP 写入和调用及工作区替换；将当前经过校验的插件开发链接替换为固定发行依赖闭包。
-    - 清理历史社区适配与旧测试材料，切换 CI、打包与更新；完成 Stable 数据副本迁移、故障回退及 Windows/macOS Intel/Universal 验收后再原位替换。社区 Profile/恢复私有模块不复刻。
+    - Project 插件已按固定发行提交构建随包，308 项检查在三个平台通过；继续按实际使用场景验收 Tasks、自动化可选包、Resources、Memory、skills、MCP 写入与调用及工作区替换。
+    - 历史社区适配与旧测试材料只作删除审计；现行 CI、打包与更新已切换官方来源，社区 Profile/恢复私有模块不复刻。macOS 当前 ad-hoc 且未公证，Windows 未签名。
   readBefore:
     - update-sidebar
     - shared-account
@@ -208,6 +215,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: shell-stable-release
+    label: 自有壳 0.2.0 Stable 发布与三平台验收
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/official-release-ci-plan.md
   - id: update-sidebar
     label: 官方侧栏更新入口接入与验收
     type: file
@@ -476,14 +487,28 @@ entries:
     referenceIds:
       - update-sidebar
     createdAt: 2026-09-30T09:51:41.547Z
+  - id: shell-stable-release-decision
+    kind: decision
+    content: 用户将 RC 选择改为直接发布自有壳 0.2.0 Stable。内置官方仍固定 0.2.0-rc.2；三平台原生安装验收后发布同批产物。旧社区 Home 迁移尚未完成，保留文件并拒绝接管，0.1.x 手动安装；数据迁移验收仍未完成，任务保持 active。
+    basis: user-request
+    referenceIds:
+      - shell-stable-release
+    createdAt: 2026-09-30T12:17:34.060Z
+  - id: shell-stable-release-published
+    kind: progress
+    content: 自有壳 v0.2.0 Stable 已发布（Release 400040136），Shell 806c540 与插件 44330c6 已进入各自主分支。最终同提交构建 run 36713622201 第 2 次运行三个平台均成功；首次为 GitHub runner 分配失败。发布 run 36717138776 成功，四个安装文件及校验文件上线，latest、版本 tag 和公开 update.json 指向本次已验证提交。旧 Home 迁移及回退未完成，不将整个任务标记完成。
+    basis: observation
+    referenceIds:
+      - shell-stable-release
+    createdAt: 2026-09-30T12:52:07.676Z
 operations: {}
 criterionVersions:
   official-source: 1
   multi-project: 2
   feature-parity: 2
   data-migration: 1
-  package-validation: 1
-  replacement-release: 1
+  package-validation: 2
+  replacement-release: 2
 ---
 
 从已发布 0.1.11（社区 Desktop 2.0.15、官方 Harness 0.1.7-rc.2）出发，改为固定 DeepSeek 官方 `apps/desktop` 源码与官方包，原位替换现有安装。先做官方构建与单项目启动实验，再推进双项目隔离、Project 插件、旧数据迁移和跨平台发布；每一步按两份任务产物中的问题点验收。

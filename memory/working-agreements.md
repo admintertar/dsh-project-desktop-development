@@ -77,12 +77,11 @@ DSH_PROJECT_DESKTOP_USER_DATA=/tmp/dsh-dev-shell yarn start -- /path/to/project
 
 ## 版本 pin 与发布
 
-- `resources/dsh-project-desktop/upstream.lock.json` 的 `project.commit/tree` 决定壳构建与打包使用哪个插件提交。日常插件开发不必改它，**发布时才 bump**。
+- 0.2.0 起，`resources/dsh-project-desktop/project-source.lock.json` 的 `commit` 决定构建与打包的插件提交；`official-source.lock.json` 固定 DeepSeek 官方 Desktop/Harness。旧 `upstream.lock.json` 只属社区版历史记录，不能再驱动现行构建。日常插件开发不必改 pin，**发布时才 bump**。
 - **改 lock 和 push 插件必须是同一个动作。** `scripts/ci-plan.mjs` 把 pin 直接作为 GitHub Actions checkout 的 `ref`，pin 指向未推送的提交会让打包工作流在 checkout 阶段直接失败。正确顺序：先 push 插件提交 → 把 lock 指到已推送的提交 → 再 push 壳。
 - pin 落后期间 CI 验的是「壳 + 旧插件」，壳与新插件的组合要等 bump 后才第一次被 CI 验证。建议在候选发布时就 bump，而不是最终 publish 时才 bump。
-- bump 后必须重算并重导：`git -C resources/dsh-plugin-project rev-parse <commit>^{tree}` 得到 tree；再删除 `.upstream/project` 后重新导出（`scripts/setup.mjs` 的 snapshot 在目标已存在时会静默跳过，直接跑 setup 会沿用旧快照）；最后 `yarn run verify:upstream` 校验。
+- bump 后用 `yarn setup --official-source <固定官方源码目录> --project-source <固定插件源码目录>` 重新核对来源与构建输入，再运行现行 `yarn check` 和 `yarn smoke:official-shell`。不调用已退役的社区快照重导、`verify:upstream` 或旧 recovery/safe-mode 检查。具体三平台发布步骤见 `skills/desktop-release/SKILL.md`。
 
 ## 禁止事项
 
 未经明确要求，不重写运行中的 Profile、不发布仓库、不改变仓库可见性、不 push 到上游。
-
