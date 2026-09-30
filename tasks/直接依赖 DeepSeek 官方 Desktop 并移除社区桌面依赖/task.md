@@ -6,8 +6,14 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T09:51:41.547Z
+updatedAt: 2026-09-30T10:12:13.626Z
 artifacts:
+  - type: file
+    path: artifacts/project-close-menu.md
+    description: 关闭页面与关闭当前项目的菜单分组、官方行为对照和原生验收。
+  - type: file
+    path: artifacts/project-close-menu-result.json
+    description: 140 项检查、中英文原生菜单、关闭弹窗与项目隔离验证摘要。
   - type: file
     path: artifacts/official-update-sidebar-plan.md
     description: 原样复用官方侧栏更新入口、状态协议和更新弹窗的实施计划。

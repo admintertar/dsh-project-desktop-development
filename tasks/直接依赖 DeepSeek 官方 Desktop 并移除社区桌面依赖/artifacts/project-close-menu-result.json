@@ -1,0 +1,30 @@
+{
+  "platform": "darwin",
+  "arch": "arm64",
+  "rows": [
+    {
+      "id": 2,
+      "title": "Menu Alpha",
+      "dialog": false,
+      "healthy": 200
+    },
+    {
+      "id": 1,
+      "title": "Menu Beta",
+      "dialog": false,
+      "healthy": 200
+    }
+  ],
+  "chineseNativeMenu": true,
+  "cmdWClosesModalOnly": true,
+  "nativeMenuCloseProject": true,
+  "otherProjectHealthy": true,
+  "englishNativeMenu": true,
+  "welcomeCloseDisabled": true,
+  "checkTests": 140,
+  "shiftShortcutNativeActivation": "not-verified: synthetic keys reached WebContents but neither existing New Project nor Close Current Project native accelerators fired",
+  "windowsNativeVerified": false,
+  "shellCommit": "66ae68c",
+  "developmentShellRestarted": true,
+  "developmentProjectsRestored": 2
+}
