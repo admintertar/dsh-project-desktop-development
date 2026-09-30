@@ -140,6 +140,14 @@ node --test tests/official-*.test.mjs
 
 全量 `yarn run check` 仍在旧社区源码缓存校验处失败：`dsh-plugin-desktop` 树期望 `47d236012452eafa032346f7d0eedacd2a671819`，实际 `2840b04334609734e21adeed431f4274c23c87a0`。正式 `main.mjs`、旧来源锁、setup、CI 和安装包尚未切换，真实用户数据未修改。
 
+### 2026-09-30：逐项目窗口 Session 释放与重开
+
+正式生命周期接入前发现 `web-session.mjs` 缺少释放入口：持久化 Electron Session 在窗口销毁后仍存在，再次打开同一分区可能重复注册 `dsh-app`。现增加每个 Session 的单所有者约束与 `dispose()`，同时移除协议和 WebSocket 处理器；旧处理器停止接受请求，重复清理不会影响新所有者。`ipc-owners.mjs` 现提供在窗口存活时捕获身份的清理闭包，并真正接入原生探针，避免窗口关闭后读取已销毁 WebContents。
+
+使用上一节完整运行目录与本地 Project 插件，真实 macOS arm64 双窗口探针通过：A 的 WebContents 从 1 变为 3，复用原 `persist:official-project-probe-A` Session；A 重开后官方 boot、transport 与 Project 页面正常，B 保持可用。全部窗口关闭后 IPC owner 为 0，所有 `dsh-app` 处理器已释放，旧 A 的重复清理不影响重开后的注册。11 项官方适配测试通过，新增覆盖旧 Cookie 失效、新 Host 接管同一 Session、重复注册拒绝和销毁后 IPC 清理。全量 `yarn run check` 复跑仍停在上一节记录的旧社区源码树校验。
+
+证据：[窗口生命周期结果](official-window-lifecycle-probe/result.json)、[重开后的 A](official-window-lifecycle-probe/window-A.png)、[独立 B](official-window-lifecycle-probe/window-B.png)。探针保持 Host 运行，因此这里只验证窗口与 Session 生命周期；正式 Shell 主进程、Host 重启、Profile 切换/恢复、正常关闭确认仍待接入。
+
 ### 当前剩余边界
 
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。

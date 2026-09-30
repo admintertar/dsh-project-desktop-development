@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T02:08:31.000Z
+updatedAt: 2026-09-30T02:16:09.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -47,6 +47,15 @@ artifacts:
   - type: file
     path: artifacts/official-runtime-probe/window-B.png
     description: 官方运行目录启动 Project 插件临时窗口 B 的真实截图。
+  - type: file
+    path: artifacts/official-window-lifecycle-probe/result.json
+    description: 官方运行目录中窗口同 Session 重开、B 存活和协议/IPC 释放验证结果。
+  - type: file
+    path: artifacts/official-window-lifecycle-probe/window-A.png
+    description: 同一 Chromium 分区重开的官方 Project 窗口 A。
+  - type: file
+    path: artifacts/official-window-lifecycle-probe/window-B.png
+    description: 独立官方 Project 窗口 B 的真实截图。
 archived: false
 phase: implementation
 brief:
@@ -259,6 +268,14 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-30T02:08:31.000Z
+  - id: official-window-session-lifecycle
+    kind: progress
+    content: 官方 Session 适配器补齐单所有者约束与释放入口，旧 Cookie 处理器失效且重复清理不会删除新注册；IPC owner 清理闭包已接入真实窗口。macOS arm64 官方 payload 加 Project 插件验证 A 销毁后同 Session 重开、B 存活、关闭后协议处理器全部释放且 IPC owner 为 0。11 项官方适配测试通过，完整 check 仍受旧社区缓存树不匹配阻断。此探针保持 Host 运行，不代表正式 Shell 的 Host 重启、Profile 恢复或正常关闭确认已完成。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-30T02:16:09.000Z
 operations: {}
 criterionVersions:
   official-source: 1
