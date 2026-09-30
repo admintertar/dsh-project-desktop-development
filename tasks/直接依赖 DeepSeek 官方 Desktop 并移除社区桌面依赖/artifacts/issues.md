@@ -17,7 +17,7 @@
 | O11 | 中 | 当前欢迎页和模型页仍从社区 Desktop 与官方 Harness 源码构建组件，官方 Web 前端的扩展入口和首次引导机制不同。要保留完整官方界面和项目插件入口，不能只用 CSS 隐藏不适用功能。 | 真实窗口 UI 验收 |
 | O12 | 中 | 社区来源仍写在 README、`AGENTS.md`、架构文档、`THIRD_PARTY_NOTICES.md` 和插件开发说明。实施后须按实际依赖更新说明，同时保留必要历史归属。 | 文档/许可审计 |
 | O13 | 高 | 官方 `dsh-v0.2.0-rc.2` 相对现有 `0.1.7-rc.2` 将自动化任务移到可选插件包。需核对 Project 插件的任务界面、任务记录和定时能力在新组合中的入口与安装默认值，防止原位升级后功能消失。 | 插件兼容与旧数据验收 |
-| O14 | 阻断 | 已验证固定官方源码的 Desktop/Host/CLI/Web 开发输入映射与 199 个暂存文件哈希；官方 `release:pack`、私有 Host pack 和 `prepare-package-set.ts` 还生成了 287 个可搬移的第一方 tarball，官方校验器接受复制后的集合并拒绝篡改。开发 Host/CLI 仍链接本机 pnpm 工作区；包集合尚缺外部 npm 依赖、原生二进制和主运行时，正式 `build.mjs`、`upstream.lock.json`、安装包和 CI 仍走社区布局。 | 官方第一方包集合已验证；继续组装完整发行闭包 |
+| O14 | 阻断 | 已从 287 个官方核心 tarball 与固定生产锁组装 macOS arm64 未签名开发运行目录，包含 Host/CLI 外部依赖、Electron、Web/preload、原生资源和 Node/Python/pnpm；19,358 项清单含 14 条包内链接，搬移前后官方原生/Host/Office smoke 均通过，payload 双窗口加 Project 插件通过。探针控制脚本仍读固定官方源码，插件仍用开发链接；正式 `build.mjs`、`upstream.lock.json`、安装包和 CI 仍走社区布局，其他平台锁与签名尚未完成。 | arm64 开发运行闭包已验证；接入正式 Shell 与插件发行依赖并扩展平台 |
 
 ## 需先证实的官方契约
 

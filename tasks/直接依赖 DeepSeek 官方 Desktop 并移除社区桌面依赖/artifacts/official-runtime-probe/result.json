@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "projectPlugin": true,
+  "projects": [
+    {
+      "id": "A",
+      "title": "DeepSeek Harness",
+      "boot": true,
+      "transport": true,
+      "platform": "darwin",
+      "textLength": 590,
+      "hostOrigin": "http://127.0.0.1:54138",
+      "partition": "persist:official-project-probe-A",
+      "webContentsId": 1
+    },
+    {
+      "id": "B",
+      "title": "DeepSeek Harness",
+      "boot": true,
+      "transport": true,
+      "platform": "darwin",
+      "textLength": 660,
+      "hostOrigin": "http://127.0.0.1:54144",
+      "partition": "persist:official-project-probe-B",
+      "webContentsId": 2
+    }
+  ],
+  "survivingWindow": true
+}

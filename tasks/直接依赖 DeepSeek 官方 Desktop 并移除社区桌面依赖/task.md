@@ -6,14 +6,14 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T01:35:29.000Z
+updatedAt: 2026-09-30T02:08:31.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
     description: 官方 Desktop 原位替换方案；包含架构选择、数据与发行策略、实施阶段和最终验收。
   - type: file
     path: artifacts/issues.md
-    description: 迁移问题清单；包含 13 个问题、待证实的官方契约和社区模块到官方基线的初步映射。
+    description: 迁移问题清单；包含 14 个问题、待证实的官方契约和社区模块到官方基线的初步映射。
   - type: file
     path: artifacts/phase1-feasibility.md
     description: 官方 0.2.0-rc.2 来源 pin、构建、真实 Host、双 Host 与临时双 Electron 窗口隔离、Project 插件兼容实验结果与未完成项。
@@ -35,6 +35,18 @@ artifacts:
   - type: file
     path: artifacts/official-project-plugin-probe/window-B.png
     description: 官方 Web 中 Project 插件临时窗口 B 的真实截图。
+  - type: file
+    path: artifacts/official-runtime-probe/runtime-result.json
+    description: macOS arm64 官方未签名运行目录的来源、完整性及原生验证结果，不含认证信息。
+  - type: file
+    path: artifacts/official-runtime-probe/result.json
+    description: 使用官方运行目录及本地 Project 插件的双 Electron 窗口实验结果。
+  - type: file
+    path: artifacts/official-runtime-probe/window-A.png
+    description: 官方运行目录启动 Project 插件临时窗口 A 的真实截图。
+  - type: file
+    path: artifacts/official-runtime-probe/window-B.png
+    description: 官方运行目录启动 Project 插件临时窗口 B 的真实截图。
 archived: false
 phase: implementation
 brief:
@@ -81,7 +93,7 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 已完成插件官方来源切换、临时窗口 Session 适配器、官方开发输入映射及 287 个可搬移第一方核心 tarball；下一步沿官方 prepare:runtime/prepare:dsh 组装外部依赖和原生资源，形成完整发行闭包，再将 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，最后审计无社区 Desktop 输入。
+    - 已完成插件官方来源切换、Session 适配器和 macOS arm64 未签名官方运行目录；搬移前后原生/Host/Office smoke 及 payload 双窗口加 Project 插件通过。下一步将 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell 的项目生命周期，并将插件开发链接替换为固定发行依赖闭包；随后切换来源锁、setup/build/CI，审计无社区 Desktop 输入。
     - Project 插件默认 setup 与 upstream.json 已切换到固定官方 0.2.0-rc.2；接着清理历史社区 Electron 适配材料，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
     - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
@@ -239,6 +251,14 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-30T01:35:29.000Z
+  - id: official-unsigned-runtime
+    kind: progress
+    content: Shell 从 287 个官方核心 tarball 和固定 mac-arm64 生产依赖锁组装完整未签名开发运行目录，包含 Host/CLI、Electron、Web/preload、原生模块及 Node/Python/pnpm 和 Office；清单 19,358 项，拒绝工作区外链。搬移前后官方原生/Host/Office smoke、payload 双窗口和双窗口加本地 Project 插件通过，A 强制销毁后 B 存活；9 项官方适配测试通过。修正 primary runtime 检查继承 Yarn cwd 和复用安装目录导致 pnpm 不退出的问题。正式 Shell check 仍被旧社区缓存树不匹配阻断；正式主进程、插件发行依赖、其他平台、数据迁移和发布尚未完成。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-30T02:08:31.000Z
 operations: {}
 criterionVersions:
   official-source: 1

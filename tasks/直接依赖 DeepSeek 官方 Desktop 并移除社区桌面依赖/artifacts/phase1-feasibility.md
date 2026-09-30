@@ -1,6 +1,6 @@
 # 官方 Desktop 0.2.0-rc.2 可行性实验
 
-日期：2026-09-29。状态：官方源码构建、真实 Host、双 Host 隔离、临时双 Electron 窗口和 Project 插件基础界面实验通过；壳的完整接入、原位数据迁移和安装包仍未验收。
+日期：2026-09-29；2026-09-30 补充 macOS arm64 运行目录验收。状态：官方源码构建、完整未签名开发运行目录、真实 Host、双 Host 隔离、临时双 Electron 窗口和 Project 插件基础界面实验通过；壳的完整接入、原位数据迁移和安装包仍未验收。
 
 ## 当前官方版本
 
@@ -107,7 +107,40 @@ Node 22.19.0 下重新准备目录成功：共 199 个文件，其中 196 个是
 
 从同一固定官方 `rc.2` 工作树，调用上游 `release:pack` 构建 318 个 DSH family tarball 和 9 个 vendor tarball，再打包私有 Desktop Host、native system entry，最后调用上游 `prepare-package-set.ts` 只保留 Desktop Host/DSH 所需闭包。Shell 的 `yarn run prepare:official-package-set -- ../deepseek-harness-official-021` 将这些步骤封装在忽略目录中，输出 `desktop-packages.json`、287 个 tarball 和 `source.json`（固定提交、Desktop tree、依赖锁 blob、描述文件 SHA-256）。上游 `verifyDesktopCorePackageSet` 检查每个 tarball 的大小与 SHA-512。
 
-本机验证输出 287 个第一方包；将整个包集合复制到另一临时目录后，官方校验器仍通过，修改其中一个 tarball 的字节后校验失败。它证明第一方包集合本身不依赖原工作树路径，但尚**不是完整安装包**：官方 `prepare:runtime`、`prepare:dsh` 仍要解析外部 npm 依赖、组装原生二进制、pnpm 和 primary runtime，并完成目标平台签名/打包。正式 Shell 的 Host、窗口、旧数据与 CI 均未接入这个集合。
+本机验证输出 287 个第一方包；将整个包集合复制到另一临时目录后，官方校验器仍通过，修改其中一个 tarball 的字节后校验失败。它证明第一方包集合本身不依赖原工作树路径；外部 npm 依赖、原生二进制、pnpm 和 primary runtime 的后续组装见下一节。包集合自身**不是完整安装包**，正式 Shell 的 Host、窗口、旧数据与 CI 均未接入这个集合。
+
+### 2026-09-30：macOS arm64 完整开发运行目录
+
+Shell 新增 `prepare:official-runtime`，先校验固定官方源码与核心包集合，再调用官方 `prepare:runtime`。`official-runtime-worker.mjs` 依据官方 `apps/desktop/scripts/prepare-dsh.ts`，复用其元数据、生产安装策略、文件过滤、manifest 整理、完整性清单及原生/Host/Office smoke。官方 macOS 脚本要求 Developer ID 签名；开发适配暂省略签名，产物明确标为 `official-unsigned-development-runtime`、`signed:false`，不能作为发布包。
+
+外部 npm 解析结果登记在 `official-runtime-locks/mac-arm64/`，绑定官方提交、包集合摘要、目标、Electron Node ABI 和 pnpm 版本；以后每次在新目录按 `--prod --frozen-lockfile --trust-lockfile` 安装。目前只登记 macOS arm64 锁，其他平台会在下载前停止。产物写入 Shell 忽略目录 `.cache/official-runtime/mac-arm64/`，约 1.0 GB，包含 Host/CLI 生产依赖、Electron、官方 Web/preload、Node/Python/pnpm、Office 资源和 LICENSE。`dsh/` 有 12,417 个运行文件；全目录清单有 19,358 项及 14 条包内 Electron 框架链接。清单校验文件字节、可执行位与相对链接，拒绝链接回原工作区。
+
+真实验证平台为 **macOS arm64**；Electron Node 为 `24.18.1`，primary runtime Node 为 `24.21.0`、Python 为 `3.12.14`、pnpm 为 `11.7.0`。依次通过：
+
+- 官方 primary runtime 的 Python 包、Office 文档读写、pip check、Node/pnpm 检查。
+- 原生模块与工具：koffi、sharp、HTML、PTY、pnpm、grep、glob。
+- 真实 Host 与外部 smoke 插件；DOCX/XLSX/PPTX 转 PDF、Office CLI 路径与转换。
+- 整体目录搬移后再次通过官方原生/Host/Office smoke。
+- 从该目录启动的双 Electron 窗口，以及双窗口加本地 Project 插件；A 强制销毁后 B 存活。
+- Shell 的 9 项 `tests/official-*.test.mjs` 与 `git diff --check`。
+
+复现命令（在 Shell 目录，以 Node 22.19.0；已有官方资源时可用 `--reuse-resources`）：
+
+```sh
+yarn run prepare:official-runtime -- ../deepseek-harness-official-021
+node --import ../deepseek-harness-official-021/node_modules/tsx/dist/loader.mjs \
+  scripts/probe-official-electron-window.mjs ../deepseek-harness-official-021 \
+  --two --plugin ../dsh-plugin-project --runtime .cache/official-runtime/mac-arm64
+node --test tests/official-*.test.mjs
+```
+
+实验修正两处：官方 primary runtime 的 `pnpm --version` 会继承 cwd，受 Shell 的 Yarn 配置影响，现放到独立临时 cwd 执行；复用安装目录时 pnpm 打印 Done 后未退出，现恢复每次新建安装目录，仅缓存下载 store 并保留 frozen lock，重新完整运行通过。
+
+证据：[运行目录与原生结果](official-runtime-probe/runtime-result.json)、[双窗口结果](official-runtime-probe/result.json)、[窗口 A](official-runtime-probe/window-A.png)、[窗口 B](official-runtime-probe/window-B.png)。原始日志仅保存在忽略目录，未提交临时 Host Cookie。窗口探针控制脚本仍导入固定官方源码 helper，Project 插件仍为本地开发链接；此结果证明官方运行 payload 的本机闭包和搬移可用性，不证明正式 Shell/插件发行闭包或跨机器、跨平台安装验收。
+
+全量 `yarn run check` 仍在旧社区源码缓存校验处失败：`dsh-plugin-desktop` 树期望 `47d236012452eafa032346f7d0eedacd2a671819`，实际 `2840b04334609734e21adeed431f4274c23c87a0`。正式 `main.mjs`、旧来源锁、setup、CI 和安装包尚未切换，真实用户数据未修改。
+
+### 当前剩余边界
 
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。
 - Shell 的 `src/desktop-adapter/stable/` 仍调用社区私有模块，必须逐批替换为官方 `apps/desktop`/`apps/desktop-host` 入口或壳自己的适配层；临时 Project 插件窗口不改变这一状态。

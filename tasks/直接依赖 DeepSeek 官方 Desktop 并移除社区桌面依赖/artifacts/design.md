@@ -66,4 +66,4 @@ Host 使用官方 `@deepseek-ai/dsh/profile-boot` 的 `runProfile` 和真实 Web
 
 ## 当前进度
 
-阶段 1 已固定官方来源并通过源码构建、真实 Host、双 Host 隔离及临时双 Electron 窗口实验；Project 插件已通过官方 `0.2.0-rc.2` 的类型检查、测试和构建，并在临时双窗口显示两个独立空项目的基础界面。Shell 已提取 `dsh-app` Session 与 IPC 所属关系适配器，建立可校验的官方开发输入映射，并通过上游打包工具生成和搬移 287 个第一方核心 tarball。开发 Host/CLI 和 pnpm 依赖仍链接本机官方工作树；完整安装包还缺外部依赖、原生资源与正式 Shell 接入。可复现命令、截图与限制见 [可行性实验](phase1-feasibility.md)。现行 Stable 的运行、setup、打包和 CI 仍依赖社区 Desktop，不能据此宣称替换完成。下一步完成正式构建闭包与主进程接入，再验证双项目窗口和 Project 插件行为；旧数据及发布验收按上列关口继续。
+阶段 1 已固定官方来源并通过源码构建、真实 Host、双 Host 隔离及临时双 Electron 窗口实验；Project 插件已通过官方 `0.2.0-rc.2` 的类型检查、测试和构建，并在临时双窗口显示两个独立空项目的基础界面。Shell 已提取 `dsh-app` Session 与 IPC 所属关系适配器，建立可校验的官方开发输入映射，并通过上游打包工具生成和搬移 287 个第一方核心 tarball。2026-09-30 已完成 macOS arm64 未签名开发运行目录，加入固定外部依赖、Electron、Web/preload、原生资源与 primary runtime；搬移前后官方原生/Host/Office smoke 和 payload 双窗口加 Project 插件验证通过。探针控制脚本仍读固定官方源码 helper，插件仍为本地开发链接；正式 Shell、插件发行依赖、其他平台和签名打包待完成。可复现命令、截图与限制见 [可行性实验](phase1-feasibility.md)。现行 Stable 的运行、setup、打包和 CI 仍依赖社区 Desktop，不能据此宣称替换完成。下一步将官方运行目录接入正式主进程的项目生命周期，再验证双项目窗口和 Project 插件行为；旧数据及发布验收按上列关口继续。
