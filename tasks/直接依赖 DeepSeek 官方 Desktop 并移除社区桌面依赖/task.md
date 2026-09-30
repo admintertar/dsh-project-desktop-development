@@ -9,6 +9,9 @@ createdAt: 2026-09-28T10:27:28.000Z
 updatedAt: 2026-09-30T06:49:06.816Z
 artifacts:
   - type: file
+    path: artifacts/project-header-drag-fix.md
+    description: 资源、记忆等 Project 页面顶部窗口拖动修复、官方对照和真实 macOS 验收。
+  - type: file
     path: artifacts/sidebar-native-theme-fix.md
     description: 深色侧栏发灰的原生主题时序定位、修复与多窗口原生回归。
   - type: file
