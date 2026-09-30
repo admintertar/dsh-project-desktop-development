@@ -6,8 +6,17 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T06:49:06.816Z
+updatedAt: 2026-09-30T08:08:17.880Z
 artifacts:
+  - type: file
+    path: artifacts/official-native-integration-audit.md
+    description: 官方原生接入查漏、登录/协议/环境/Windows/系统退出修复与剩余发行门禁。
+  - type: file
+    path: artifacts/official-native-integration-result.json
+    description: Shell 128 项检查与真实 macOS 双项目登录取消、浏览器隔离及生命周期验证结论。
+  - type: file
+    path: artifacts/official-account-waiting.png
+    description: 从已知开发项目 WebContents 捕获的官方等待登录弹窗，无授权 URL 或凭据。
   - type: file
     path: artifacts/project-header-drag-fix.md
     description: 资源、记忆等 Project 页面顶部窗口拖动修复、官方对照和真实 macOS 验收。
@@ -136,10 +145,11 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 正式 Shell、setup/build/start/check 与运行任务关闭确认已接入官方；Shell 114 项、Project 307 项检查与 macOS arm64 双项目及关闭确认原生验收通过。接着补快捷键完整交互、账号/浏览器/麦克风与 dsh://open 操作系统入口的验收。
+    - 原生接入查漏已集成 e5318ca：补官方登录监听、dsh://open 分发、Host login shell 环境、Windows caption/菜单及系统退出。Shell 128 项检查和 macOS arm64 真实登录初始化/取消与双项目回归通过；继续真实账号授权/用量/充值、系统协议安装关联、Windows、快捷键完整交互与麦克风验收。
     - 验证 Project 的 Tasks、自动化可选包、Resources、Memory、skills、MCP 写入和调用及工作区替换；将当前经过校验的插件开发链接替换为固定发行依赖闭包。
     - 清理历史社区适配与旧测试材料，切换 CI、打包与更新；完成 Stable 数据副本迁移、故障回退及 Windows/macOS Intel/Universal 验收后再原位替换。社区 Profile/恢复私有模块不复刻。
   readBefore:
+    - native-integration
     - close-flow
     - shell-main
     - design
@@ -149,6 +159,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: native-integration
+    label: 官方原生接入查漏与验证
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/official-native-integration-audit.md
   - id: sidebar-native-theme
     label: 深色侧栏原生主题同步修复
     type: file
@@ -366,6 +380,13 @@ entries:
     referenceIds:
       - sidebar-native-theme
     createdAt: 2026-09-30T06:49:06.816Z
+  - id: official-native-integration-gaps
+    kind: progress
+    content: Shell 本地提交 e5318ca 补齐官方登录自动打开浏览器与逐项目监听生命周期、dsh://open 启动/第二实例分发、官方 login shell 环境、Windows caption/菜单与系统退出处理。完整 128 项检查通过；macOS arm64 真实官方登录菜单/在线初始化/取消、回原项目与浏览器分区和跨 Host 认证及双项目生命周期回归通过。浏览器打开在 OS 边界截获，未完成真实账号授权；Windows 实机、安装协议关联、更新/CLI/打包/数据迁移仍待验收。
+    basis: observation
+    referenceIds:
+      - native-integration
+    createdAt: 2026-09-30T08:08:17.880Z
 operations: {}
 criterionVersions:
   official-source: 1

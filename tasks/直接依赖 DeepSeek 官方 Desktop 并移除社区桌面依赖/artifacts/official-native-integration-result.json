@@ -1,0 +1,41 @@
+{
+  "platform": "darwin",
+  "arch": "arm64",
+  "officialVersion": "0.2.0-rc.2",
+  "welcomeAndCreation": true,
+  "guideLocalesThemesNarrowKeyboardCancel": true,
+  "twoProjects": true,
+  "realApiKeyState": true,
+  "officialShortcuts": true,
+  "nativeClose": true,
+  "reopen": true,
+  "restart": true,
+  "sameSession": true,
+  "legacyDataPreserved": true,
+  "allOwnersReleased": true,
+  "sharedTheme": true,
+  "nativeThemeLightDarkSystem": true,
+  "browser": {
+    "separateWorkspacePartitions": true,
+    "acquiredAndReleasedThroughOfficialPreload": true,
+    "ownHostBlockedByOfficialGuestPolicy": true,
+    "otherHostRejectsUnauthenticatedGuest": true
+  },
+  "account": {
+    "officialSignInDialog": true,
+    "realHostAccountWatch": true,
+    "launchInterceptedAtOsBoundary": true,
+    "themeAndAuthorizationPreserved": true,
+    "returnedToOriginatingProject": true,
+    "cancelledViaOfficialDialog": true,
+    "otherProjectUnaffected": true,
+    "realAccountAuthorizationCompleted": false
+  },
+  "rendererErrors": [],
+  "shellCommit": "5604476",
+  "shellCheck": {
+    "tests": 128,
+    "passed": 128,
+    "failed": 0
+  }
+}
