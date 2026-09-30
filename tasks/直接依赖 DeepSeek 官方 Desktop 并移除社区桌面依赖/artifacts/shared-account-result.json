@@ -1,0 +1,70 @@
+{
+  "platform": "darwin",
+  "arch": "arm64",
+  "officialVersion": "0.2.0-rc.2",
+  "localPlatformFixture": true,
+  "realOfficialPkceExchange": true,
+  "oneLoginSharedAcrossWindows": true,
+  "sameAccountIdentity": true,
+  "newAndRestartedWindowSignedIn": true,
+  "privateApiKeysAndHostSecrets": true,
+  "separateChromiumPartitions": true,
+  "officialSignOutCancelAndConfirm": true,
+  "signedOutAfterRestart": true,
+  "competingLoginCancellation": true,
+  "logoutCancelsPendingPeerLogin": true,
+  "chineseDarkEnglishLightNarrow": true,
+  "allProjectsClosed": true,
+  "shellCommit": "4e9bd7e",
+  "pluginCommit": "90ea335",
+  "shellCheck": {
+    "tests": 136,
+    "passed": 136,
+    "failed": 0
+  },
+  "officialShellLifecycle": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "officialVersion": "0.2.0-rc.2",
+    "welcomeAndCreation": true,
+    "guideLocalesThemesNarrowKeyboardCancel": true,
+    "twoProjects": true,
+    "realApiKeyState": true,
+    "officialShortcuts": true,
+    "nativeClose": true,
+    "reopen": true,
+    "restart": true,
+    "sameSession": true,
+    "legacyDataPreserved": true,
+    "allOwnersReleased": true,
+    "sharedTheme": true,
+    "nativeThemeLightDarkSystem": true,
+    "browser": {
+      "separateWorkspacePartitions": true,
+      "acquiredAndReleasedThroughOfficialPreload": true,
+      "ownHostBlockedByOfficialGuestPolicy": true,
+      "otherHostRejectsUnauthenticatedGuest": true
+    },
+    "rendererErrors": []
+  },
+  "existingDevelopmentAccount": {
+    "windows": [
+      {
+        "title": "DeepSeek Harness",
+        "status": "credential-stored",
+        "signedInButton": true,
+        "onboarding": false,
+        "accountProfileStatus": "ready"
+      },
+      {
+        "title": "DeepSeek Harness",
+        "status": "credential-stored",
+        "signedInButton": true,
+        "onboarding": false,
+        "accountProfileStatus": "ready"
+      }
+    ],
+    "windowCount": 2,
+    "existingAccountShared": true
+  }
+}

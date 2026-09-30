@@ -6,8 +6,23 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T08:38:44.000Z
+updatedAt: 2026-09-30T09:17:11.869Z
 artifacts:
+  - type: file
+    path: artifacts/shared-account-plan.md
+    description: 用户确认仅共享 DeepSeek 登录账号的方案、边界与实施步骤。
+  - type: file
+    path: artifacts/shared-account-validation.md
+    description: 多窗口账号共享实现、现有登录沿用、官方流程与 macOS arm64 验收报告。
+  - type: file
+    path: artifacts/shared-account-result.json
+    description: 136 项检查、账号共享及生命周期原生验证和现有双窗口账号状态的脱敏摘要。
+  - type: file
+    path: artifacts/shared-account-zh-dark.png
+    description: 临时项目中文深色界面的共享测试账号。
+  - type: file
+    path: artifacts/shared-account-en-confirm.png
+    description: 真实官方英文浅色窄窗口退出确认弹窗。
   - type: file
     path: artifacts/chat-workspace-entry-hidden.md
     description: 隐藏聊天页重复工作区入口、保留项目绑定及原生界面验证。
@@ -129,9 +144,9 @@ brief:
       required: true
       version: 1
     - id: multi-project
-      text: 两个项目同时运行时窗口、Host、Profile、认证、协议 Session 和恢复生命周期互不串线；一个项目故障不影响另一个，并有真实 Electron 验证。
+      text: 两个项目同时运行时窗口、Host、Profile、模型 API Key、Host 认证、协议 Session 和恢复生命周期互不串线；DeepSeek 登录账号按用户决定在应用内共享，登录与退出跨窗口同步；一个项目故障不影响另一个，并有真实 Electron 验证。
       required: true
-      version: 1
+      version: 2
     - id: feature-parity
       text: Shell 的欢迎页、创建/打开/切换项目、多窗口和应用菜单，DeepSeek 官方主界面原有能力，以及 Project 插件的项目页面和工作区替换完成真实窗口验收；不要求兼容或复刻社区 Desktop 独有模块。
       required: true
@@ -154,10 +169,12 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
+    - 共享账号已集成 4e9bd7e，现有双项目登录直接沿用；模型 API Key 与 Host 认证继续隔离。系统 dsh:// 关联按用户决定暂缓，本轮不继续修改。
     - 原生接入查漏已集成 e5318ca：补官方登录监听、dsh://open 分发、Host login shell 环境、Windows caption/菜单及系统退出。Shell 128 项检查和 macOS arm64 真实登录初始化/取消与双项目回归通过；继续真实账号授权/用量/充值、系统协议安装关联、Windows、快捷键完整交互与麦克风验收。
     - 验证 Project 的 Tasks、自动化可选包、Resources、Memory、skills、MCP 写入和调用及工作区替换；将当前经过校验的插件开发链接替换为固定发行依赖闭包。
     - 清理历史社区适配与旧测试材料，切换 CI、打包与更新；完成 Stable 数据副本迁移、故障回退及 Windows/macOS Intel/Universal 验收后再原位替换。社区 Profile/恢复私有模块不复刻。
   readBefore:
+    - shared-account
     - native-integration
     - close-flow
     - shell-main
@@ -168,6 +185,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: shared-account
+    label: 多窗口共享 DeepSeek 账号与现有登录沿用
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/shared-account-validation.md
   - id: chat-workspace-entry
     label: 聊天页工作区入口隐藏
     type: file
@@ -407,10 +428,24 @@ entries:
     referenceIds:
       - chat-workspace-entry
     createdAt: 2026-09-30T08:38:44.000Z
+  - id: shared-account-scope
+    kind: decision
+    content: 用户确认多个项目窗口只共享 DeepSeek 登录账号；模型 API Key 与其他认证信息保持项目独立。据此更新 multi-project 验收为第 2 版。
+    basis: user-request
+    referenceIds:
+      - shared-account
+    createdAt: 2026-09-30T09:17:11.869Z
+  - id: shared-account-integrated
+    kind: progress
+    content: Shell 本地提交 4e9bd7e 接入账号记录路由、一次性已有账号沿用和应用级登录退出协调；官方登录、PKCE、账号与退出界面保留。136 项检查通过，macOS arm64 真实三窗口共享、重启、官方确认/取消、并发登录、退出期间回调清理及最终生命周期回归通过。已用原开发 userData 启动两个项目，均返回同一账号且资料 ready，无需重新登录；API Key、Host 认证及 Chromium 分区隔离。测试与任务证据不含真实身份或凭据，未推送或发布。
+    basis: observation
+    referenceIds:
+      - shared-account
+    createdAt: 2026-09-30T09:17:11.869Z
 operations: {}
 criterionVersions:
   official-source: 1
-  multi-project: 1
+  multi-project: 2
   feature-parity: 2
   data-migration: 1
   package-validation: 1
