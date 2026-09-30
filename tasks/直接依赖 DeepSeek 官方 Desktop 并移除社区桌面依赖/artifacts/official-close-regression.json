@@ -1,0 +1,18 @@
+{
+  "platform": "darwin",
+  "arch": "arm64",
+  "officialVersion": "0.2.0-rc.2",
+  "welcomeAndCreation": true,
+  "guideLocalesThemesNarrowKeyboardCancel": true,
+  "twoProjects": true,
+  "realApiKeyState": true,
+  "officialShortcuts": true,
+  "nativeClose": true,
+  "reopen": true,
+  "restart": true,
+  "sameSession": true,
+  "legacyDataPreserved": true,
+  "allOwnersReleased": true,
+  "sharedTheme": true,
+  "rendererErrors": []
+}

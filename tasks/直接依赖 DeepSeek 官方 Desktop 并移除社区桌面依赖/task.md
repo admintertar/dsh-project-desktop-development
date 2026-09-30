@@ -6,8 +6,17 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T05:16:43.000Z
+updatedAt: 2026-09-30T06:17:16.000Z
 artifacts:
+  - type: file
+    path: artifacts/official-close-flow.md
+    description: 官方关闭确认接入、项目范围、真实运行任务与计划提醒及原生确认/取消验收。
+  - type: file
+    path: artifacts/official-close-result.json
+    description: macOS arm64 正式主进程关闭/重启/退出验收结果，不含运行数据或凭据。
+  - type: file
+    path: artifacts/official-close-regression.json
+    description: 关闭前等待 IPC 与取消在途 HTTP 后的最终空闲双项目原生回归结果。
   - type: file
     path: artifacts/shell-main-switch.md
     description: 正式 Shell 主进程接入官方运行链、105/307 项检查、真实双项目与引导页验收及剩余关卡。
@@ -115,10 +124,11 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 正式 Shell 已接入官方 Host、Session、dsh-app 与逐项目 IPC，setup/build/start/check 已切换官方来源；Shell 105 项、Project 307 项检查与 macOS arm64 双项目原生验收通过。接着补活跃任务关闭确认、快捷键完整交互、账号/浏览器/麦克风与 dsh://open 操作系统入口的验收。
+    - 正式 Shell、setup/build/start/check 与运行任务关闭确认已接入官方；Shell 114 项、Project 307 项检查与 macOS arm64 双项目及关闭确认原生验收通过。接着补快捷键完整交互、账号/浏览器/麦克风与 dsh://open 操作系统入口的验收。
     - 验证 Project 的 Tasks、自动化可选包、Resources、Memory、skills、MCP 写入和调用及工作区替换；将当前经过校验的插件开发链接替换为固定发行依赖闭包。
     - 清理历史社区适配与旧测试材料，切换 CI、打包与更新；完成 Stable 数据副本迁移、故障回退及 Windows/macOS Intel/Universal 验收后再原位替换。社区 Profile/恢复私有模块不复刻。
   readBefore:
+    - close-flow
     - shell-main
     - design
     - issues
@@ -127,6 +137,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: close-flow
+    label: 官方关闭确认接入与验证
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/official-close-flow.md
   - id: shell-main
     label: Shell 主进程切换与验证结果
     type: file
@@ -310,6 +324,14 @@ entries:
       - shell-main
       - issues
     createdAt: 2026-09-30T05:08:48.000Z
+  - id: official-close-confirmation
+    kind: progress
+    content: 直接编译复用官方 DesktopQuitConfirmation，将真实 Host 运行任务与计划提醒检查接入关闭项目、重启和应用退出；单项目操作隔离，应用退出汇总全部 Host，重复动作合并，取消及弹窗失败保留运行状态。macOS arm64 真实 Jobs/Schedule 临时组合的中英文、明暗、窄窗口、键盘取消/确认与全部所有权释放通过。关闭前等待已进入的 IPC 请求和主题通知，并取消所属 Session 的在途 HTTP；最终空闲双项目回归不再出现 Host 停止后的读取错误。Shell 114 项与插件 307 项检查通过；其他平台、发行与真实数据迁移仍待完成。
+    basis: observation
+    referenceIds:
+      - close-flow
+      - shell-main
+    createdAt: 2026-09-30T06:09:36.000Z
 operations: {}
 criterionVersions:
   official-source: 1

@@ -4,6 +4,8 @@
 
 Shell 本地提交：`4e13cc8`（切换 Shell 主进程与开发构建到 DeepSeek 官方 Desktop）；未推送、未发布。
 
+后续进展：运行/计划任务的关闭确认已完成接入与原生验收，见 [官方关闭流程](official-close-flow.md)。以下保留本阶段原始结论。
+
 ## 本阶段结论
 
 正式 `src/app/main.mjs` 已启动固定官方 Desktop/Host/Web，Shell 负责项目与窗口，Project 插件负责主窗口中的项目页面。
