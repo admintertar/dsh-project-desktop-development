@@ -6,14 +6,14 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T02:16:09.000Z
+updatedAt: 2026-09-30T03:33:41.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
     description: 官方 Desktop 原位替换方案；包含架构选择、数据与发行策略、实施阶段和最终验收。
   - type: file
     path: artifacts/issues.md
-    description: 迁移问题清单；包含 14 个问题、待证实的官方契约和社区模块到官方基线的初步映射。
+    description: 迁移问题清单；包含官方接入关口、用户收敛后的职责边界和旧社区调用删除审计。
   - type: file
     path: artifacts/phase1-feasibility.md
     description: 官方 0.2.0-rc.2 来源 pin、构建、真实 Host、双 Host 与临时双 Electron 窗口隔离、Project 插件兼容实验结果与未完成项。
@@ -60,15 +60,16 @@ archived: false
 phase: implementation
 brief:
   currentBehavior: 已发布壳 0.1.11 仍固定 Anywhere Labs Desktop 2.0.15 和官方 Harness 0.1.7-rc.2。壳运行时大量调用社区 Desktop 私有模块；Project 插件的开发 setup 和来源锁也仍指向社区仓库。之前的 2.0.15 升级与 0.1.11 发布已完成，本任务是移除社区 Desktop 这一中间层。
-  scope: 从固定的 DeepSeek 官方 Git 提交构建 apps/desktop 与官方 DSH 包，改造两个公开仓库的 Host、窗口、Profile、恢复、插件、setup、打包和 CI；对现有安装与项目数据做原位迁移并完成 macOS/Windows/Intel 验收。已开始阶段 1 可行性验证，最终替换须满足全部验收条件。
+  scope: Shell 负责多窗口、欢迎页、创建/打开/切换项目与应用菜单；打开项目时加载固定 DeepSeek 官方主界面，Project 插件负责窗口内的项目页面和工作区替换。全部弃用 Anywhere Labs dsh-desktop 及其私有模块，切换运行、setup、构建、测试、打包与 CI 来源；正式原位替换前完成用户数据迁移回退及跨平台验收。
   constraints:
     - Desktop/Harness 的运行、构建、测试、CI 和安装包来源只允许固定的 deepseek-ai/deepseek-harness 提交；不得依赖 Anywhere Labs 的 Desktop 包、源码快照或缓存。
     - 保持独立 Shell，不维护官方 Desktop fork；单一主进程下每个项目的窗口、Host、DSH Home、Profile 和 Chromium 分区仍需隔离。
     - 直接替换当前 Stable，沿用应用身份、用户数据根、项目文件和更新入口；正式迁移前先在副本验证，失败时必须可恢复旧数据。
-    - 不静默删除现有用户可见功能；官方未提供项目级界面时，由壳基于官方组件实现并做真实窗口验收。
+    - 按用户明确的 Shell、Project 插件与 DeepSeek 官方职责验收功能；社区私有模块清单不是兼容或逐项复刻需求，不以重建社区独有界面作为主进程切换前提。
     - 不修改官方源码快照；全部上游来源固定 commit、校验树和依赖锁。
   outOfScope:
     - 将 Anywhere Labs Next 作为运行或构建依赖。
+    - 保留社区 Desktop 运行回退分支，或为迁移复刻其私有 RPC、Profile 选择/创建、恢复助手等独有实现。
     - 新建与 Stable 并行安装的另一套应用身份或共享数据目录。
     - 在迁移、跨平台验收与回退演练完成前发布替换版。
   acceptanceCriteria:
@@ -81,9 +82,9 @@ brief:
       required: true
       version: 1
     - id: feature-parity
-      text: 官方 Web 前端及现有 Profile 选择、恢复、设置、终端、诊断、更新、项目市场和 Project 插件的 Tasks、Resources、Memory、skills、MCP 能力完成行为对照和真实窗口验收。
+      text: Shell 的欢迎页、创建/打开/切换项目、多窗口和应用菜单，DeepSeek 官方主界面原有能力，以及 Project 插件的项目页面和工作区替换完成真实窗口验收；不要求兼容或复刻社区 Desktop 独有模块。
       required: true
-      version: 1
+      version: 2
     - id: data-migration
       text: 从已发布 0.1.11 项目数据原位升级有备份、迁移日志、故障恢复及旧包回退演练；项目列表、项目文件和项目根数据保持完整。
       required: true
@@ -98,13 +99,13 @@ brief:
       version: 1
 questions:
   - 官方 apps/desktop 的 private 包与构建产物中哪些模块可直接复用，哪些需从同一固定提交按源码构建？先做可行性实验，不预设接口稳定。
-  - 官方桌面只有应用级 mainWindow 与 profiles/desktop；项目级 Profile 选择、创建和恢复界面应如何复用官方底层能力并维持功能等价？
+  - 官方桌面只有应用级 mainWindow 与 profiles/desktop；如何以最小适配把官方主界面及 Host 生命周期放入壳的逐项目窗口，并完全移除社区调用？
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
     - 已完成插件官方来源切换、Session 适配器和 macOS arm64 未签名官方运行目录；搬移前后原生/Host/Office smoke 及 payload 双窗口加 Project 插件通过。下一步将 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell 的项目生命周期，并将插件开发链接替换为固定发行依赖闭包；随后切换来源锁、setup/build/CI，审计无社区 Desktop 输入。
     - Project 插件默认 setup 与 upstream.json 已切换到固定官方 0.2.0-rc.2；接着清理历史社区 Electron 适配材料，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
-    - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
+    - 主进程切换按用户明确的三层职责执行，移除社区启动/导入链；不再逐项迁移社区 Profile/恢复私有模块。之后处理旧数据迁移、打包和跨平台验收。
   readBefore:
     - design
     - issues
@@ -276,11 +277,19 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-30T02:16:09.000Z
+  - id: direct-official-responsibility-boundary
+    kind: decision
+    content: 用户再次明确全部不用 Anywhere Labs dsh-desktop 及其社区私有模块。Shell 负责多窗口、欢迎页、创建/打开/切换项目与菜单；打开项目承载官方主界面。Project 插件负责窗口内项目页面和工作区替换。主进程切换应直接接官方运行链，旧社区模块仅作为删除审计对象，不要求逐项兼容、复刻或保留社区启动回退分支。已据此收敛方案、O03/O07 与 feature-parity 验收第 2 版，用户数据迁移回退要求仍保留。
+    basis: user-request
+    referenceIds:
+      - design
+      - issues
+    createdAt: 2026-09-30T03:33:41.000Z
 operations: {}
 criterionVersions:
   official-source: 1
   multi-project: 1
-  feature-parity: 1
+  feature-parity: 2
   data-migration: 1
   package-validation: 1
   replacement-release: 1

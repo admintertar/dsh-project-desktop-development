@@ -6,11 +6,11 @@
 | --- | --- | --- | --- |
 | O01 | 阻断 | 官方 `apps/desktop` 包为 `private: true`；已发布 `0.1.11` 的来源锁仍固定社区 `dsh-plugin-desktop@2.0.15`。已从固定官方 `0.2.0-rc.2` 提交完成源码构建、Host、双 Host 和临时双 Electron 窗口实验；壳安装包和完整构建闭包仍待证明。 | 官方依赖可行性实验 |
 | O02 | 阻断 | 官方当前 `main.ts` 只有应用级 `mainWindow`，`paths.ts` 固定一个 `profiles/desktop`。临时探针已让两个官方 Web 窗口各有 Host 与 Session，A 强制销毁后 B 存活；正式 Shell 的多项目生命周期仍未接入。 | 双项目运行骨架 |
-| O03 | 阻断 | 当前 [`src/desktop-adapter/native.mjs`](../../../resources/dsh-project-desktop/src/desktop-adapter/native.mjs) 和 `stable/` 的约 30 个适配文件大量调用社区私有模块，涉及窗口、Host RPC、Profile、恢复、设置、终端、更新和客户端。需逐项映射官方实现、保留项目级副作用，不能批量改导入路径。 | 接口映射与分批替换 |
+| O03 | 阻断 | 当前 [`src/desktop-adapter/native.mjs`](../../../resources/dsh-project-desktop/src/desktop-adapter/native.mjs) 和 `stable/` 大量调用社区私有模块。用户已明确这些模块全部弃用；按 Shell/Project 插件/官方 Desktop 的职责重接入口，旧调用清单用于删除审计，不是逐项兼容需求。 | 删除社区调用，接通壳到官方主界面 |
 | O04 | 阻断 | `dsh-plugin-project` 候选分支已改到官方 `0.2.0-rc.2`，适配 Sidebar 注入与 macOS `SidebarRoot` DOM，并在临时双 Electron 窗口显示独立 Project 概览。默认 `upstream.json` 与 setup 现只接受固定官方源码；类型检查、307 项测试、构建通过。历史 `desktop-runtime.ts` 与 Electron 回归材料仍使用社区接口；Tasks/Resources/Memory/skills/MCP 写入行为和打包兼容尚未证明。 | 插件兼容实验 |
 | O05 | 阻断 | 旧项目 DSH Home 在 `userData/projects/<hash>/dsh`。已发布版虽使用官方 Harness `0.1.7-rc.2`，Profile、设置与插件组合仍由社区 Desktop `2.0.15` 管理；切到官方 `apps/desktop` 的启动和安装逻辑时，没有针对项目级 Home 的现成迁移保证。 | 旧项目副本迁移/回退实验 |
 | O06 | 高 | `dsh-app://app` 在所有项目窗口使用同一 Origin；逐项目 Session 转发和主 Frame IPC 适配器均已接入真实探针，单测覆盖错误 WebContents、Host、Origin、旧 Cookie 与重复注册拒绝。已补齐 Session/IPC 释放，并在官方 payload 双窗口加 Project 插件中验证 A 同分区重开、B 存活、旧清理不影响新所有者和最终注册清空。尚需在正式 Shell 验证 Host 重启、跨项目凭据、重定向、外链和恢复窗口不能串线。`dsh://open` 仅是操作系统唤起入口。 | 窗口 Session 重开已验证；继续正式 Shell 生命周期与安全验收 |
-| O07 | 高 | 官方 `apps/desktop` 的 Profile/恢复/设置流程以单一应用身份组织；当前 `apps/desktop/src` 没有社区版的 `profile-selection-window`、`profile-create-window`、`startup-recovery-window`。需要用官方 UI 组件和逻辑补齐项目级窗口，并保持旧版行为。 | 原生 UI 行为对照 |
+| O07 | 范围已收敛 | 官方没有社区版的 Profile 选择/创建及恢复助手窗口。用户明确社区私有模块全部不用；本轮复用官方能力并保证逐项目运行隔离，不为社区独有窗口补一套替代实现。旧 Profile 数据的处理仍归 O05/O10 的迁移验收。 | 不阻断主进程切换；数据迁移单独验证 |
 | O08 | 高 | 插件默认 setup 已切换官方源码；Shell 的 [`scripts/setup.mjs`](../../../resources/dsh-project-desktop/scripts/setup.mjs)、[`scripts/verify-upstream.mjs`](../../../resources/dsh-project-desktop/scripts/verify-upstream.mjs)、[`scripts/build.mjs`](../../../resources/dsh-project-desktop/scripts/build.mjs)、打包脚本和多条 GitHub Actions 工作流仍从社区仓库导出源码、依赖缓存并校验其版本。删除运行时代码引用还不足以实现零社区依赖。 | 构建闭包与安装包审计 |
 | O09 | 高 | 当前更新清单只接受 `channel: stable` 和 `x.y.z`；直接替换时旧 Stable 客户端不会接受 `-next` 版本。需明确候选版测试方式和正式版版本号，并验证旧客户端发现及安装新包。 | 发布/更新演练 |
 | O10 | 高 | 新旧版本使用同一应用数据根；迁移失败、断电或用户重装旧包时可能读到半迁移数据。需要备份、迁移日志、原子切换或等价恢复机制，并实测回退。 | 破坏性故障注入 |
@@ -27,13 +27,13 @@
 4. 官方 `DesktopProjectManager`、恢复和安装逻辑能否针对外部项目 Home 使用；若它们假定 `profiles/desktop`，仅复用底层算法，项目范围的编排由壳负责。
 5. 官方 `0.2.0-rc.2` 发布包、官方仓库依赖锁、native 模块及 Electron 版本在 macOS Universal 与 Windows x64 上能否形成完整可搬移安装包。
 
-## 社区模块到官方基线的初步映射
+## 旧社区调用的删除审计（不是兼容清单）
 
 | 当前使用的社区模块 | 官方候选基础 | 尚需解决 |
 | --- | --- | --- |
 | `host-rpc`、`host-runtime-bridge`、`renderer-boot`、`desktop-browser-access` | `apps/desktop/src/host-process.ts`、`backend-controller.ts`、`web-document.ts`，官方 `runProfile`/WebServer | 多 Host、逐项目认证与协议 Session；不能沿用旧 RPC 契约 |
-| `profile-manager`、`profile-selection-window`、`profile-create-window` | `apps/desktop/src/project-manager.ts`、`@deepseek-ai/dsh-app-boot` Profile 模板 | 官方桌面只有应用级 `profiles/desktop`；项目级选择/创建 UI 需实现 |
-| `startup-recovery-window`、`profile-checkpoint`、`safe-mode` | `apps/desktop/src/fatal-recovery.ts`、官方 Profile 清理及恢复能力 | 当前项目级检查点、安全模式与旧数据迁移仍需单独设计 |
+| `profile-manager`、`profile-selection-window`、`profile-create-window` | `apps/desktop/src/project-manager.ts`、`@deepseek-ai/dsh-app-boot` Profile 模板 | 移除社区模块调用，复用官方初始化；不复刻社区选择/创建 UI |
+| `startup-recovery-window`、`profile-checkpoint`、`safe-mode` | `apps/desktop/src/fatal-recovery.ts`、官方 Profile 清理及恢复能力 | 移除社区恢复链；逐项目故障隔离及旧数据可恢复性单独验收 |
 | `index` 客户端、`settings-client`、`window-options` | 官方 `@deepseek-ai/dsh-web-frontend`、平台 preload/视图模块 | Project 插件入口、模型页、项目设置和窗口材质的完整行为 |
 | `update-lifecycle`、`update-download`、原生菜单和诊断模块 | 官方 Desktop 的更新/菜单/诊断实现作为源码参考 | 继续使用我们的 GitHub Release、原应用身份及多项目退出顺序 |
 
