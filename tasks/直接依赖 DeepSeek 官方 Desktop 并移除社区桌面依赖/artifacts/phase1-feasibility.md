@@ -103,6 +103,12 @@ Shell 新增 `src/desktop-adapter/official/build-inputs.mjs`，在固定官方 `
 
 Node 22.19.0 下重新准备目录成功：共 199 个文件，其中 196 个是 Web 文件。构建输入、暂存篡改及 Session/IPC 的 5 项定向测试通过；双 Host 探针再次确认跨项目 Cookie 被拒绝，停止 A 不影响 B；双 Electron 窗口加 Project 插件探针再次确认两个窗口 boot/transport 均成功，销毁 A 后 B 存活。Shell `yarn run check` 仍在旧社区源码缓存的树 hash 不符处停止，尚未执行到新官方路径。这些探针只证明本机固定官方工作树的开发输入映射可用。清单中的 Host/CLI 是绝对工作树路径，pnpm 依赖也从该工作树解析；尚未形成可复制到另一台机器的安装包，未替换正式 Shell `src/app/main.mjs`、`upstream.lock.json`、setup、CI 或打包链。构建输出属于本机忽略文件，目前哈希用于检测暂存后改动，不等于已有官方发布产物校验值。
 
+### 官方第一方包集合实验
+
+从同一固定官方 `rc.2` 工作树，调用上游 `release:pack` 构建 318 个 DSH family tarball 和 9 个 vendor tarball，再打包私有 Desktop Host、native system entry，最后调用上游 `prepare-package-set.ts` 只保留 Desktop Host/DSH 所需闭包。Shell 的 `yarn run prepare:official-package-set -- ../deepseek-harness-official-021` 将这些步骤封装在忽略目录中，输出 `desktop-packages.json`、287 个 tarball 和 `source.json`（固定提交、Desktop tree、依赖锁 blob、描述文件 SHA-256）。上游 `verifyDesktopCorePackageSet` 检查每个 tarball 的大小与 SHA-512。
+
+本机验证输出 287 个第一方包；将整个包集合复制到另一临时目录后，官方校验器仍通过，修改其中一个 tarball 的字节后校验失败。它证明第一方包集合本身不依赖原工作树路径，但尚**不是完整安装包**：官方 `prepare:runtime`、`prepare:dsh` 仍要解析外部 npm 依赖、组装原生二进制、pnpm 和 primary runtime，并完成目标平台签名/打包。正式 Shell 的 Host、窗口、旧数据与 CI 均未接入这个集合。
+
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。
 - Shell 的 `src/desktop-adapter/stable/` 仍调用社区私有模块，必须逐批替换为官方 `apps/desktop`/`apps/desktop-host` 入口或壳自己的适配层；临时 Project 插件窗口不改变这一状态。
 - 官方 Desktop 仍以应用级窗口和 `profiles/desktop` 为中心；项目壳必须继续负责逐项目 Profile 目录、Host 进程、端口、认证 Cookie、Electron Session 和窗口生命周期。

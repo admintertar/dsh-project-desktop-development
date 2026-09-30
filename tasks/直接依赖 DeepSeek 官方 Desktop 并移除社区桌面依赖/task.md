@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T01:24:29.000Z
+updatedAt: 2026-09-30T01:35:29.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -81,7 +81,7 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 已完成插件官方来源切换、临时窗口 Session 适配器及官方开发构建输入映射；下一步把 Host/CLI/pnpm 依赖做成可搬移的官方构建闭包，再将官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，最后审计无社区 Desktop 输入。
+    - 已完成插件官方来源切换、临时窗口 Session 适配器、官方开发输入映射及 287 个可搬移第一方核心 tarball；下一步沿官方 prepare:runtime/prepare:dsh 组装外部依赖和原生资源，形成完整发行闭包，再将 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，最后审计无社区 Desktop 输入。
     - Project 插件默认 setup 与 upstream.json 已切换到固定官方 0.2.0-rc.2；接着清理历史社区 Electron 适配材料，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
     - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
@@ -231,6 +231,14 @@ entries:
       - phase1
       - issues
     createdAt: 2026-09-30T01:24:29.000Z
+  - id: official-core-package-set
+    kind: progress
+    content: 调用固定官方 0.2.0-rc.2 的 release:pack、私有 Desktop Host pack、native entry pack 和 prepare-package-set.ts，生成 287 个 Desktop 核心第一方 tarball；Shell 新命令记录来源 pin 与描述文件哈希，官方验证器检查 tarball 大小和 SHA-512。复制集合到另一临时目录后校验通过，篡改一个包后被拒绝。该集合尚不含外部 npm 依赖、原生资源和 primary runtime，不能计作可安装包；正式运行、CI、用户数据未修改。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-30T01:35:29.000Z
 operations: {}
 criterionVersions:
   official-source: 1
