@@ -97,6 +97,12 @@ Project 插件的 `upstream.json` 现直接固定 DeepSeek 官方 `dsh-v0.2.0-rc
 
 Shell 中用于官方探针的来源锁和校验入口已从 `official-candidate.*` 统一命名为 `official-source.*`，并复测固定官方 `rc.2` 工作树校验通过。旧 `upstream.lock.json` 仍记录已发布 Stable 的社区来源；只有正式构建与运行链完成映射后才能切换该锁。
 
+### 官方开发构建输入映射
+
+Shell 新增 `src/desktop-adapter/official/build-inputs.mjs`，在固定官方 `rc.2` 工作树中校验 Desktop、Desktop Host、CLI、Web 包名和版本、pnpm 版本以及已构建的入口。`scripts/prepare-official-development.mjs` 将官方 Web dist、preload、许可证和从官方 `web-document.ts` 编译的 ESM 模块放入忽略目录 `.cache/official-development/`。清单 `inputs.json` 记录来源 pin、Host/CLI 工作树路径及每个暂存文件的 SHA-256；消费前会重新枚举文件、拒绝符号链接并验证哈希。
+
+Node 22.19.0 下重新准备目录成功：共 199 个文件，其中 196 个是 Web 文件。构建输入、暂存篡改及 Session/IPC 的 5 项定向测试通过；双 Host 探针再次确认跨项目 Cookie 被拒绝，停止 A 不影响 B；双 Electron 窗口加 Project 插件探针再次确认两个窗口 boot/transport 均成功，销毁 A 后 B 存活。Shell `yarn run check` 仍在旧社区源码缓存的树 hash 不符处停止，尚未执行到新官方路径。这些探针只证明本机固定官方工作树的开发输入映射可用。清单中的 Host/CLI 是绝对工作树路径，pnpm 依赖也从该工作树解析；尚未形成可复制到另一台机器的安装包，未替换正式 Shell `src/app/main.mjs`、`upstream.lock.json`、setup、CI 或打包链。构建输出属于本机忽略文件，目前哈希用于检测暂存后改动，不等于已有官方发布产物校验值。
+
 - Shell 的 `upstream.lock.json`、默认 setup、打包脚本、CI 和运行时仍含 Anywhere Labs 社区 Desktop；当前阶段不宣称零社区依赖已实现。
 - Shell 的 `src/desktop-adapter/stable/` 仍调用社区私有模块，必须逐批替换为官方 `apps/desktop`/`apps/desktop-host` 入口或壳自己的适配层；临时 Project 插件窗口不改变这一状态。
 - 官方 Desktop 仍以应用级窗口和 `profiles/desktop` 为中心；项目壳必须继续负责逐项目 Profile 目录、Host 进程、端口、认证 Cookie、Electron Session 和窗口生命周期。

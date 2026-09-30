@@ -6,7 +6,7 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-29T12:39:00.000Z
+updatedAt: 2026-09-30T01:24:29.000Z
 artifacts:
   - type: file
     path: artifacts/design.md
@@ -81,7 +81,7 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 已完成插件官方来源切换和临时窗口 Session 适配器；下一步把官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，先解决官方源码/Host/Web dist 与现有 Shell 构建闭包的布局差异，再审计无社区 Desktop 输入。
+    - 已完成插件官方来源切换、临时窗口 Session 适配器及官方开发构建输入映射；下一步把 Host/CLI/pnpm 依赖做成可搬移的官方构建闭包，再将官方 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell，最后审计无社区 Desktop 输入。
     - Project 插件默认 setup 与 upstream.json 已切换到固定官方 0.2.0-rc.2；接着清理历史社区 Electron 适配材料，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
     - 逐批替换壳的 Host、窗口、Profile 与恢复适配，随后进行旧数据迁移、打包和跨平台验收。
   readBefore:
@@ -223,6 +223,14 @@ entries:
     referenceIds:
       - phase1
     createdAt: 2026-09-29T12:39:00.000Z
+  - id: official-development-input-map
+    kind: progress
+    content: Shell 增加固定官方 0.2.0-rc.2 的 Desktop/Host/CLI/Web 构建输入映射及忽略目录暂存，清单记录 199 个文件（196 个 Web 文件）的 SHA-256，读取前拒绝符号链接及改动；5 项定向测试、双 Host、双 Electron 窗口加 Project 插件探针通过，A 销毁后 B 存活。Host/CLI 与 pnpm 依赖仍链接本机官方工作树，此阶段只是开发输入验证，不是可搬移安装包；正式 main.mjs、旧来源锁、setup、CI、打包及用户数据尚未迁移。
+    basis: observation
+    referenceIds:
+      - phase1
+      - issues
+    createdAt: 2026-09-30T01:24:29.000Z
 operations: {}
 criterionVersions:
   official-source: 1
