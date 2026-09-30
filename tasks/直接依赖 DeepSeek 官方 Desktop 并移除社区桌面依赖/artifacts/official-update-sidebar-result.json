@@ -1,0 +1,83 @@
+{
+  "platform": "darwin",
+  "arch": "arm64",
+  "officialVersion": "0.2.0-rc.2",
+  "originalOfficialSidebarAndDialog": true,
+  "ownReleaseFeed": true,
+  "idleHidden": true,
+  "currentVersionAndNetworkFailure": true,
+  "sharedAcrossWindows": true,
+  "manualDownloadCancellation": true,
+  "promptOwnerClosure": true,
+  "downloadRetryAndProgress": true,
+  "cancelledInstallStaysReady": true,
+  "reopenedWindowReadsReady": true,
+  "explicitInstallerHandoff": true,
+  "fixtureInstallerNotExecuted": true,
+  "chineseDarkEnglishLight": true,
+  "narrowNoOverflow": true,
+  "captures": [
+    "update-sidebar-zh-dark",
+    "update-sidebar-en-progress",
+    "update-official-install-confirm"
+  ],
+  "shellCommit": "a9fae5b",
+  "check": {
+    "passed": 140,
+    "failed": 0
+  },
+  "lifecycle": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "officialVersion": "0.2.0-rc.2",
+    "welcomeAndCreation": true,
+    "guideLocalesThemesNarrowKeyboardCancel": true,
+    "twoProjects": true,
+    "realApiKeyState": true,
+    "officialShortcuts": true,
+    "nativeClose": true,
+    "reopen": true,
+    "restart": true,
+    "sameSession": true,
+    "legacyDataPreserved": true,
+    "allOwnersReleased": true,
+    "sharedTheme": true,
+    "nativeThemeLightDarkSystem": true,
+    "browser": {
+      "separateWorkspacePartitions": true,
+      "acquiredAndReleasedThroughOfficialPreload": true,
+      "ownHostBlockedByOfficialGuestPolicy": true,
+      "otherHostRejectsUnauthenticatedGuest": true
+    },
+    "rendererErrors": []
+  },
+  "liveDevelopment": {
+    "states": [
+      {
+        "signedIn": true,
+        "updates": {
+          "phase": "idle"
+        }
+      },
+      {
+        "signedIn": true,
+        "updates": {
+          "phase": "idle"
+        }
+      }
+    ],
+    "windows": [
+      {
+        "title": "dsh-project-desktop-development",
+        "url": "dsh-app://app/"
+      },
+      {
+        "title": "Sidebar 验证",
+        "url": "dsh-app://app/"
+      }
+    ],
+    "menu": "检查更新…",
+    "releaseStatus": 200,
+    "latestVersion": "0.1.11"
+  }
+}

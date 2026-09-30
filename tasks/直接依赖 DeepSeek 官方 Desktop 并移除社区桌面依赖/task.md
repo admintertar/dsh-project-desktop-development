@@ -6,8 +6,23 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T09:17:11.869Z
+updatedAt: 2026-09-30T09:51:41.547Z
 artifacts:
+  - type: file
+    path: artifacts/official-update-sidebar-plan.md
+    description: 原样复用官方侧栏更新入口、状态协议和更新弹窗的实施计划。
+  - type: file
+    path: artifacts/official-update-sidebar-validation.md
+    description: 官方更新组件复用、自有发行源与安装包校验、多窗口原生验收结果。
+  - type: file
+    path: artifacts/official-update-sidebar-result.json
+    description: 140 项检查、官方更新交互、生命周期回归和当前开发壳公开发行源检查摘要。
+  - type: file
+    path: artifacts/official-update-sidebar-zh.png
+    description: 真实中文深色窗口左下角截图裁剪，展示官方新版本按钮。
+  - type: file
+    path: artifacts/official-update-progress-en.png
+    description: 真实英文浅色窗口，官方账号右侧更新入口显示下载百分比。
   - type: file
     path: artifacts/shared-account-plan.md
     description: 用户确认仅共享 DeepSeek 登录账号的方案、边界与实施步骤。
@@ -169,11 +184,13 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
+    - 官方侧栏更新入口和弹窗已集成 a9fae5b，使用自有 update.json 与完整性校验；继续签名安装包与 Windows/Intel 的真实安装交接验收，不复用社区更新模块。
     - 共享账号已集成 4e9bd7e，现有双项目登录直接沿用；模型 API Key 与 Host 认证继续隔离。系统 dsh:// 关联按用户决定暂缓，本轮不继续修改。
     - 原生接入查漏已集成 e5318ca：补官方登录监听、dsh://open 分发、Host login shell 环境、Windows caption/菜单及系统退出。Shell 128 项检查和 macOS arm64 真实登录初始化/取消与双项目回归通过；继续真实账号授权/用量/充值、系统协议安装关联、Windows、快捷键完整交互与麦克风验收。
     - 验证 Project 的 Tasks、自动化可选包、Resources、Memory、skills、MCP 写入和调用及工作区替换；将当前经过校验的插件开发链接替换为固定发行依赖闭包。
     - 清理历史社区适配与旧测试材料，切换 CI、打包与更新；完成 Stable 数据副本迁移、故障回退及 Windows/macOS Intel/Universal 验收后再原位替换。社区 Profile/恢复私有模块不复刻。
   readBefore:
+    - update-sidebar
     - shared-account
     - native-integration
     - close-flow
@@ -185,6 +202,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: update-sidebar
+    label: 官方侧栏更新入口接入与验收
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/official-update-sidebar-validation.md
   - id: shared-account
     label: 多窗口共享 DeepSeek 账号与现有登录沿用
     type: file
@@ -442,6 +463,13 @@ entries:
     referenceIds:
       - shared-account
     createdAt: 2026-09-30T09:17:11.869Z
+  - id: official-update-sidebar-integrated
+    kind: progress
+    content: 按用户要求复用官方侧栏底部账号右侧的更新入口。Shell 本地提交 a9fae5b 直接接入原样 DesktopUpdateIndicator、官方状态协议、协调器及更新弹窗；自有发行清单与 DMG/NSIS 下载保留版本、大小和 SHA-256 校验。140 项检查、macOS arm64 双窗口同步、确认/取消、下载失败重试与百分比、关闭弹窗所属项目、重开、窄窗口和生命周期回归通过。测试安装交接已拦截，未执行测试安装器。开发壳已沿用原数据重启，两个项目均保留登录；线上清单返回 200，最新与当前均为 0.1.11，底部按官方 idle 规则隐藏，菜单可手动检查。未 push 或发布，Windows/Intel 真实安装仍待验收。
+    basis: user-request
+    referenceIds:
+      - update-sidebar
+    createdAt: 2026-09-30T09:51:41.547Z
 operations: {}
 criterionVersions:
   official-source: 1
