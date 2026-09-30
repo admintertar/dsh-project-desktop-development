@@ -6,8 +6,14 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T06:29:22.930Z
+updatedAt: 2026-09-30T06:49:06.816Z
 artifacts:
+  - type: file
+    path: artifacts/sidebar-native-theme-fix.md
+    description: 深色侧栏发灰的原生主题时序定位、修复与多窗口原生回归。
+  - type: file
+    path: artifacts/sidebar-native-theme-result.json
+    description: 修复前后 DOM、nativeTheme、共享设置对照与正式 Shell 原生回归摘要。
   - type: file
     path: artifacts/sidebar-fade-fix.md
     description: macOS 侧栏底部白条的官方样式对照、插件修复及中英文/明暗/窄窗口原生验收。
@@ -140,6 +146,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: sidebar-native-theme
+    label: 深色侧栏原生主题同步修复
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/sidebar-native-theme-fix.md
   - id: sidebar-fade
     label: macOS 侧栏白条修复
     type: file
@@ -346,6 +356,13 @@ entries:
     referenceIds:
       - sidebar-fade
     createdAt: 2026-09-30T06:29:22.930Z
+  - id: sidebar-native-theme-fixed
+    kind: progress
+    content: 用户发现深色侧栏整体发灰；原生诊断确认 Renderer 为 dark，而 nativeTheme 仍为 system 且系统浅色。定位到官方 DOM 主题早于 ConfigForm 异步保存，壳单次读取旧值后丢弃通知；新增有界同步等待、过时通知取消和关闭取消。Shell 118 项与插件 307 项检查通过，真实官方设置切换及双项目明暗/跟随系统、关闭重开/重启原生回归通过。Shell 本地提交 0fb78c2，开发壳已重启供用户继续验证，未发布。
+    basis: observation
+    referenceIds:
+      - sidebar-native-theme
+    createdAt: 2026-09-30T06:49:06.816Z
 operations: {}
 criterionVersions:
   official-source: 1

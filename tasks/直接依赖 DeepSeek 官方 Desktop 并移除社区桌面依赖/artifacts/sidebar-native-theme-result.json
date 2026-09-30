@@ -1,0 +1,42 @@
+{
+  "platform": "darwin",
+  "arch": "arm64",
+  "officialVersion": "0.2.0-rc.2",
+  "before": {
+    "nativeTheme": "system",
+    "nativeDark": false,
+    "rendererDark": true,
+    "rendererMediaDark": false,
+    "sharedPreference": "system",
+    "sidebarFill": "#1b1b1c",
+    "reducedTransparency": false
+  },
+  "after": {
+    "nativeTheme": "dark",
+    "nativeDark": true,
+    "rendererDark": true,
+    "rendererMediaDark": true,
+    "sharedPreference": "dark",
+    "sidebarFill": "#1b1b1c",
+    "reducedTransparency": false
+  },
+  "smoke": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "officialVersion": "0.2.0-rc.2",
+    "welcomeAndCreation": true,
+    "guideLocalesThemesNarrowKeyboardCancel": true,
+    "twoProjects": true,
+    "realApiKeyState": true,
+    "officialShortcuts": true,
+    "nativeClose": true,
+    "reopen": true,
+    "restart": true,
+    "sameSession": true,
+    "legacyDataPreserved": true,
+    "allOwnersReleased": true,
+    "sharedTheme": true,
+    "nativeThemeLightDarkSystem": true,
+    "rendererErrors": []
+  }
+}
