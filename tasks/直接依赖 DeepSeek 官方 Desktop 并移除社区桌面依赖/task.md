@@ -6,8 +6,20 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T03:33:41.000Z
+updatedAt: 2026-09-30T05:16:43.000Z
 artifacts:
+  - type: file
+    path: artifacts/shell-main-switch.md
+    description: 正式 Shell 主进程接入官方运行链、105/307 项检查、真实双项目与引导页验收及剩余关卡。
+  - type: file
+    path: artifacts/official-shell-main/result.json
+    description: 正式主进程的 macOS arm64 生命周期及页面验证结果，不含凭据。
+  - type: file
+    path: artifacts/official-shell-main/welcome.png
+    description: 从已知 WebContents 捕获的 Shell 欢迎页。
+  - type: file
+    path: artifacts/official-shell-main/beta-dark.png
+    description: 官方主窗口中 Project 页面及共享深色主题。
   - type: file
     path: artifacts/design.md
     description: 官方 Desktop 原位替换方案；包含架构选择、数据与发行策略、实施阶段和最终验收。
@@ -59,7 +71,7 @@ artifacts:
 archived: false
 phase: implementation
 brief:
-  currentBehavior: 已发布壳 0.1.11 仍固定 Anywhere Labs Desktop 2.0.15 和官方 Harness 0.1.7-rc.2。壳运行时大量调用社区 Desktop 私有模块；Project 插件的开发 setup 和来源锁也仍指向社区仓库。之前的 2.0.15 升级与 0.1.11 发布已完成，本任务是移除社区 Desktop 这一中间层。
+  currentBehavior: 已发布壳 0.1.11 仍固定 Anywhere Labs Desktop 2.0.15 和官方 Harness 0.1.7-rc.2。当前开发分支的 Shell 主进程、setup/build/start/check 及 Project 插件默认来源已切换到 DeepSeek 官方 0.2.0-rc.2；双项目原生检查通过。历史社区适配与发行流程尚待清理，Project 仍使用校验后的开发链接，真实数据迁移与发布尚未完成。
   scope: Shell 负责多窗口、欢迎页、创建/打开/切换项目与应用菜单；打开项目时加载固定 DeepSeek 官方主界面，Project 插件负责窗口内的项目页面和工作区替换。全部弃用 Anywhere Labs dsh-desktop 及其私有模块，切换运行、setup、构建、测试、打包与 CI 来源；正式原位替换前完成用户数据迁移回退及跨平台验收。
   constraints:
     - Desktop/Harness 的运行、构建、测试、CI 和安装包来源只允许固定的 deepseek-ai/deepseek-harness 提交；不得依赖 Anywhere Labs 的 Desktop 包、源码快照或缓存。
@@ -103,10 +115,11 @@ questions:
   - 已发布 0.1.11 的数据转入官方 Desktop 运行方式时，哪些 Profile、设置、会话和插件状态需要显式迁移与回退处理？
 handoff:
   nextSteps:
-    - 已完成插件官方来源切换、Session 适配器和 macOS arm64 未签名官方运行目录；搬移前后原生/Host/Office smoke 及 payload 双窗口加 Project 插件通过。下一步将 Host、Session、dsh-app 与逐项目 IPC 接入正式 Shell 的项目生命周期，并将插件开发链接替换为固定发行依赖闭包；随后切换来源锁、setup/build/CI，审计无社区 Desktop 输入。
-    - Project 插件默认 setup 与 upstream.json 已切换到固定官方 0.2.0-rc.2；接着清理历史社区 Electron 适配材料，并验证 Tasks、自动化可选包、Resources、Memory、skills、MCP 的真实行为。
-    - 主进程切换按用户明确的三层职责执行，移除社区启动/导入链；不再逐项迁移社区 Profile/恢复私有模块。之后处理旧数据迁移、打包和跨平台验收。
+    - 正式 Shell 已接入官方 Host、Session、dsh-app 与逐项目 IPC，setup/build/start/check 已切换官方来源；Shell 105 项、Project 307 项检查与 macOS arm64 双项目原生验收通过。接着补活跃任务关闭确认、快捷键完整交互、账号/浏览器/麦克风与 dsh://open 操作系统入口的验收。
+    - 验证 Project 的 Tasks、自动化可选包、Resources、Memory、skills、MCP 写入和调用及工作区替换；将当前经过校验的插件开发链接替换为固定发行依赖闭包。
+    - 清理历史社区适配与旧测试材料，切换 CI、打包与更新；完成 Stable 数据副本迁移、故障回退及 Windows/macOS Intel/Universal 验收后再原位替换。社区 Profile/恢复私有模块不复刻。
   readBefore:
+    - shell-main
     - design
     - issues
     - completed-upgrade
@@ -114,6 +127,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: shell-main
+    label: Shell 主进程切换与验证结果
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/shell-main-switch.md
   - id: design
     label: 官方 Desktop 原位替换方案
     type: file
@@ -231,7 +248,7 @@ entries:
       - issues
     createdAt: 2026-09-29T12:28:00.000Z
   - id: shell-build-layout-blocker
-    kind: finding
+    kind: progress
     content: 核对正式 Shell 构建输入确认官方 apps/desktop 私有包 @deepseek-ai/dsh-desktop、独立 desktop-host、lib/main.js 和 Web dist 与当前社区 dsh-plugin-desktop/vendor runtime/manifest 构建闭包不兼容；直接改 upstream.lock.json 会在 verify-upstream 或 build.mjs 失败。下一步需先完成官方源码/Host/Web dist 到 Shell 构建输入映射，再接正式 main.mjs。
     basis: observation
     referenceIds:
@@ -285,6 +302,14 @@ entries:
       - design
       - issues
     createdAt: 2026-09-30T03:33:41.000Z
+  - id: official-shell-main-connected
+    kind: progress
+    content: 正式 Shell main 已直接接入官方 0.2.0-rc.2，setup/build/start/check 不再加载社区 Desktop。复用官方 Host、Web、快捷键、目录选择和元数据接口，Shell 保留欢迎/创建/多窗口/菜单，共享主题通过官方 settings 同步。Shell 105 项现行测试与插件 307 项测试通过；macOS arm64 真正通过欢迎页创建、双项目渲染、关闭/重开/重启、主题同步、旧数据副本拒绝接管及全部 owner/协议释放。12 份社区专用旧测试仅保留历史记录，不计入通过。安装包/CI、账号等完整交互、跨平台与真实 Stable 数据迁移仍未完成，任务保持 active，未推送或发布。
+    basis: observation
+    referenceIds:
+      - shell-main
+      - issues
+    createdAt: 2026-09-30T05:08:48.000Z
 operations: {}
 criterionVersions:
   official-source: 1
