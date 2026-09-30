@@ -6,8 +6,11 @@ title: 直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖
 objective: 以 DeepSeek 官方 deepseek-harness/apps/desktop 为唯一 Desktop/Harness 来源，直接替换现有社区 Desktop Stable；保留项目级多窗口隔离、Project 插件能力、原应用身份和用户数据，并完成可回退迁移及跨平台验收。
 status: active
 createdAt: 2026-09-28T10:27:28.000Z
-updatedAt: 2026-09-30T06:17:16.000Z
+updatedAt: 2026-09-30T06:29:22.930Z
 artifacts:
+  - type: file
+    path: artifacts/sidebar-fade-fix.md
+    description: macOS 侧栏底部白条的官方样式对照、插件修复及中英文/明暗/窄窗口原生验收。
   - type: file
     path: artifacts/official-close-flow.md
     description: 官方关闭确认接入、项目范围、真实运行任务与计划提醒及原生确认/取消验收。
@@ -137,6 +140,10 @@ handoff:
     - 对照已发布 0.1.11 的远端 upstream.lock.json 和配套插件提交；本地 resources 检出可能落后，不能把旧检出当现行版本。
     - 先证明官方依赖的构建与单项目原生启动，再修改现有 Stable 安装或用户数据。
 references:
+  - id: sidebar-fade
+    label: macOS 侧栏白条修复
+    type: file
+    path: tasks/直接依赖 DeepSeek 官方 Desktop 并移除社区桌面依赖/artifacts/sidebar-fade-fix.md
   - id: close-flow
     label: 官方关闭确认接入与验证
     type: file
@@ -332,6 +339,13 @@ entries:
       - close-flow
       - shell-main
     createdAt: 2026-09-30T06:09:36.000Z
+  - id: macos-sidebar-fade-fixed
+    kind: progress
+    content: 按用户截图定位到 Project 会话列表底部渐变，在 macOS 半透明侧栏上形成白条；插件补齐固定官方 WorkspaceBrowser 的 Darwin 隐藏规则。插件 307 项测试、类型检查和构建通过，开发壳使用本地插件重新构建；macOS arm64 中英文、明暗、852×672 窄窗口与侧栏折叠/展开及 Escape 原生验收通过。修复已本地提交 0643b3a，发行 pin 与已安装 Stable 未变更。
+    basis: observation
+    referenceIds:
+      - sidebar-fade
+    createdAt: 2026-09-30T06:29:22.930Z
 operations: {}
 criterionVersions:
   official-source: 1
